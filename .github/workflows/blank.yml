@@ -1,0 +1,47 @@
+name: C Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: macos-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Homebrew
+      run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    - name: Install Valgrind
+      run: brew install --HEAD valgrind
+
+    - name: Install Criterion
+      run: brew install snaipe/soft/criterion
+
+    - name: Install Python
+      run: brew install python
+
+    - name: Install 42Norminette
+      run: |
+        git clone https://github.com/42School/norminette.git
+        cd norminette
+        pip3 install -r requirements.txt
+        sudo python3 setup.py install
+
+    - name: Build the project
+      run: make
+
+    - name: Run 42Norminette
+      run: norminette src/
+
+    #- name: Run Criterion tests
+    #  run: ./run_tests
+
+    # - name: Run Valgrind
+    #  run: valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 ./your_executable
