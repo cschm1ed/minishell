@@ -27,20 +27,21 @@
 
 typedef struct s_data
 {
-	int		argc;
-	char	**argv;
+	// int		argc;
+	// char	**argv;
 	char	**envp;
 	int		pipe_fd[2];
 	pid_t	pid;
 	char	**env_paths;
 	char	**cmd_split;
 	char	*cmd_path;
+	char	*str;
 }				t_data;
 
 void	exit_cmd_failed(char *cmd);
 void	exit_open_failed(char *str, int fd);
 void	exit_cmd_not_found(char *cmd, t_data *pipex);
-void	ft_split_cmd_path(t_data *pipex, int i);
+void	ft_split_cmd_path(t_data *pipex, char *cmd);
 void	ft_child_process(t_data *pipex, char *cmd);
 void	ft_parent_process(t_data *pipex);
 char	**ft_split_cmd(char *cmd);

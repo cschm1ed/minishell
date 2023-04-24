@@ -50,33 +50,23 @@ static char	*ft_get_cmd_path(t_data *pipex, char *cmd)
 	return (NULL);
 }
 
-void	ft_split_cmd_path(t_data *pipex, int i)
+void	ft_split_cmd_path(t_data *pipex, char *cmd)
 {
-	pipex->cmd_split = ft_split_cmd(pipex->argv[i]);
+	pipex->cmd_split = ft_split_cmd(cmd);
 	if (pipex->cmd_split == NULL)
 		exit_cmd_failed("split");
 	if (pipex->cmd_split[0][0] == '/')
 		pipex->cmd_path = ft_strdup(pipex->cmd_split[0]);
 	else
 		pipex->cmd_path = ft_get_cmd_path(pipex, pipex->cmd_split[0]);
-	if (pipex->cmd_path == NULL && i == pipex->argc - 2)
+	if (pipex->cmd_path == NULL)
 		exit_cmd_not_found(pipex->cmd_split[0], pipex);
 }
 
 void	ft_child_process(t_data *pipex, char *cmd)
 {
 	close(pipex->pipe_fd[0]);
-	dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 	close(pipex->pipe_fd[1]);
-	if (ft_strncmp(cmd, pipex->argv[pipex->argc - 2], sizeof(cmd)) == 0)
-	{
-		write(2, "Hello\n", 6);
-		exit(42);
-		dup2(pipex->pipe_fd[0], STDIN_FILENO);
-		close(pipex->pipe_fd[0]);
-		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
-		close(pipex->pipe_fd[1]);
-	}
 	if (execve(pipex->cmd_path, pipex->cmd_split, pipex->envp) <= -1)
 		exit_cmd_not_found(pipex->cmd_split[0], pipex);
 }
