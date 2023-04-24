@@ -12,42 +12,28 @@
 
 #include "minishell.h"
 
-static void	ft_iterate_through_cmds(t_data *pipex)
+static void ft_iterate_through_cmds(t_data *pipex, char *cmd)
 {
-	int		i;
-
-	i = 1;
-	while (pipex->argv[++i + 1] != NULL)
-	{
-		ft_split_cmd_path(pipex, i);
-		if (pipe(pipex->pipe_fd) == -1)
-			exit_cmd_failed("pipe");
-		pipex->pid = fork();
-		if (pipex->pid == -1)
-			exit_cmd_failed("fork");
-		if (pipex->pid == 0)
-			ft_child_process(pipex, pipex->argv[i]);
-		else
-			ft_parent_process(pipex);
-		ft_free_dbl_ptr(pipex->cmd_split);
-		free(pipex->cmd_path);
-		pipex->cmd_path = NULL;
-	}
+	ft_split_cmd_path(pipex, cmd);
+	if (pipe(pipex->pipe_fd) == -1)
+		exit_cmd_failed("pipe");
+	pipex->pid = fork();
+	if (pipex->pid == -1)
+		exit_cmd_failed("fork");
+	if (pipex->pid == 0)
+		ft_child_process(pipex, cmd);
+	else
+		ft_parent_process(pipex);
+	ft_free_dbl_ptr(pipex->cmd_split);
+	free(pipex->cmd_path);
+	pipex->cmd_path = NULL;
 }
 
-int	main(int argc, char **argv, char **envp)
+int main(int argc, char **argv, char **envp)
 {
 	t_data	pipex;
-	char *prompt[4];
 
-	prompt[0] = "minishell";
-	prompt[1] = "whoami";
-	prompt[2] = "hostname -s";
-	prompt[3] = NULL;
-	pipex.argc = 3;
-	pipex.argv = prompt;
 	pipex.envp = envp;
-	ft_printf("Test: %s\n", pipex.argv[1]);
-	ft_iterate_through_cmds(&pipex);
-	return (0);
+	ft_iterate_through_cmds(&pipex, "whoami");
+	ft_iterate_through_cmds(&pipex, "hostname -s");
 }
