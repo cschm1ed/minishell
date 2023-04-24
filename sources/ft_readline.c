@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_readline.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/24 17:41:50 by cschmied         ###   ########.fr       */
+/*   Created: 2023/04/24 17:42:12 by cschmied          #+#    #+#             */
+/*   Updated: 2023/04/24 17:54:04 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int main(int argc, char **argv, char **env)
+char    *ft_readline(const char *str)
 {
-    t_commands  commands;
+    char    *tmp;
 
-    while (1)
-    {
-        commands.raw = ft_readline("minishell: ");
-        commands.lexed = lexer(commands.raw);
-        if (commands.lexed == NULL)
-            return (1);
-    }
+    history_base
+    tmp = readline(str);
+    add_history(tmp);
+    return (tmp);
 }

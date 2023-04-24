@@ -3,27 +3,31 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
+#    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/01 18:42:55 by lspohle          ###   ########.fr        #
+#    Updated: 2023/04/24 17:36:20 by cschmied         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+VPATH			:= sources
 
 NAME			= minishell
 				
 LIBFT			= libft
 
-SRCS			= mandatory/main.c \
-				  mandatory/execute.c \
-				  mandatory/exit.c \
-				  mandatory/split.c \
+SRCS			:= main.c lexer.c
+
+#SRCS			= mandatory/main.c \
+#				  mandatory/execute.c \
+#				  mandatory/exit.c \
+#				  mandatory/split.c \
 
 OBJS			= ${SRCS:.c=.o}
 
 CC				= cc
 
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror -g -lreadline
 
 RM				= rm -f
 
