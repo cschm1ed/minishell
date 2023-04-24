@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/24 18:04:54 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/24 18:09:51 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 
 typedef struct s_parsed
 {
-    char    *cmd;
-    char    **args;
-    char    *redirect_input:
-    char    *redirect_outpu;
-    char    *delimiter;
-    int     append_mode;
+    char        *cmd;
+    char        **args;
+    char        *redirect_input:
+    char        *redirect_output;
+    char        *delimiter;
+    int         append_mode;
+    t_parsed    *next;
 }   t_parsed;
 
 typedef struct s_commands
