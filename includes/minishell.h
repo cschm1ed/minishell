@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/24 18:10:34 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/24 21:29:28 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # define FAILURE 0
 # define TRUE 1
 # define FALSE 0
+
+typedef struct s_parsed t_parsed;
+typedef struct s_commands t_commands;
+typedef struct s_history t_history;
 
 typedef struct s_parsed
 {
@@ -51,6 +55,7 @@ typedef struct s_history
 # include "../libft/libft.h"
 
 char	**lexer(char *cmd);
+char    *ft_readline(const char *str);
 
 #endif
 

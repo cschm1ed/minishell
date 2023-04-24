@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/24 17:41:50 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/24 21:31:40 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int main(int argc, char **argv, char **env)
         commands.lexed = lexer(commands.raw);
         if (commands.lexed == NULL)
             return (1);
+		
     }
 }

@@ -6,7 +6,7 @@
 #    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/24 17:36:20 by cschmied         ###   ########.fr        #
+#    Updated: 2023/04/24 21:29:47 by cschmied         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME			= minishell
 				
 LIBFT			= libft
 
-SRCS			:= main.c lexer.c
+SRCS			:= main.c lexer.c ft_readline.c
 
 #SRCS			= mandatory/main.c \
 #				  mandatory/execute.c \
