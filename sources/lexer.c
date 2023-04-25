@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/25 11:44:09 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:18:30 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_search_for_char(char *s, size_t *i, char c)
 {
-	if (c == '"' || c == '\'')
+	if (c == '"' || c == '\'' || c == '>' || c == '<')
 		(*i)++;
 	while (s[*i] != c && s[*i])
 		(*i)++;
@@ -29,9 +29,9 @@ static int	ft_cnt_sub_cmds(char *s)
 	cnt = 1;
 	while (s[++i])
 	{
-		if (s[i] == ' ')
+		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
 		{
-			ft_search_for_char(s, &i, ' ');
+			ft_search_for_char(s, &i, s[i]);
 			cnt++;
 		}
 		if (s[i] == '"' || s[i] == '\'')
@@ -50,11 +50,13 @@ static void	ft_locate_substr(char *s, size_t *start, size_t *len)
 		ft_search_for_char(s, len, s[(*len)]);
 		(*start)++;
 	}
+	else if (s[(*len)] == '>' && ft_isspace(s[(*len + 1)]) == FAILURE)
+		*len += 1;
 	else
 		ft_search_for_char(s, len, ' ');
 }
 
-static void	ft_check_syntax(char *cmd)
+static int	ft_check_syntax(char *cmd)
 {
 	int		dbl_qte;
 	int		sng_qte;
@@ -71,7 +73,8 @@ static void	ft_check_syntax(char *cmd)
 			sng_qte++;
 	}
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
-		exit(1);
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 char	**lexer(char *cmd)
@@ -81,10 +84,11 @@ char	**lexer(char *cmd)
 	size_t	start;
 	size_t	len;
 
-	ft_check_syntax(cmd);
-	if (cmd == NULL)
+	if (*cmd == 0 || !cmd)
 		return (NULL);
-	substr = (char **) malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
+	else if (ft_check_syntax(cmd) == FAILURE)
+		return (printf("Invalid syntax\n"), NULL);
+	substr = malloc(sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
 	if (substr == NULL)
 		return (NULL);
 	sub_cmds = 0;
