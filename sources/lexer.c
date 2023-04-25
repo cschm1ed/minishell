@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/24 17:38:00 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/25 11:44:09 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_search_for_char(char *s, size_t *i, char c)
 {
-	if (c == 34 || c == 39)
+	if (c == '"' || c == '\'')
 		(*i)++;
 	while (s[*i] != c && s[*i])
 		(*i)++;
@@ -34,7 +34,7 @@ static int	ft_cnt_sub_cmds(char *s)
 			ft_search_for_char(s, &i, ' ');
 			cnt++;
 		}
-		if (s[i] == 34 || s[i] == 39)
+		if (s[i] == '"' || s[i] == '\'')
 			ft_search_for_char(s, &i, s[i]);
 	}
 	return (cnt);
@@ -45,7 +45,7 @@ static void	ft_locate_substr(char *s, size_t *start, size_t *len)
 	while (s[(*start)] == ' ' && s[(*start)])
 		(*start)++;
 	(*len) = (*start);
-	if (s[(*len)] == 34 || s[(*len)] == 39)
+	if (s[(*len)] == '"' || s[(*len)] == '\'')
 	{
 		ft_search_for_char(s, len, s[(*len)]);
 		(*start)++;
@@ -65,9 +65,9 @@ static void	ft_check_syntax(char *cmd)
 	i = -1;
 	while (cmd[++i])
 	{
-		if (cmd[i] == 34)
+		if (cmd[i] == '"')
 			dbl_qte++;
-		else if (cmd[i] == 39)
+		else if (cmd[i] == '\'')
 			sng_qte++;
 	}
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
