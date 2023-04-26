@@ -5,14 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/26 15:17:51 by lspohle          ###   ########.fr       */
+/*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
+/*   Updated: 2023/04/26 20:31:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	ft_search_for_char(char *s, size_t *i, char c)
+static char	**iterate_through_cmd(char *cmd, char **substr);
+static void	search_for_char(char *s, size_t *i, char c);
+static int	check_redirections(char *s, size_t *i);
+static int	check_redirections_at_beginning(char *s, size_t *i);
+static int	cnt_substr(char *s);
+static int	locate_substr(char *s, size_t *start, size_t *end);
+static int	is_syntax_valid(char *cmd);
+
+
+/**
+ * @brief allocates the accurate amount of strings to store the lexed input
+ * @param cmd - the user's input that was read from the line
+ * @return char** - the lexed array of strings
+ */
+char	**lexer(char *cmd)
+{
+	char	**substr;
+
+	if (*cmd == 0 || !cmd || is_syntax_valid(cmd) == FALSE)
+		return (NULL);
+	substr = (char **) malloc (sizeof(char *) * (cnt_substr(cmd) + 1));
+	if (substr == NULL)
+		return (perror("malloc"), NULL);
+	//printf(GREEN"Count: %d\n"ESC, cnt_substr(cmd));
+	return (iterate_through_cmd(cmd, substr));
+}
+
+/**
+ * @brief splits the user's command into an array of strings
+ * @param cmd - the user's input that was read from the line
+ * @param substr - the array of strings that will be returned after lexing
+ * @return char** - the lexed array of strings
+ */
+static char	**iterate_through_cmd(char *cmd, char **substr)
+{
+	size_t	start;
+	size_t	end;
+	int		i;
+
+	start = 0;
+	i = -1;
+	while (++i < cnt_substr(cmd))
+	{
+		locate_substr(cmd, &start, &end);
+		substr[i] = ft_substr(cmd, start, end - start);
+		if (!substr[i])
+			return (ft_free_dbl_ptr(substr));
+		//printf(YELLOW"String: %s$\n"ESC, substr[i]);
+		start = end;
+		if (cmd[start] == '"' || cmd[start] == '\'')
+			start++;
+	}
+	substr[i] = NULL;
+	return (substr);
+}
+
+static void	search_for_char(char *s, size_t *i, char c)
 {
 	if (c == '"' || c == '\'')
 		(*i)++;
@@ -20,66 +76,98 @@ static void	ft_search_for_char(char *s, size_t *i, char c)
 		(*i)++;
 }
 
-static int ft_search_for_redirection(char *s, size_t *i)
+static int check_redirections(char *s, size_t *i)
 {
 	if (s[*i] == '>' || s[*i] == '<')
 	{
 		while ((s[*i] == '>' && s[*i + 1] == '>') || (s[*i] == '>' && s[*i + 1] == '<')
 			|| (s[*i] == '<' && s[*i + 1] == '<') || (s[*i] == '<' && s[*i + 1] == '>'))
 			(*i)++;
-		return (SUCCESS);
+		return (TRUE);
 	}
-	return (FAILURE);
+	return (FALSE);
 }
 
-static int	ft_cnt_sub_cmds(char *s)
+/**
+ * @brief checks if a redirection is at the beginning of the user's input
+ * @param s the user's input that was read from the line
+ * @param i index to continue interating through the user's input
+ * @return true or false
+ */
+static int check_redirections_at_beginning(char *s, size_t *i)
+{
+	if (s[*i] == '>' || s[*i] == '<')
+		return (TRUE);
+	while (s[*i] == ' ')
+	{
+		if (s[*i + 1] == '>' || s[*i + 1] == '<')
+			return (TRUE);
+		(*i)++;
+	}
+	return (FALSE);
+}
+
+/**
+ * @brief counts substrings of the prospective lexed array of strings
+ * @param s the user's input that was read from the line
+ * @return int 
+ */
+static int	cnt_substr(char *s)
 {
 	size_t	i;
 	int		cnt;
 
-	i = -1;
+	i = 0;
 	cnt = 1;
-	while (s[++i])
+	if (check_redirections_at_beginning(s, &i) == TRUE)
+		cnt = 0;
+	while (s[i])
 	{
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<'
 			|| s[i - 1] == '>' || s[i - 1] == '<')
 		{
 			while (s[i] == ' ')
  				i++;
-			if ((s[i] == '>' && cnt == 1) || (s[i] == '<' && cnt == 1))
-				cnt--;
-			if (ft_search_for_redirection(s, &i) == FAILURE)
-				ft_search_for_char(s, &i, s[i]);
+			if (check_redirections(s, &i) == FALSE)
+				search_for_char(s, &i, s[i]);
 			cnt++;
 		}
-		if (s[i] == '"' || s[i] == '\'')
-			ft_search_for_char(s, &i, s[i]);
+		i++;
 	}
 	return (cnt);
 }
 
-static int	ft_locate_substr(char *s, size_t *start, size_t *len)
+static int	locate_substr(char *s, size_t *start, size_t *end)
 {
+	char c;
+
 	while (s[(*start)] == ' ' && s[(*start)])
 		(*start)++;
-	(*len) = (*start);
-	while (s[(*len)] == '>' || s[(*len)] == '<')
+	(*end) = (*start);
+	while (s[(*end)] == '>' || s[(*end)] == '<')
 	{
-		*len += 1;
-		if ((s[(*len)] != '>' && s[(*len)] != '<'))
+		*end += 1;
+		if ((s[(*end)] != '>' && s[(*end)] != '<'))
 			return (SUCCESS);
 	}
-	if (s[(*len)] == '"' || s[(*len)] == '\'')
+	if (s[(*end)] == '"' || s[(*end)] == '\'')
 	{
-		ft_search_for_char(s, len, s[(*len)]);
+		c = s[(*end)];
+		(*end)++;
+		while (s[(*end)] == ' ')
+		{
+			(*start)++;
+			(*end)++;
+		}
+		search_for_char(s, end, c);
 		(*start)++;
 	}
 	else
-		ft_search_for_char(s, len, ' ');
+		search_for_char(s, end, ' ');
 	return (SUCCESS);
 }
 
-static int	ft_check_syntax(char *cmd)
+static int	is_syntax_valid(char *cmd)
 {
 	int		dbl_qte;
 	int		sng_qte;
@@ -98,33 +186,4 @@ static int	ft_check_syntax(char *cmd)
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
 		return (printf("minishell: syntax error near unexpected token\n"), FAILURE);
 	return (SUCCESS);
-}
-
-char	**lexer(char *cmd)
-{
-	char	**substr;
-	int		sub_cmds;
-	size_t	start;
-	size_t	len;
-
-	if (*cmd == 0 || !cmd || ft_check_syntax(cmd) == FAILURE)
-		return (NULL);
-	substr = (char **) malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
-	if (substr == NULL)
-		return (perror("malloc"), NULL);
-	sub_cmds = 0;
-	start = 0;
-	// printf(GREEN"Count: %d\n"ESC, ft_cnt_sub_cmds(cmd));
-	while (sub_cmds < ft_cnt_sub_cmds(cmd))
-	{
-		ft_locate_substr(cmd, &start, &len);
-		substr[sub_cmds] = ft_substr(cmd, start, len - start);
-		if (!substr[sub_cmds])
-			return (ft_free_dbl_ptr(substr));
-		// printf("String: %s\n", substr[sub_cmds]);
-		sub_cmds++;
-		start = len;
-	}
-	substr[sub_cmds] = NULL;
-	return (substr);
 }
