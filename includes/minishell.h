@@ -18,6 +18,14 @@
 # define TRUE 1
 # define FALSE 0
 
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
+
 typedef struct s_parsed t_parsed;
 typedef struct s_commands t_commands;
 typedef struct s_history t_history;
@@ -46,15 +54,7 @@ typedef struct s_history
     t_history   *next;
 }   t_history;
 
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
-
-t_parsed	*parser(t_parsed *parsed, char **lexed);
+t_parsed	*parser(t_parsed **parsed, char **lexed);
 char		**lexer(char *cmd);
 
 // wrappers

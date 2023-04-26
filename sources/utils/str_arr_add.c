@@ -30,6 +30,10 @@ char	**str_arr_add(char ***array, char *toadd)
 	j = 0;
 	size = 0;
 	arr = *array;
+	if (!arr)
+		arr = ft_calloc(sizeof(char*), 2);
+	if (!arr)
+			return (perror("malloc"), NULL);
 	if (!toadd)
 		return (*array);
 	while (arr[size])

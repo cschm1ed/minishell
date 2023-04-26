@@ -12,16 +12,18 @@
 
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **env)
+int main()
 {
     t_commands  commands;
 
-    // while (1)
-    // {
-    //     commands.raw = ft_readline("minishell: ");
-    //     commands.lexed = lexer(commands.raw);
-    //     if (commands.lexed == NULL)
-    //         printf("Keep going!\n");
-    // }
-	test_parser();
+     while (1)
+     {
+         commands.raw = ft_readline("minishell: ");
+         commands.lexed = lexer(commands.raw);
+         if (commands.lexed == NULL)
+             printf("Keep going!\n");
+		 commands.parsed = parser(&commands.parsed, commands.lexed);
+		 if (!commands.parsed)
+			 return (printf("You Died!\n"), 1);
+     }
 }

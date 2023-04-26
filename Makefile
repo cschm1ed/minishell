@@ -12,41 +12,38 @@
 
 VPATH			:= sources:sources/utils
 
-NAME			= minishell
+NAME			:= minishell
 				
-LIBFT			= libft
+LIBFT			:= libft
 
 UTILS			:= ft_isspace.c str_arr_add.c
 
-SRCS			:= $(UTILS) main.c lexer.c ft_readline.c parser.c
+SRCS			:= $(UTILS) main.c lexer.c parser.c ft_readline.c
 
-#SRCS			= mandatory/main.c \
-#				  mandatory/execute.c \
-#				  mandatory/exit.c \
-#				  mandatory/split.c \
+OBJS			:= ${SRCS:.c=.o}
 
-OBJS			= ${SRCS:.c=.o}
+CC				:= cc
 
-CC				= cc
+CFLAGS			:= -g -Wall -Wextra -Werror -O2
 
-CFLAGS			= -Wall -Wextra -Werror -g -lreadline
+LDFLAGS			:= -Wall -Werror -Wextra -g -lreadline
 
-RM				= rm -f
+RM				:= rm -f
 
 MAKE			:= make
 
 # Colors
-GREEN			= \033[92m
-YELLOW			= \033[0;33m
-BLUE			= \033[0;34m
-MAGENTA			= \033[0;35m
-ESCAPE			= \033[0m
+GREEN			:= \033[92m
+YELLOW			:= \033[0;33m
+BLUE			:= \033[0;34m
+MAGENTA			:= \033[0;35m
+ESCAPE			:= \033[0m
 
 %.o: %.c		
 				@${CC} $(CFLAGS) -c $^ -o $@
 
 ${NAME}:		${OBJS} ${LIBFT}/libft.a
-				@${CC} ${CFLAGS} ${OBJS} -L ${LIBFT} -lft -o ${NAME}
+				@${CC} ${LDFLAGS} ${OBJS} -L ${LIBFT} -lft -o ${NAME}
 				@echo "${GREEN}******************  COMPILED  *******************${ESCAPE}"
 				@echo "${BLUE}********* WE GOT THIS! TEAM COMPETENCE! *********${ESCAPE}"
 

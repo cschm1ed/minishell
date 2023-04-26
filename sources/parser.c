@@ -30,39 +30,41 @@ static int	check_special(char **str, int *i, t_parsed *cmd_info);
  * @return - parser() returns a linked list of commands and their context.
  */
 
-t_parsed	*parser(t_parsed *parsed, char **lexed)
+t_parsed	*parser(t_parsed **parsed, char **lexed)
 {
 	int			first;
 	int			i;
-	
+
 	i = 0;
 	first = TRUE;
-	if (parsed == NULL)
-		parsed = ft_calloc(sizeof(t_parsed), 1);
-	if (!parsed)
+	*parsed = ft_calloc(sizeof(t_parsed), 1);
+	if (!*parsed)
 		return (perror("malloc"), NULL);
 	while (lexed[i])
 	{
-		if (check_special(lexed, &i, parsed) == FAILURE)
+		if (check_special(lexed, &i, *parsed) == FAILURE)
 		{
-			if (ft_strncmp(lexed[i], "|", 2) == 0)
-				if (parser(parsed->next, &lexed[i + 1]) == NULL)
-					return (NULL);
-			if (first == TRUE)
+			if (lexed[i][0] == '|')
 			{
-				parsed->cmd = lexed[i];
+				if (parser(&((*parsed)->next), &lexed[i + 1]) == NULL)
+					return (NULL);
+				return (*parsed);
+			}
+			else if (first == TRUE)
+			{
+				(*parsed)->cmd = lexed[i];
 				first = FALSE;
 			}
 			else
 			{
-				parsed->args = str_arr_add(&parsed->args, lexed[i]);
-				if (parsed->args == NULL)
+				(*parsed)->args = str_arr_add(&((*parsed)->args), lexed[i]);
+				if ((*parsed)->args == NULL)
 					return (NULL);
 			}
 		}
 		i ++;
 	}
-	return (parsed);
+	return (*parsed);
 }
 
 /**
@@ -117,7 +119,7 @@ int	test_parser()
 	while (input[i])
 		printf("%s " ,input[i++]);
 	printf("\n");
-	parsed = parser(NULL, input);
+	parsed = parser(&parsed, input);
 	if (!parsed)
 		return (FAILURE);
 	print_parsed(parsed);
@@ -137,6 +139,7 @@ void	print_parsed(t_parsed *parsed)
 		j = 0;
 		if (parsed->args)
 		{
+			printf("args:\n");
 			while (parsed->args[j])
 			{
 				printf("\t%s, ", parsed->args[j]);
@@ -149,5 +152,6 @@ void	print_parsed(t_parsed *parsed)
 		printf("delimiter:\n\t%s\n", parsed->delimiter);
 		printf("append mode:\n\t%d\n\n", parsed->append_mode);
 		parsed = parsed->next;
+		i ++;
 	}
 }
