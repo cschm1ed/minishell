@@ -3,20 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/24 21:29:47 by cschmied         ###   ########.fr        #
+#    Updated: 2023/04/25 12:07:11 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources
+VPATH			:= sources:sources/utils
 
 NAME			= minishell
 				
 LIBFT			= libft
 
-SRCS			:= main.c lexer.c ft_readline.c
+UTILS			:= ft_isspace.c
+
+SRCS			:= $(UTILS) main.c lexer.c ft_readline.c
 
 #SRCS			= mandatory/main.c \
 #				  mandatory/execute.c \

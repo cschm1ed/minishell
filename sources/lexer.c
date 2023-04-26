@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/25 13:03:10 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:09:04 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,22 @@
 
 static void	ft_search_for_char(char *s, size_t *i, char c)
 {
-	if (c == '"' || c == '\'')
+	//printf("Index: %zu\n", *i);
+	while (s[*i] == c)
 		(*i)++;
-	while (s[*i] != c && s[*i])
+	if (c == '"' || c == '\'' || c == '>' || c == '<')
+		(*i)++;
+	while (s[*i] != c && s[*i] && s[*i] != '>' && s[*i] != '<')
 		(*i)++;
 }
+
+// static void	ft_search_for_char(char *s, size_t *i, char c)
+// {
+// 	if (c == '"' || c == '\'')
+// 		(*i)++;
+// 	while (s[*i] != c && s[*i] != '>' || s[*i] != '<' && s[*i])
+// 		(*i)++;
+// }
 
 static int	ft_cnt_sub_cmds(char *s)
 {
@@ -29,9 +40,9 @@ static int	ft_cnt_sub_cmds(char *s)
 	cnt = 1;
 	while (s[++i])
 	{
-		if (s[i] == ' ')
+		if (s[i] == ' ' || s[i] == '>' || s[i] == '<')
 		{
-			ft_search_for_char(s, &i, ' ');
+			ft_search_for_char(s, &i, s[i]);
 			cnt++;
 		}
 		if (s[i] == '"' || s[i] == '\'')
@@ -40,11 +51,17 @@ static int	ft_cnt_sub_cmds(char *s)
 	return (cnt);
 }
 
-static void	ft_locate_substr(char *s, size_t *start, size_t *len)
+static int	ft_locate_substr(char *s, size_t *start, size_t *len)
 {
 	while (s[(*start)] == ' ' && s[(*start)])
 		(*start)++;
 	(*len) = (*start);
+	while (s[(*len)] == '>' || s[(*len)] == '<' && ft_isspace(s[(*len + 1)]) == FAILURE)
+	{
+		*len += 1;
+		if ((s[(*len)] != '>' && s[(*len)] != '<'))
+			return (SUCCESS);
+	}
 	if (s[(*len)] == '"' || s[(*len)] == '\'')
 	{
 		ft_search_for_char(s, len, s[(*len)]);
@@ -52,9 +69,10 @@ static void	ft_locate_substr(char *s, size_t *start, size_t *len)
 	}
 	else
 		ft_search_for_char(s, len, ' ');
+	return (SUCCESS);
 }
 
-static void	ft_check_syntax(char *cmd)
+static int	ft_check_syntax(char *cmd)
 {
 	int		dbl_qte;
 	int		sng_qte;
@@ -71,7 +89,8 @@ static void	ft_check_syntax(char *cmd)
 			sng_qte++;
 	}
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
-		exit(1);
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 char	**lexer(char *cmd)
@@ -81,20 +100,21 @@ char	**lexer(char *cmd)
 	size_t	start;
 	size_t	len;
 
-	ft_check_syntax(cmd);
-	if (cmd == NULL)
+	if (*cmd == 0 || !cmd)
 		return (NULL);
-	substr = malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
+	substr = (char **) malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
 	if (substr == NULL)
 		return (perror("malloc"), NULL);
 	sub_cmds = 0;
 	start = 0;
+	//printf("Count: %d\n", ft_cnt_sub_cmds(cmd));
 	while (sub_cmds < ft_cnt_sub_cmds(cmd))
 	{
 		ft_locate_substr(cmd, &start, &len);
 		substr[sub_cmds] = ft_substr(cmd, start, len - start);
 		if (!substr[sub_cmds])
 			return (ft_free_dbl_ptr(substr));
+		//printf("String: %s\n", substr[sub_cmds]);
 		sub_cmds++;
 		start = len;
 	}
