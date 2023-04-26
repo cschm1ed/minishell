@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 14:53:12 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:16:33 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include "colors.h"
 
 typedef struct s_parsed t_parsed;
 typedef struct s_commands t_commands;

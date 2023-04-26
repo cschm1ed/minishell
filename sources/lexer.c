@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/26 15:02:15 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:17:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ static int	ft_cnt_sub_cmds(char *s)
 	cnt = 1;
 	while (s[++i])
 	{
-		// printf("INDEX: %c[%zu]\n", s[i], i);
 		if (s[i] == ' ' || s[i] == '>' || s[i] == '<'
 			|| s[i - 1] == '>' || s[i - 1] == '<')
 		{
 			while (s[i] == ' ')
  				i++;
+			if ((s[i] == '>' && cnt == 1) || (s[i] == '<' && cnt == 1))
+				cnt--;
 			if (ft_search_for_redirection(s, &i) == FAILURE)
 				ft_search_for_char(s, &i, s[i]);
 			cnt++;
@@ -113,14 +114,14 @@ char	**lexer(char *cmd)
 		return (perror("malloc"), NULL);
 	sub_cmds = 0;
 	start = 0;
-	printf("Count: %d\n", ft_cnt_sub_cmds(cmd));
+	// printf(GREEN"Count: %d\n"ESC, ft_cnt_sub_cmds(cmd));
 	while (sub_cmds < ft_cnt_sub_cmds(cmd))
 	{
 		ft_locate_substr(cmd, &start, &len);
 		substr[sub_cmds] = ft_substr(cmd, start, len - start);
 		if (!substr[sub_cmds])
 			return (ft_free_dbl_ptr(substr));
-		printf("String: %s\n", substr[sub_cmds]);
+		// printf("String: %s\n", substr[sub_cmds]);
 		sub_cmds++;
 		start = len;
 	}
