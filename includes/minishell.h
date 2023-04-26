@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 10:17:34 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:37:53 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,19 @@ typedef struct s_history
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-char	**lexer(char *cmd);
+t_parsed	*parser(t_parsed *parsed, char **lexed);
+char		**lexer(char *cmd);
+
+// wrappers
 char    *ft_readline(const char *str);
 
 // utils
 int 	ft_isspace(char c);
 char	**str_arr_add(char ***arr, char *toadd);
+
+// tests
+void		print_parsed(t_parsed *parsed);
+int		test_parser();
 
 #endif
 

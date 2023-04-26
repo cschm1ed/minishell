@@ -6,13 +6,13 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 10:16:04 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/26 11:17:54 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_special(char **str, int *i, t_commands *cmd_info)
+static int	check_special(char **str, int *i, t_parsed *cmd_info);
 
 /**
  * @brief 
@@ -30,20 +30,29 @@ static int	check_special(char **str, int *i, t_commands *cmd_info)
  * @return - parser() returns a linked list of commands and their context.
  */
 
-t_parsed	*parser(char **lexed)
+t_parsed	*parser(t_parsed *parsed, char **lexed)
 {
-	t_parsed	*parsed;
 	int			first;
 	int			i;
-
+	
 	i = 0;
 	first = TRUE;
+	if (parsed == NULL)
+		parsed = ft_calloc(sizeof(t_parsed), 1);
+	if (!parsed)
+		return (perror("malloc"), NULL);
 	while (lexed[i])
 	{
 		if (check_special(lexed, &i, parsed) == FAILURE)
 		{
+			if (ft_strncmp(lexed[i], "|", 2) == 0)
+				if (parser(parsed->next, &lexed[i + 1]) == NULL)
+					return (NULL);
 			if (first == TRUE)
+			{
 				parsed->cmd = lexed[i];
+				first = FALSE;
+			}
 			else
 			{
 				parsed->args = str_arr_add(&parsed->args, lexed[i]);
@@ -53,6 +62,7 @@ t_parsed	*parser(char **lexed)
 		}
 		i ++;
 	}
+	return (parsed);
 }
 
 /**
@@ -70,30 +80,48 @@ t_parsed	*parser(char **lexed)
 
 static int	check_special(char **str, int *i, t_parsed *info)
 {
-	if (str[*i] == '>' && str[*i+1] != '>')
+	if (ft_strncmp(str[*i], ">", 2) == 0)
 	{
-		*i++;
+		*i += 1;
 		info->redirect_output = str[*i];
 		return (SUCCESS);
 	}
-	else if (str[*i] == '<' && str[*i+1] != '<')
+	else if (ft_strncmp(str[*i], "<", 2) == 0)
 	{
-		*i++;
+		*i += 1;
 		info->redirect_input = str[*i];
 		return (SUCCESS);
 	}
-	else if (str[*i] == '>' && str[*i+1] == '>')
+	else if (ft_strncmp(str[*i], ">>", 3) == 0)
 	{
 		info->append_mode = TRUE;
 		return (SUCCESS);
 	}
-	else if (str[*i] == '<' && str[*i+1] == '<')
+	else if (ft_strncmp(str[*i], "<<", 3) == 0)
 	{
-		*i++;
+		*i += 1;
 		info->delimiter = str[*i];
 		return (SUCCESS);
 	}
 	return (FAILURE);
+}
+
+int	test_parser()
+{
+	char		*input[] = {"<", "infile", "cat", "-e", "|", "wc", "-l", ">", "outfile", NULL};
+	t_parsed	*parsed;
+	int			i;
+
+	i = 0;
+	printf("input: ");
+	while (input[i])
+		printf("%s " ,input[i++]);
+	printf("\n");
+	parsed = parser(NULL, input);
+	if (!parsed)
+		return (FAILURE);
+	print_parsed(parsed);
+	return (SUCCESS);
 }
 
 void	print_parsed(t_parsed *parsed)
@@ -104,13 +132,16 @@ void	print_parsed(t_parsed *parsed)
 	i = 0;
 	while (parsed)
 	{
-		print("Node %d:\n", i);
-		print("cmd:\n\t%s\n", parsed->cmd);
+		printf("Node %d:\n", i);
+		printf("cmd:\n\t%s\n", parsed->cmd);
 		j = 0;
-		while (parsed->args[j])
+		if (parsed->args)
 		{
-			print("\t%s, ", parsed->args[j]);
-			j ++;
+			while (parsed->args[j])
+			{
+				printf("\t%s, ", parsed->args[j]);
+				j ++;
+			}
 		}
 		printf("\n");
 		printf("redirect input:\n\t%s\n", parsed->redirect_input);
