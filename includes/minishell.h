@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 10:08:20 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:17:34 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ typedef struct s_history
 
 char	**lexer(char *cmd);
 char    *ft_readline(const char *str);
+
+// utils
+int 	ft_isspace(char c);
+char	**str_arr_add(char ***arr, char *toadd);
 
 #endif
 

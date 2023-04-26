@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/25 13:41:04 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/26 10:16:04 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,27 @@ static int	check_special(char **str, int *i, t_parsed *info)
 	return (FAILURE);
 }
 
+void	print_parsed(t_parsed *parsed)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (parsed)
+	{
+		print("Node %d:\n", i);
+		print("cmd:\n\t%s\n", parsed->cmd);
+		j = 0;
+		while (parsed->args[j])
+		{
+			print("\t%s, ", parsed->args[j]);
+			j ++;
+		}
+		printf("\n");
+		printf("redirect input:\n\t%s\n", parsed->redirect_input);
+		printf("redirect output:\n\t%s\n", parsed->redirect_output);
+		printf("delimiter:\n\t%s\n", parsed->delimiter);
+		printf("append mode:\n\t%d\n\n", parsed->append_mode);
+		parsed = parsed->next;
+	}
+}
