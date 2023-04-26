@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:26:15 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/25 11:44:09 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/25 13:03:10 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ char	**lexer(char *cmd)
 	ft_check_syntax(cmd);
 	if (cmd == NULL)
 		return (NULL);
-	substr = (char **) malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
+	substr = malloc (sizeof(char *) * (ft_cnt_sub_cmds(cmd) + 1));
 	if (substr == NULL)
-		return (NULL);
+		return (perror("malloc"), NULL);
 	sub_cmds = 0;
 	start = 0;
 	while (sub_cmds < ft_cnt_sub_cmds(cmd))
