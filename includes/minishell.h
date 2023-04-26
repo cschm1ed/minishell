@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:56 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 14:51:33 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/26 14:53:12 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # define FAILURE 0
 # define TRUE 1
 # define FALSE 0
+
+# include <unistd.h>
+# include <string.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
 
 typedef struct s_parsed t_parsed;
 typedef struct s_commands t_commands;
@@ -46,20 +54,19 @@ typedef struct s_history
     t_history   *next;
 }   t_history;
 
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "../libft/libft.h"
+t_parsed	*parser(t_parsed **parsed, char **lexed);
+char		**lexer(char *cmd);
 
-char	**lexer(char *cmd);
+// wrappers
 char    *ft_readline(const char *str);
 
 // utils
 int 	ft_isspace(char c);
 char	**str_arr_add(char ***arr, char *toadd);
+
+// tests
+void		print_parsed(t_parsed *parsed);
+int		test_parser();
 
 #endif
 
