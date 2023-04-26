@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 14:54:20 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/26 15:01:10 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int main()
 		 commands.parsed = parser(&commands.parsed, commands.lexed);
 		 if (!commands.parsed)
 			 return (printf("You Died!\n"), 1);
+        print_parsed(commands.parsed);
     }
 }
