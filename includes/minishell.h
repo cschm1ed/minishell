@@ -18,6 +18,9 @@
 # define TRUE 1
 # define FALSE 0
 
+# define SYNERR "minishell: syntax error\n"
+# define PARERR "minishell: parse error\n"
+
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -55,20 +58,29 @@ typedef struct s_history
     t_history   *next;
 }   t_history;
 
-t_parsed	*parser(t_parsed **parsed, char **lexed);
+t_parsed    *parser(t_parsed **parsed, char **lexed);
 char		**lexer(char *cmd);
 
 // wrappers
-char    *ft_readline(const char *str);
+char        *ft_readline(const char *str);
 
 // utils
-int 	ft_isspace(char c);
-int     ft_isspecial(char c);
-char	**str_arr_add(char ***arr, char *toadd);
+int 	    ft_isspace(char c);
+int         ft_isspecial(char c);
+char	    **str_arr_add(char ***arr, char *toadd);
 
 // tests
-void		print_parsed(t_parsed *parsed);
-int		test_parser();
+void	    print_parsed(t_parsed *parsed);
+int		    test_parser();
+
+// lexer/lexer_checks.c
+int	        is_even_num_of_quotes(char *s);
+int         are_valid_quotes(char **substr);
+// lexer/lexer_utils.c
+int	        count_substrs(char *s);
+int	        locate_substr(char *s, size_t *start, size_t *end);
+// lexer/lexer.c
+char	    **lexer(char *cmd);
 
 #endif
 

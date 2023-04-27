@@ -20,9 +20,7 @@ int main()
     {
         commands.raw = ft_readline("minishell: ");
         commands.lexed = lexer(commands.raw);
-        // if (commands.lexed == NULL)
-        //     ft_free_dbl_ptr(commands.lexed);
-        // else
+        // if (commands.lexed)
         // {
 		//     commands.parsed = parser(&commands.parsed, commands.lexed);
         //     print_parsed(commands.parsed);
