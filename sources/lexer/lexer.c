@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/26 20:31:02 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:06:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ char	**lexer(char *cmd)
 	char	**substr;
 	int		amt_substr;
 
-	if (*cmd == 0 || !cmd || is_even_num_of_quotes(cmd) == FALSE)
+	if (*cmd == 0 || !cmd || even_num_of_quotes(cmd) == FALSE)
 		return (NULL);
 	amt_substr = count_substrs(cmd);
 	substr = (char **) malloc (sizeof(char *) * (amt_substr + 1));
 	if (substr == NULL)
 		return (perror("malloc"), NULL);
-	//printf(GREEN"Count: %d\n"ESC, amt_substr);
+	printf(GREEN"Count: %d\n"ESC, amt_substr);
 	iterate_through_cmd(cmd, substr, amt_substr);
-	if (are_valid_quotes(substr) == FALSE)
+	if (valid_quotes(substr) == FALSE || valid_num_of_specials(substr) == FALSE)
 		return (ft_free_dbl_ptr(substr));
 	return (substr);
 }
@@ -65,7 +65,7 @@ static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr)
 		while ((trim_quotes == TRUE && cmd[start] == '"')
 			|| (trim_quotes == TRUE && cmd[start] == '\''))
 			start++;
-		//printf(YELLOW"String: %s\n"ESC, substr[i]);
+		printf(YELLOW"String: %s\n"ESC, substr[i]);
 	}
 	substr[i] = NULL;
 	return (substr);

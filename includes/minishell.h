@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 15:21:12 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/27 17:50:16 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ void	    print_parsed(t_parsed *parsed);
 int		    test_parser();
 
 // lexer/lexer_checks.c
-int	        is_even_num_of_quotes(char *s);
-int         are_valid_quotes(char **substr);
+int	        even_num_of_quotes(char *s);
+int         valid_quotes(char **substr);
+int	        valid_num_of_specials(char **substr);
 // lexer/lexer_utils.c
 int	        count_substrs(char *s);
 int	        locate_substr(char *s, size_t *start, size_t *end);
