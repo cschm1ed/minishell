@@ -16,7 +16,7 @@ NAME			:= minishell
 				
 LIBFT			:= libft
 
-UTILS			:= ft_isspace.c str_arr_add.c
+UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c
 
 SRCS			:= $(UTILS) main.c lexer.c parser.c ft_readline.c
 

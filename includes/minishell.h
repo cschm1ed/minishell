@@ -63,6 +63,7 @@ char    *ft_readline(const char *str);
 
 // utils
 int 	ft_isspace(char c);
+int     ft_isspecial(char c);
 char	**str_arr_add(char ***arr, char *toadd);
 
 // tests
