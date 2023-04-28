@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/27 18:06:25 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:36:10 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr);
 /**
  * @brief allocates the accurate amount of strings to store the lexed input
  * @param cmd the user's input that was read from the line
- * @return char** - the lexed array of strings
+ * @return char** - the lexed array of the user's cmd
  */
 char	**lexer(char *cmd)
 {
 	char	**substr;
 	int		amt_substr;
 
-	if (*cmd == 0 || !cmd || even_num_of_quotes(cmd) == FALSE)
+	if (*cmd == 0 || !cmd || !valid_num_of_quotes(cmd))
 		return (NULL);
 	amt_substr = count_substrs(cmd);
 	substr = (char **) malloc (sizeof(char *) * (amt_substr + 1));
@@ -32,7 +32,7 @@ char	**lexer(char *cmd)
 		return (perror("malloc"), NULL);
 	printf(GREEN"Count: %d\n"ESC, amt_substr);
 	iterate_through_cmd(cmd, substr, amt_substr);
-	if (valid_quotes(substr) == FALSE || valid_num_of_specials(substr) == FALSE)
+	if (!valid_num_of_specials(substr))
 		return (ft_free_dbl_ptr(substr));
 	return (substr);
 }
@@ -41,7 +41,7 @@ char	**lexer(char *cmd)
  * @brief splits the user's command into an array of strings
  * @param cmd the user's input that was read from the line
  * @param substr the array of strings that will be returned after lexing
- * @return char** - the lexed array of strings
+ * @return char** - the lexed array of the user's cmd
  */
 static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr)
 {
@@ -62,8 +62,7 @@ static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr)
 		if (!substr[i])
 			return (ft_free_dbl_ptr(substr));
 		start = end;
-		while ((trim_quotes == TRUE && cmd[start] == '"')
-			|| (trim_quotes == TRUE && cmd[start] == '\''))
+		while (trim_quotes && ft_isquote(cmd[start]))
 			start++;
 		printf(YELLOW"String: %s\n"ESC, substr[i]);
 	}

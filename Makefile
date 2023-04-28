@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/26 11:11:16 by cschmied         ###   ########.fr        #
+#    Updated: 2023/04/28 12:15:51 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME			:= minishell
 				
 LIBFT			:= libft
 
-UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c
+UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 

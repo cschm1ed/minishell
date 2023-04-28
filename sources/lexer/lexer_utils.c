@@ -6,36 +6,35 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/26 20:31:02 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:51:39 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	skip_specials(char *s, size_t *i);
-static void	skip_until_delimiter(char *s, size_t *i, char c);
-static void	skip_quotes(char *s, size_t *start, size_t *end);
+static void	skip_specials(char *cmd, size_t *i);
+static void	skip_until_delimiter(char *cmd, size_t *i, char c);
+static void	skip_quotes(char *cmd, size_t *start, size_t *end);
 
 /**
  * @brief counts substrings of the prospective lexed array of strings
- * @param s the user's input that was read from the line
+ * @param cmd the user's input that was read from the line
  * @return int 
  */
-int	count_substrs(char *s)
+int	count_substrs(char *cmd)
 {
 	size_t	i;
 	int		cnt;
 
 	i = 0;
-	skip_specials(s, &i);
+	skip_specials(cmd, &i);
 	cnt = 1;
-	while (s[++i])
+	while (cmd[++i])
 	{
-		if (s[i] == ' '
-			|| ft_isspecial(s[i]) == TRUE || ft_isspecial(s[i - 1]) == TRUE)
+		if (cmd[i] == ' ' || ft_isspecial(cmd[i]) || ft_isspecial(cmd[i - 1]))
 		{
-			skip_specials(s, &i);
-			skip_until_delimiter(s, &i, s[i]);
+			skip_specials(cmd, &i);
+			skip_until_delimiter(cmd, &i, cmd[i]);
 			cnt++;
 		}
 	}
@@ -44,43 +43,46 @@ int	count_substrs(char *s)
 
 /**
  * @brief splits the user's command into an array of strings
- * @param s the user's input that was read from the line
+ * @param cmd the user's input that was read from the line
  * @param start start of the string that will be terminated by the delimiter
  * @param end skip until delimiter to terminate the string by using end
  * @return void
  */
-int	locate_substr(char *s, size_t *start, size_t *end)
+int	locate_substr(char *cmd, size_t *start, size_t *end)
 {
-	while (s[(*start)] && s[(*start)] == ' ')
+	while (cmd[(*start)] && cmd[(*start)] == ' ')
 		(*start)++;
 	(*end) = (*start);
-	while (ft_isspecial(s[(*end)]) == TRUE)
-		if (ft_isspecial(s[(++(*end))]) == FALSE)
+	while (cmd[(*end)] && ft_isspecial(cmd[(*end)]))
+		if (!ft_isspecial(cmd[(++(*end))]))
 			return (FALSE);
-	if (s[(*end)] == '"' || s[(*end)] == '\'')
+	if (ft_isquote(cmd[(*end)]))
 	{
-		skip_quotes(s, start, end);
-		skip_until_delimiter(s, end, s[(*end)]);
+		skip_quotes(cmd, start, end);
+		skip_until_delimiter(cmd, end, cmd[(*end)]);
 		(*start)++;
 		return (TRUE);
 	}
 	else
-		skip_until_delimiter(s, end, ' ');
+	{
+		skip_until_delimiter(cmd, end, ' ');
+	}		
 	return (FALSE);
 }
 
 /**
  * @brief skips all specails ('>' '<' '||' ' ')
- * @param s the user's input that was read from the line
+ * @param cmd the user's input that was read from the line
  * @param i index to continue interating through the user's input
  * @return void
  */
-static void	skip_specials(char *s, size_t *i)
+static void	skip_specials(char *cmd, size_t *i)
 {
-	if (s[*i] == '"' || s[*i] == '\'')
+	if (ft_isquote(cmd[*i]))
 		(*i)++;
-	while (s[*i] == ' '
-		|| (ft_isspecial(s[*i]) == TRUE && ft_isspecial(s[*i + 1]) == TRUE))
+	while ((cmd[*i+ 1] != 0 && cmd[*i] == ' ')
+		|| (cmd[*i+ 1] != 0 && ft_isspecial(cmd[*i])
+		&& ft_isspecial(cmd[*i + 1])))
 		(*i)++;
 }
 
@@ -91,14 +93,12 @@ static void	skip_specials(char *s, size_t *i)
  * @param c the char to determine if spaces need to be skipped (within quotes)
  * @return void
  */
-static void	skip_until_delimiter(char *s, size_t *i, char c)
+static void	skip_until_delimiter(char *cmd, size_t *i, char c)
 {
-	if (c == '"' || c == '\'')
-	{
-		while (s[*i] == '"' || s[*i] == '\'')
+	if (ft_isquote(c))
+		while (ft_isquote(cmd[*i]))
 			(*i)++;
-	}
-	while (s[*i] && s[*i] != c && ft_isspecial(s[*i]) == FALSE)
+	while (cmd[*i] && cmd[*i] != c && !ft_isspecial(cmd[*i]))
 		(*i)++;
 }
 
@@ -109,10 +109,10 @@ static void	skip_until_delimiter(char *s, size_t *i, char c)
  * @param end skip until delimiter to terminate the string by using end
  * @return void
  */
-static void	skip_quotes(char *s, size_t *start, size_t *end)
+static void	skip_quotes(char *cmd, size_t *start, size_t *end)
 {
-	while ((s[*end] == '"' && s[*end + 1] == '"')
-		|| (s[*end] == '\'' && s[*end + 1] == '\''))
+	while ((cmd[*end] == '"' && cmd[*end + 1] == '"')
+		|| (cmd[*end] == '\'' && cmd[*end + 1] == '\''))
 	{
 		(*end)++;
 		(*start)++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 11:17:54 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/04/28 13:10:18 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
  * adjust i accordingly.
  * @return int 
  */
-
 static int	check_special(char **str, int *i, t_parsed *info)
 {
 	if (ft_strncmp(str[*i], ">", 2) == 0)

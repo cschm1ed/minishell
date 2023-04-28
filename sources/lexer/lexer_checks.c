@@ -6,18 +6,20 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/27 18:48:16 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:45:44 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static int count_specials(char *lxd, int *i, char c);
+
 /**
- * @brief checks if the user's input contains even number of quotation marks
+ * @brief checks if the user's cmd contains an even number of quotation marks
  * @param cmd the user's input that was read from the line
  * @return true or false
  */
-int	even_num_of_quotes(char *s)
+int	valid_num_of_quotes(char *cmd)
 {
 	int		dbl_qte;
 	int		sng_qte;
@@ -26,68 +28,66 @@ int	even_num_of_quotes(char *s)
 	dbl_qte = 0;
 	sng_qte = 0;
 	i = -1;
-	while (s[++i])
+	while (cmd[++i])
 	{
-		if (s[i] == '"')
+		if (cmd[i] == '"')
 			dbl_qte++;
-		else if (s[i] == '\'')
+		else if (cmd[i] == '\'')
 			sng_qte++;
 	}
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
 		return (printf(SYNERR), FALSE);
+		// suggestion: exit (258)
 	return (TRUE);
 }
 
 /**
- * @brief checks if the user's input contains invalid quotes
- * @param substr the user's input lexed into an array
+ * @brief checks if the lexed array only contains valid specials ('>' '<' '|')
+ * @param lxd the lexed array of the user's cmd
  * @return true or false
  */
-int	valid_quotes(char **lexed)
-{
-	int	str;
-	int	i;
-
-	str = -1;
-	while (lexed[++str])
-	{
-		i = -1;
-		while (lexed[str][++i])
-			if (lexed[str][i] == '"' || lexed[str][i] == '\'')
-				return (printf(SYNERR), FALSE);
-	}
-	return (TRUE);
-}
-
-static int count_specials(char *s, int *i, char c, char next)
-{
-	int cnt;
-
-	cnt = 0;
-	if (next == c)
-		return (3);
-	while (s[(*i)] && s[(*i)++] == c)
-		cnt++;
-	return (cnt);
-}
-
-int	valid_num_of_specials(char **lexed)
+int	valid_num_of_specials(char **lxd)
 {
 	int	s;
 	int	i;
 
 	s = -1;
-	while (lexed[++s])
+	while (lxd[++s])
 	{
 		i = -1;
-		while (lexed[s][++i])
+		while (lxd[s][++i])
 		{
-			if (lexed[s][i] == '>' || lexed[s][i] == '<' || lexed[s][i] == '|')
-			{
-				if (count_specials(lexed[s], &i, lexed[s][i], lexed[s + 1][i]) > 2)
-					return (printf(PARERR), FALSE);
-			}
+			if (lxd[s + 1] && ft_isredirect(lxd[s][i])
+				&& ft_isredirect(lxd[s + 1][i]))
+				return (printf(RED SYNERR ESC), FALSE);
+				// exit(258)
+			if (ft_isredirect(lxd[s][i]) || lxd[s][i] == '|')
+				if (count_specials(lxd[s], &i, lxd[s][i]) > 2)
+					return (printf(RED SYNERR ESC), FALSE);
+					// exit(258)
 		}
 	}
 	return (TRUE);
+}
+
+/**
+ * @brief counts how many special characters are contained and their syntax
+ * @param lxd string that contains a special character
+ * @param i index to continue interating through the user's input
+ * @param c special character
+ * @return int 
+ */
+static int count_specials(char *lxd, int *i, char c)
+{
+	int cnt;
+
+	cnt = 0;
+	while (lxd[(*i)] && lxd[(*i)++] == c)
+	{
+		if ((c == '>' && lxd[(*i)] == '<')
+			|| (c == '<' && lxd[(*i)] == '>'))
+			return (3);
+		cnt++;
+	}
+	return (cnt);
 }

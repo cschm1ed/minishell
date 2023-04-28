@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/27 17:50:16 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:52:50 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ char        *ft_readline(const char *str);
 
 // utils
 int 	    ft_isspace(char c);
+int         ft_isquote(char c);
 int         ft_isspecial(char c);
+int     	ft_isredirect(char c);
 char	    **str_arr_add(char ***arr, char *toadd);
 
 // tests
@@ -74,14 +76,12 @@ void	    print_parsed(t_parsed *parsed);
 int		    test_parser();
 
 // lexer/lexer_checks.c
-int	        even_num_of_quotes(char *s);
-int         valid_quotes(char **substr);
-int	        valid_num_of_specials(char **substr);
+int	        valid_num_of_quotes(char *cmd);
+int	        valid_num_of_specials(char **lxd);
 // lexer/lexer_utils.c
-int	        count_substrs(char *s);
-int	        locate_substr(char *s, size_t *start, size_t *end);
+int	        count_substrs(char *cmd);
+int	        locate_substr(char *cmd, size_t *start, size_t *end);
 // lexer/lexer.c
 char	    **lexer(char *cmd);
 
 #endif
-
