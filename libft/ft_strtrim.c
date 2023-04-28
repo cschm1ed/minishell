@@ -53,6 +53,8 @@ char	*ft_strtrim(const char *s1, const char *set)
 	int		len;
 	int		i;
 
+	if (!s1)
+		return (NULL);
 	if (*s1 == 0)
 		return (ft_strdup(""));
 	if (set == NULL)

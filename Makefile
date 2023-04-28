@@ -10,15 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils
+VPATH			:= sources:sources/utils:sources/lexer
 
 NAME			:= minishell
 				
 LIBFT			:= libft
 
-UTILS			:= ft_isspace.c str_arr_add.c
+UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c
 
-SRCS			:= $(UTILS) main.c lexer.c parser.c ft_readline.c
+LEXER			:= lexer.c lexer_checks.c lexer_utils.c
+
+SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c
 
 OBJS			:= ${SRCS:.c=.o}
 

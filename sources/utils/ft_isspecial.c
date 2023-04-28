@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_isspecial.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 12:03:35 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/26 12:58:54 by lspohle          ###   ########.fr       */
+/*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
+/*   Updated: 2023/04/26 20:31:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int ft_isspace(char c)
+int	ft_isspecial(char c)
 {
-    if (c == ' ' || c == '\t' || c == '\r'
-        || c == '\v' || c == '\f' || c == '\n')
-        return (TRUE);
-    return (FALSE);
+	if (c == '>' || c == '<' || c == '|'
+		|| c == '=' || c == '$' || c == ';')
+		return (TRUE);
+	return (FALSE);
 }
