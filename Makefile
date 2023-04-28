@@ -6,11 +6,11 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/28 21:03:11 by lspohle          ###   ########.fr        #
+#    Updated: 2023/04/28 21:59:40 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtin
+VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins
 
 NAME			:= minishell
 				
