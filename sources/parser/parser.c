@@ -18,13 +18,13 @@ static int	check_special(char **str, int *i, t_parsed *cmd_info);
  * @brief 
  * 
  * @param lexed - str-array the lexer created from user input
- * @return t_parsed* - a structure in which the information from the use input
- * 					   will be stored
+ * @return t_parsed* - a structure in which the information from the use
+ * 									input will be stored
  * Iterates through the tokens the lexer created. 
  * If a special token (specified in check_special) is recognized it will be 
  * handled by an appropriate function.
- * The first non special token is interpreted as the command, other tokens will be
- * interpreted as arguments of the command.
+ * The first non special token is interpreted as the command,
+ * other tokens will be interpreted as arguments of the command.
  * The function will only read till a pipe operator or semicolon and create
  * one struct per command.
  * @return - parser() returns a linked list of commands and their context.
@@ -43,22 +43,18 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
 	{
 		if (check_special(lexed, &i, *parsed) == FAILURE)
 		{
-			if (lexed[i][0] == '|' || lexed[i][0] == ';')
-			{
-				if (lexed[i][0] == ';')
-					(*parsed)->pipe = TRUE;
+			if (lexed[i][0] == '|' || lexed[i][0] == ';') {
 				if (parser(&((*parsed)->next), &lexed[i + 1]) == NULL)
 					return (NULL);
 				return (*parsed);
 			}
-			else if (first == TRUE)
-			{
+			else if (first == TRUE) {
 				(*parsed)->cmd = lexed[i];
 				first = FALSE;
 			}
 			else
 			{
-				(*parsed)->args = str_arr_add(&((*parsed)->args), lexed[i]);
+				(*parsed)->args = str_arr_add((*parsed)->args, lexed[i]);
 				if ((*parsed)->args == NULL)
 					return (NULL);
 			}
@@ -99,10 +95,10 @@ static int	check_special(char **str, int *i, t_parsed *info)
 		info->append_mode = TRUE;
 		return (SUCCESS);
 	}
-	// else if (ft_strncmp((str[*i], "=", 2) == 0))
-	// {
-	// 	(void);
-	// }
+	else if (ft_strncmp(str[*i], "=", 2) == 0)
+	{
+		(void)i;
+	}
 	else if (ft_strncmp(str[*i], "<<", 3) == 0)
 	{
 		*i += 1;
@@ -112,16 +108,17 @@ static int	check_special(char **str, int *i, t_parsed *info)
 	return (FAILURE);
 }
 
-int	test_parser()
+int	test_parser(void)
 {
-	char		*input[] = {"<", "infile", "cat", "-e", "|", "wc", "-l", ">", "outfile", NULL};
+	char		*input[] = {"<", "infile", "cat",
+							"-e", "|", "wc", "-l", ">", "outfile", NULL};
 	t_parsed	*parsed;
 	int			i;
 
 	i = 0;
 	printf("input: ");
 	while (input[i])
-		printf("%s " ,input[i++]);
+		printf("%s ",input[i++]);
 	printf("\n");
 	parsed = parser(&parsed, input);
 	if (!parsed)

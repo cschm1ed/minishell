@@ -14,15 +14,15 @@
 
 int main(int argc, char **argv, char **env)
 {
-    t_commands  commands;
-	// t_info      info;
+    t_info      *info;
 
-	// if (info_init(env) == NULL)
-	// 	return (1);
+    info = info_init(env);
+    if (info == NULL)
+      return (1);
     while (1)
     {
-        commands.raw = ft_readline("minishell: ");
-        commands.lexed = lexer(commands.raw);
+        info->commands->raw = ft_readline("minishell: ");
+        info->commands->lexed = lexer(commands.raw);
         // if (commands.lexed)
         // {
 		//     commands.parsed = parser(&commands.parsed, commands.lexed);

@@ -38,10 +38,10 @@ typedef struct s_info		t_info;
 
 typedef struct s_info
 {
-	t_variable	*var_lst;
-	t_commands	*commands;
-	int			exit_code;
-}	t_info;
+	t_list      *var_lst;
+	t_commands  *commands;
+	int         exit_code;
+}   t_info;
 
 typedef struct s_parsed
 {
@@ -51,7 +51,6 @@ typedef struct s_parsed
 	char		*redirect_output;
 	char		*delimiter;
 	int			append_mode;
-	int			pipe;
 	t_parsed	*next;
 }	t_parsed;
 
@@ -74,8 +73,11 @@ typedef struct s_history
 	t_history	*next;
 }	t_history;
 
-t_parsed	*parser(t_parsed **parsed, char **lexed);
-char		**lexer(char *cmd);
+// inits
+t_info      *info_init(char **env);
+
+// parser
+t_parsed    *parser(t_parsed **parsed, char **lexed);
 
 // utils
 char		*ft_readline(const char *str);
@@ -83,26 +85,23 @@ int			ft_isspace(char c);
 int			ft_isquote(char c);
 int			ft_isspecial(char c);
 int			ft_isredirect(char c);
-char		**str_arr_add(char ***arr, char *toadd);
+char		**str_arr_add(char **arr, char *toadd);
+
 // tests
-void		print_parsed(t_parsed *parsed);
+void		        print_parsed(t_parsed *parsed);
 int			test_parser(void);
+
 // lexer/lexer_checks.c
 int			even_num_of_quotes(char *s);
 int			valid_quotes(char **substr);
 int			valid_num_of_specials(char **substr);
+
 // lexer/lexer_utils.c
 int			count_substrs(char *s);
 int			locate_substr(char *s, size_t *start, size_t *end);
-// lexer/lexer.c
-char		**lexer(char *cmd);
-// lexer/lexer_checks.c
-int			valid_num_of_quotes(char *cmd);
-int			valid_num_of_specials(char **lxd);
-// lexer/lexer_utils.c
-int			count_substrs(char *cmd);
-int			locate_substr(char *cmd, size_t *start, size_t *end);
+
 // lexer/lexer.c
 char		**lexer(char *cmd);
 
 #endif
+

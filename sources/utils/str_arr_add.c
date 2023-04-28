@@ -20,33 +20,30 @@
  * @return char** 
  */
 
-char	**str_arr_add(char ***array, char *toadd)
+char	**str_arr_add(char **array, char *toadd)
 {
 	int		size;
 	int		j;
-	char    **new;
-	char    **arr;
+	char	**new;
 
 	j = 0;
 	size = 0;
-	arr = *array;
-	if (!arr)
-		arr = ft_calloc(sizeof(char*), 2);
-	if (!arr)
+	if (!array)
+	{
+		array = ft_calloc(sizeof(char *), 2);
+		if (!array)
 			return (perror("malloc"), NULL);
+		return (array);
+	}
 	if (!toadd)
-		return (*array);
-	while (arr[size])
+		return (array);
+	while (array[size])
 		size ++;
-	new = ft_calloc(sizeof(char*), (size + 2));
+	new = ft_calloc(sizeof(char *), (size + 2));
 	if (!new)
 		return (perror("malloc"), NULL);
-	while (arr[j])
-	{
-		new[j] = arr[j];
-		j ++;
-	}
+	ft_memmove(new, array, sizeof(char *) * size);
 	new[j] = toadd;
-	free(*array);
+	free(array);
 	return (new);
 }
