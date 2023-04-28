@@ -6,7 +6,7 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/28 12:15:51 by lspohle          ###   ########.fr        #
+#    Updated: 2023/04/28 16:59:02 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,11 @@ OBJS			:= ${SRCS:.c=.o}
 
 CC				:= cc
 
-CFLAGS			:= -g -Wall -Wextra -Werror -O2
+CFLAGS			:= -g -Wall -Wextra -O2
+# CFLAGS			:= -g -Wall -Wextra -Werror -O2
 
-LDFLAGS			:= -Wall -Werror -Wextra -g -lreadline
+LDFLAGS			:= -Wall -Wextra -g -lreadline
+# LDFLAGS			:= -Wall -Werror -Wextra -g -lreadline
 
 RM				:= rm -f
 

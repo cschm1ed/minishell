@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 14:51:39 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:23:58 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	count_substrs(char *cmd)
 	cnt = 1;
 	while (cmd[++i])
 	{
-		if (cmd[i] == ' ' || ft_isspecial(cmd[i]) || ft_isspecial(cmd[i - 1]))
+		if (ft_isspace(cmd[i])
+			|| ft_isspecial(cmd[i]) || ft_isspecial(cmd[i - 1]))
 		{
 			skip_specials(cmd, &i);
 			skip_until_delimiter(cmd, &i, cmd[i]);
@@ -50,7 +51,7 @@ int	count_substrs(char *cmd)
  */
 int	locate_substr(char *cmd, size_t *start, size_t *end)
 {
-	while (cmd[(*start)] && cmd[(*start)] == ' ')
+	while (cmd[(*start)] && ft_isspace(cmd[(*start)]))
 		(*start)++;
 	(*end) = (*start);
 	while (cmd[(*end)] && ft_isspecial(cmd[(*end)]))
@@ -64,9 +65,7 @@ int	locate_substr(char *cmd, size_t *start, size_t *end)
 		return (TRUE);
 	}
 	else
-	{
 		skip_until_delimiter(cmd, end, ' ');
-	}		
 	return (FALSE);
 }
 
@@ -80,9 +79,9 @@ static void	skip_specials(char *cmd, size_t *i)
 {
 	if (ft_isquote(cmd[*i]))
 		(*i)++;
-	while ((cmd[*i+ 1] != 0 && cmd[*i] == ' ')
-		|| (cmd[*i+ 1] != 0 && ft_isspecial(cmd[*i])
-		&& ft_isspecial(cmd[*i + 1])))
+	while ((cmd[*i + 1] != 0 && ft_isspace(cmd[*i]))
+		|| (cmd[*i + 1] != 0 && ft_isspecial(cmd[*i])
+			&& ft_isspecial(cmd[*i + 1])))
 		(*i)++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 13:10:18 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:16:14 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ static int	check_special(char **str, int *i, t_parsed *info)
 		info->append_mode = TRUE;
 		return (SUCCESS);
 	}
-	else if (ft_strncmp((str[*i], "=", 2) == 0)
-	{
-
-	}
+	// else if (ft_strncmp((str[*i], "=", 2) == 0))
+	// {
+	// 	(void);
+	// }
 	else if (ft_strncmp(str[*i], "<<", 3) == 0)
 	{
 		*i += 1;

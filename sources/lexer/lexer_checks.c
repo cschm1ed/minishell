@@ -6,13 +6,13 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 14:45:44 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:53:38 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int count_specials(char *lxd, int *i, char c);
+static int	count_specials(char *lxd, int *i, char c);
 
 /**
  * @brief checks if the user's cmd contains an even number of quotation marks
@@ -77,9 +77,9 @@ int	valid_num_of_specials(char **lxd)
  * @param c special character
  * @return int 
  */
-static int count_specials(char *lxd, int *i, char c)
+static int	count_specials(char *lxd, int *i, char c)
 {
-	int cnt;
+	int	cnt;
 
 	cnt = 0;
 	while (lxd[(*i)] && lxd[(*i)++] == c)

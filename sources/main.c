@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 11:23:07 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 16:56:31 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int main(int argc, char **argv, char **env)
 {
     t_commands  commands;
-	t_info      info;
+	// t_info      info;
 
-	if (info_init(env) == NULL)
-		return (1);
+	// if (info_init(env) == NULL)
+	// 	return (1);
     while (1)
     {
         commands.raw = ft_readline("minishell: ");

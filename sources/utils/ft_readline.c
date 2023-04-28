@@ -6,13 +6,13 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:42:12 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/25 13:24:55 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/04/28 17:27:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-static int  str_isspace(char *str);
+static int	str_isspace(char *str);
 
 /**
  * @brief - ft_readline reads one line from stdin and adds it to history
@@ -22,28 +22,25 @@ static int  str_isspace(char *str);
  * @return char* - returns the line read
  */
 
-char    *ft_readline(const char *str)
+char	*ft_readline(const char *str)
 {
-    char    *tmp;
+	char	*tmp;
 
-    tmp = readline(str);
-    if (tmp && str_isspace(tmp) == FAILURE)
-        add_history(tmp);
-    return (tmp);
+	tmp = readline(str);
+	if (tmp && !str_isspace(tmp))
+		add_history(tmp);
+	return (tmp);
 }
 
-static int  str_isspace(char *str)
+static int	str_isspace(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!str)
-        return (SUCCESS);
-    while (str[i])
-    {
-        if (ft_isspace(str[i]) == FAILURE)
-            return (FAILURE);
-        i ++;
-    }
-    return (SUCCESS);
+	i = -1;
+	if (!str)
+		return (SUCCESS);
+	while (str[++i])
+		if (!ft_isspace(str[i]))
+			return (FALSE);
+	return (TRUE);
 }
