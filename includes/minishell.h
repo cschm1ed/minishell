@@ -103,9 +103,10 @@ int			locate_substr(char *s, size_t *start, size_t *end);
 // lexer/lexer.c
 char		**lexer(char *cmd);
 
-// bultin/pwd.c
+// bultins
 void		execute_pwd(char **envp);
 void		execute_echo(void);
+void		builtin_env(t_info *info);
 
 #endif
 

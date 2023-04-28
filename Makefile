@@ -16,11 +16,11 @@ NAME			:= minishell
 				
 LIBFT			:= libft
 
-UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c
+UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 
-SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c pwd.c echo.c
+SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c pwd.c echo.c env.c
 
 OBJS			:= ${SRCS:.c=.o}
 

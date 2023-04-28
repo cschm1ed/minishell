@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static t_list	*var_list_init(char **env);
 
@@ -51,6 +51,7 @@ static t_list	*var_list_init(char **env)
 	int			i;
 
 	i = 0;
+	ret = NULL;
 	while (env[i])
 	{
 		split = ft_split(env[i], '=');
