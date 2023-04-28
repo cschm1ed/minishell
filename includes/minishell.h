@@ -28,50 +28,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+
 # include "colors.h"
-
-typedef struct s_parsed		t_parsed;
-typedef struct s_commands	t_commands;
-typedef struct s_history	t_history;
-typedef struct s_variable	t_variable;
-typedef struct s_info		t_info;
-
-typedef struct s_info
-{
-	t_list      *var_lst;
-	t_commands  *commands;
-	int         exit_code;
-}   t_info;
-
-typedef struct s_parsed
-{
-	char		*cmd;
-	char		**args;
-	char		*redirect_input;
-	char		*redirect_output;
-	char		*delimiter;
-	int			append_mode;
-	t_parsed	*next;
-}	t_parsed;
-
-typedef struct s_variable
-{
-	char		*name;
-	char		*value;
-}	t_variable;
-
-typedef struct s_commands
-{
-	char		*raw;
-	char		**lexed;
-	t_parsed	*parsed;
-}	t_commands;
-
-typedef struct s_history
-{
-	char		*cmd;
-	t_history	*next;
-}	t_history;
+# include "structs.h"
 
 // inits
 t_info      *info_init(char **env);
@@ -86,6 +45,9 @@ int			ft_isquote(char c);
 int			ft_isspecial(char c);
 int			ft_isredirect(char c);
 char		**str_arr_add(char **arr, char *toadd);
+void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
+void		delete_variable(void *content);
+int			var_lst_add(t_list *list, char **arg);
 
 // tests
 void		print_parsed(t_parsed *parsed);
@@ -107,6 +69,7 @@ char		**lexer(char *cmd);
 void		execute_pwd(char **envp);
 void		execute_echo(void);
 void		builtin_env(t_info *info);
+int			export(t_info *info, char **arg);
 
 #endif
 

@@ -16,7 +16,8 @@ NAME			:= minishell
 				
 LIBFT			:= libft
 
-UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c
+UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
+					ft_lstrmone.c delete_variable.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 

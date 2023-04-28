@@ -30,8 +30,8 @@ t_info	*info_init(char **env)
 	info = ft_calloc(sizeof(t_info), 1);
 	if (info == NULL)
 		return (NULL);
-	info->var_lst = var_list_init(env);
-	if (info->var_lst == NULL)
+	info->env_lst = var_list_init(env);
+	if (info->env_lst == NULL)
 		return (NULL);
 	return (info);
 }
@@ -45,26 +45,10 @@ t_info	*info_init(char **env)
  */
 static t_list	*var_list_init(char **env)
 {
-	char		**split;
-	t_variable	*var;
 	t_list		*ret;
-	int			i;
 
-	i = 0;
 	ret = NULL;
-	while (env[i])
-	{
-		split = ft_split(env[i], '=');
-		if (!split)
-			return (perror("malloc"), NULL);
-		var = ft_calloc(sizeof(t_variable), 1);
-		if (!var)
-			return (perror("malloc"), NULL);
-		var->name = ft_strdup(split[0]);
-		var->value = ft_strdup(split[1]);
-		ft_free_dbl_ptr(split);
-		ft_lstadd_back(&ret, ft_lstnew((void *)var));
-		i ++;
-	}
+	if (var_lst_add(&ret, env) == FAILURE)
+		return (ft_lstclear(&ret, delete_variable), NULL);
 	return (ret);
 }
