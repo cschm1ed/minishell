@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer
+VPATH			:= sources:sources/utils:sources/lexer:sources/parser
 
 NAME			:= minishell
 				

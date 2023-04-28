@@ -99,5 +99,15 @@ int	        locate_substr(char *s, size_t *start, size_t *end);
 // lexer/lexer.c
 char	    **lexer(char *cmd);
 
+// lexer/lexer_checks.c
+int	        even_num_of_quotes(char *s);
+int         valid_quotes(char **substr);
+int	        valid_num_of_specials(char **substr);
+// lexer/lexer_utils.c
+int	        count_substrs(char *s);
+int	        locate_substr(char *s, size_t *start, size_t *end);
+// lexer/lexer.c
+char	    **lexer(char *cmd);
+
 #endif
 

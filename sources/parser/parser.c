@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	check_special(char **str, int *i, t_parsed *cmd_info);
 
@@ -29,7 +29,6 @@ static int	check_special(char **str, int *i, t_parsed *cmd_info);
  * one struct per command.
  * @return - parser() returns a linked list of commands and their context.
  */
-
 t_parsed	*parser(t_parsed **parsed, char **lexed)
 {
 	int			first;
@@ -81,7 +80,6 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
  * adjust i accordingly.
  * @return int 
  */
-
 static int	check_special(char **str, int *i, t_parsed *info)
 {
 	if (ft_strncmp(str[*i], ">", 2) == 0)
