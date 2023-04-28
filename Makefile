@@ -6,11 +6,11 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/28 16:59:02 by lspohle          ###   ########.fr        #
+#    Updated: 2023/04/28 21:03:11 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer:sources/parser
+VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtin
 
 NAME			:= minishell
 				
@@ -20,7 +20,7 @@ UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 
-SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c
+SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c pwd.c echo.c
 
 OBJS			:= ${SRCS:.c=.o}
 
