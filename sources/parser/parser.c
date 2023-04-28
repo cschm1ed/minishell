@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	check_special(char **str, int *i, t_parsed *cmd_info);
 
@@ -23,13 +23,12 @@ static int	check_special(char **str, int *i, t_parsed *cmd_info);
  * Iterates through the tokens the lexer created. 
  * If a special token (specified in check_special) is recognized it will be 
  * handled by an appropriate function.
- * The first non speial token is interpreted as the command, other tokens will be 
+ * The first non special token is interpreted as the command, other tokens will be
  * interpreted as arguments of the command.
- * The function will only read till a pipe operator and create one struct per
- * command.
+ * The function will only read till a pipe operator or semicolon and create
+ * one struct per command.
  * @return - parser() returns a linked list of commands and their context.
  */
-
 t_parsed	*parser(t_parsed **parsed, char **lexed)
 {
 	int			first;
@@ -44,8 +43,10 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
 	{
 		if (check_special(lexed, &i, *parsed) == FAILURE)
 		{
-			if (lexed[i][0] == '|')
+			if (lexed[i][0] == '|' || lexed[i][0] == ';')
 			{
+				if (lexed[i][0] == ';')
+					(*parsed)->pipe = TRUE;
 				if (parser(&((*parsed)->next), &lexed[i + 1]) == NULL)
 					return (NULL);
 				return (*parsed);
@@ -97,6 +98,10 @@ static int	check_special(char **str, int *i, t_parsed *info)
 	{
 		info->append_mode = TRUE;
 		return (SUCCESS);
+	}
+	else if (ft_strncmp((str[*i], "=", 2) == 0)
+	{
+
 	}
 	else if (ft_strncmp(str[*i], "<<", 3) == 0)
 	{

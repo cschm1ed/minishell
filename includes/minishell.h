@@ -33,6 +33,15 @@
 typedef struct s_parsed t_parsed;
 typedef struct s_commands t_commands;
 typedef struct s_history t_history;
+typedef struct s_variable t_variable;
+typedef struct s_info t_info;
+
+typedef struct s_info
+{
+	t_variable  *var_lst;
+	t_commands  *commands;
+	int         exit_code;
+}   t_info;
 
 typedef struct s_parsed
 {
@@ -42,8 +51,15 @@ typedef struct s_parsed
     char        *redirect_output;
     char        *delimiter;
     int         append_mode;
+	int         pipe;
     t_parsed    *next;
 }   t_parsed;
+
+typedef struct s_variable
+{
+	char        *name;
+	char        *value;
+}   t_variable;
 
 typedef struct s_commands
 {
@@ -72,8 +88,18 @@ int     	ft_isredirect(char c);
 char	    **str_arr_add(char ***arr, char *toadd);
 
 // tests
-void	    print_parsed(t_parsed *parsed);
-int		    test_parser();
+void	print_parsed(t_parsed *parsed);
+int		test_parser();
+
+// lexer/lexer_checks.c
+int	        even_num_of_quotes(char *s);
+int         valid_quotes(char **substr);
+int	        valid_num_of_specials(char **substr);
+// lexer/lexer_utils.c
+int	        count_substrs(char *s);
+int	        locate_substr(char *s, size_t *start, size_t *end);
+// lexer/lexer.c
+char	    **lexer(char *cmd);
 
 // lexer/lexer_checks.c
 int	        valid_num_of_quotes(char *cmd);

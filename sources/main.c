@@ -12,10 +12,13 @@
 
 #include "../includes/minishell.h"
 
-int main()
+int main(int argc, char **argv, char **env)
 {
     t_commands  commands;
+	t_info      info;
 
+	if (info_init(env) == NULL)
+		return (1);
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
