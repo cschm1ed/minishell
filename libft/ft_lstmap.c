@@ -3,58 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 09:40:42 by lspohle           #+#    #+#             */
-/*   Updated: 2022/12/29 19:08:14 by lspohle          ###   ########.fr       */
+/*   Created: 2022/12/17 19:42:45 by cschmied          #+#    #+#             */
+/*   Updated: 2023/04/14 17:13:32 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Note
-//  Prototyped as
-//  t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
-//  -> lst: the address of a pointer to a node
-//  -> f: the address of the function used to iterate on the list
-//  -> del : the address of the function used to delete the content of a node
-//     if needed
-//  -> iterates the list 'lst' and applies the function 'f' on the content of
-//     each node
-//  -> creates a new list resulting of the successive applications of
-//     the function ’f’
-//  -> the ’del’ function is used to delete the content of a node if needed
-//  -> the memory of ’next’ must not be freed
-//  -> external functs: malloc, free
-//  -> return: the new list
-//             NULL if allocation fails
+// The function ft_lstmap() iterates the linked-list 'lst', and creates a new
+// list resulting of the successive applications of the function 'f' to the
+// content of each node.
 
 #include "libft.h"
 
-// Iterates 'lst' and applies 'f' on the content of each node
-// Creates new list resulting of successive applications of ’f’
-// ’del’ is used to delete the content of a node if needed
-// Returns the new list
-// Returns NULL if allocation failed
+static t_list	*delete_node(t_list *node, t_list *head, void (*del)(void *))
+{
+	t_list	*tmp;
+
+	while (head != node)
+	{
+		del(head->content);
+		tmp = head;
+		ft_lstdelone(head, del);
+		head = tmp->next;
+	}
+	del(node->content);
+	ft_lstdelone(node, del);
+	return (NULL);
+}
+
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*head;
-	t_list	*new;
-	void	*replacement;
+	t_list	*node;
 
-	head = NULL;
-	while (lst != NULL)
+	if (!lst)
+		return (NULL);
+	head = ft_lstnew(f(lst->content));
+	if (!head)
 	{
-		new = (t_list *) malloc (sizeof(t_list));
-		if (new == NULL)
-		{
-			ft_lstclear(&head, del);
-			free(head);
-			return (NULL);
-		}
-		replacement = f(lst->content);
-		new->content = replacement;
-		ft_lstadd_back(&head, new);
+		del(head->content);
+		ft_lstdelone(head, del);
+		return (NULL);
+	}
+	lst = lst->next;
+	while (lst)
+	{
+		node = ft_lstnew(f(lst->content));
+		if (!node)
+			return (delete_node(node, head, del));
+		ft_lstadd_back(&head, node);
 		lst = lst->next;
-		new->next = NULL;
 	}
 	return (head);
 }
