@@ -49,8 +49,8 @@ void	handle_keybindings(int signum)
 {
 	if (signum == SIGINT)
 	{
-		rl_replace_line("", 0);
+		printf("ctrl+c"\n)
 	}
 	else if (signum == SIGQUIT)
-		ft_printf("ctrl+ backslash");
+		ft_printf("ctrl+backslash\n");
 }
