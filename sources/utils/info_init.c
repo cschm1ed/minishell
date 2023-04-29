@@ -48,7 +48,7 @@ static t_list	*var_list_init(char **env)
 	t_list		*ret;
 
 	ret = NULL;
-	if (var_lst_add(&ret, env) == FAILURE)
+	if (var_lst_add(ret, env) == FAILURE)
 		return (ft_lstclear(&ret, delete_variable), NULL);
 	return (ret);
 }

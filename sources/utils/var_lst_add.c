@@ -16,7 +16,7 @@ int	var_lst_add(t_list *list, char **arg)
 {
 	t_variable	*var;
 	char		**split;
-	int 		i;
+	int			i;
 
 	i = 0;
 	while (arg[i])

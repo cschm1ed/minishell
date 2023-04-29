@@ -21,9 +21,9 @@ typedef struct s_info		t_info;
 
 typedef struct s_info
 {
-	t_list      *env_lst;
-	t_commands  *commands;
-	int         exit_code;
+	t_list		*env_lst;
+	t_commands	*commands;
+	int			exit_code;
 }   t_info;
 
 typedef struct s_parsed
@@ -32,7 +32,7 @@ typedef struct s_parsed
 	char		**args;
 	char		*redirect_input;
 	char		*redirect_output;
-	char		*delimiter;
+	char 		*delimiter;
 	int			append_mode;
 	t_parsed	*next;
 }	t_parsed;

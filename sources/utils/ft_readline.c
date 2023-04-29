@@ -24,7 +24,7 @@ static int	str_isspace(char *str);
 
 char	*ft_readline(const char *str)
 {
-	char	*tmp;
+	char *tmp;
 
 	tmp = readline(str);
 	if (tmp && !str_isspace(tmp))
@@ -43,4 +43,14 @@ static int	str_isspace(char *str)
 		if (!ft_isspace(str[i]))
 			return (FALSE);
 	return (TRUE);
+}
+
+void	handle_keybindings(int signum)
+{
+	if (signum == SIGINT)
+	{
+		rl_replace_line("", 0);
+	}
+	else if (signum == SIGQUIT)
+		ft_printf("ctrl+ backslash");
 }

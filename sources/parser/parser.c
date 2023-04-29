@@ -43,7 +43,8 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
 	{
 		if (check_special(lexed, &i, *parsed) == FAILURE)
 		{
-			if (lexed[i][0] == '|' || lexed[i][0] == ';') {
+			if (lexed[i][0] == '|' || lexed[i][0] == ';')
+			{
 				if (parser(&((*parsed)->next), &lexed[i + 1]) == NULL)
 					return (NULL);
 				return (*parsed);

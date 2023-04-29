@@ -12,7 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-static void	print_sorted_lst(t_info *info);
+static int	print_sorted_lst(t_info *info);
+static char	*cpy_lst_to_array(t_list *lst);
+static void	bubble_sort_str_array(char *array, int len);
 
 int	export(t_info *info, char **arg)
 {
@@ -20,16 +22,70 @@ int	export(t_info *info, char **arg)
 
 	i = 0;
 	if (arg == NULL)
-	{
-		print_sorted_lst(info);
-		return (SUCCESS);
-	}
+		return (print_sorted_lst(info));
 	return (var_lst_add(info->env_lst, arg)
 }
 
-static void	print_sorted_lst(t_info *info)
+static char	*cpy_lst_to_array(t_list *lst)
 {
-	t_info	*cpy;
+	int		i;
+	char	*arr;
 
+	i = 0;
+	arr = ft_calloc(sizeof(char*), ft_lstsize(lst) + 1);
+	if (!arr)
+		return (perror("malloc"), NULL);
+	while (i < ft_lstsize(lst))
+	{
+		arr[i] = lst_get_var(lst)->name;
+		i ++;
+		lst = lst->next;
+	}
+	return (arr);
+}
 
+static void	bubble_sort_str_array(char *array, int len)
+{
+	int 	i;
+	int		j;
+	char 	*tmp;
+
+	i = 0;
+	while (i < len)
+	{
+		j = 0;
+		while (j < len - 1)
+		{
+			if (ft_strncmp(array[j], array[j + 1], ft_strlen(array[j])) > 0)
+			{
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;
+			}
+			j ++;
+		}
+		i ++;
+	}
+}
+
+static int	print_sorted_lst(t_info *info)
+{
+	int 	i;
+	char 	*array;
+	t_list	*ptr;
+
+	i = 0;
+	array = cpy_lst_to_array(info->env_lst);
+	if (!array)
+		return (FAILURE);
+	bubble_sort_str_array(array, ft_lstsize(lst));
+	while (i < ft_lstsize(info->env_lst))
+	{
+		ptr = info->env_lst;
+		while (ft_strncmp(lst_get_var(ptr)->name, array[i], ft_strlen(array[i])) != 0)
+			ptr = ptr->next;
+		printf("declare -x %s=%s\n", lst_get_var(ptr)->name, lst_get_var(ptr)->value);
+		i ++;
+	}
+	return (SUCCESS);
 }

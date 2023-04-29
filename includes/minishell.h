@@ -32,11 +32,13 @@
 # include "colors.h"
 # include "structs.h"
 
+void rl_replace_line (const char *text, int clear_undo);
+
 // inits
-t_info      *info_init(char **env);
+t_info		*info_init(char **env);
 
 // parser
-t_parsed    *parser(t_parsed **parsed, char **lexed);
+t_parsed	*parser(t_parsed **parsed, char **lexed);
 
 // utils
 char		*ft_readline(const char *str);
@@ -48,6 +50,10 @@ char		**str_arr_add(char **arr, char *toadd);
 void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
 void		delete_variable(void *content);
 int			var_lst_add(t_list *list, char **arg);
+t_variable	*lst_get_var(t_list *lst);
+
+// signals
+void		handle_keybindings(int signum);
 
 // tests
 void		print_parsed(t_parsed *parsed);
@@ -72,4 +78,3 @@ void		builtin_env(t_info *info);
 int			export(t_info *info, char **arg);
 
 #endif
-

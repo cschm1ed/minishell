@@ -12,8 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-void    execute_exit(void)
+void    execute_exit(t_info *info)
 {
     // free
+	(void)info;
     exit(0);
 }

@@ -21,8 +21,8 @@ void	unset(t_info *info, char **arg)
 	while (arg[i])
 	{
 		ptr = info->env_lst;
-		while (ptr && ft_strncmp(((t_variable*)(ptr->content))->name,
-								 arg[i], ft_strlen(arg[i]) + 1) != 0)
+		while (ptr && ft_strncmp(lst_get_var(ptr)->name, arg[i],
+								 ft_strlen(arg[i]) + 1) != 0)
 			ptr = ptr->next;
 		ft_lstrmone(&(info->env_lst), ptr, delete_variable);
 		i++;
