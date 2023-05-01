@@ -3,35 +3,40 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
+#    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/04/28 21:59:40 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/01 12:06:45 by cschmied         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins
 
+BUILDDIR		:= build
+
 NAME			:= minishell
 				
-LIBFT			:= libft
+LIBFTDIR		:= libft
+
+LIBFT			:= libft.a
 
 UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
-					ft_lstrmone.c delete_variable.c
+					ft_lstrmone.c delete_variable.c var_lst_add.c lst_get_var.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 
-SRCS			:= $(UTILS) $(LEXER) main.c parser.c ft_readline.c pwd.c echo.c env.c
+BUILTINS		:= echo.c env.c pwd.c export.c
 
-OBJS			:= ${SRCS:.c=.o}
+SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) parser.c ft_readline.c main.c
+
+OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
 
 CC				:= cc
 
 CFLAGS			:= -g -Wall -Wextra -O2
 # CFLAGS			:= -g -Wall -Wextra -Werror -O2
 
-LDFLAGS			:= -Wall -Wextra -g -lreadline
-# LDFLAGS			:= -Wall -Werror -Wextra -g -lreadline
+LDFLAGS			:= -lreadline -g -Wall -Wextra
 
 RM				:= rm -f
 
@@ -44,31 +49,34 @@ BLUE			:= \033[0;34m
 MAGENTA			:= \033[0;35m
 ESCAPE			:= \033[0m
 
-%.o: %.c		
-				@${CC} $(CFLAGS) -c $^ -o $@
+$(BUILDDIR)/%.o: %.c $(BUILDDIR)
+				@${CC} $(CFLAGS) -c $< -o $@
 
 ${NAME}:		${OBJS} ${LIBFT}/libft.a
-				@${CC} ${LDFLAGS} ${OBJS} -L ${LIBFT} -lft -o ${NAME}
-				@echo "${GREEN}******************  COMPILED  *******************${ESCAPE}"
-				@echo "${BLUE}********* WE GOT THIS! TEAM COMPETENCE! *********${ESCAPE}"
+				@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
+				@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
+				@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
 
 
 ${LIBFT}/libft.a:
-				@echo "${YELLOW}******************  COMPILING  ******************${ESCAPE}"
-				@$(MAKE) bonus -C ${LIBFT}		
+				@echo "$(YELLOW)******************  COMPILING  ******************$(ESCAPE)"
+				@$(MAKE) bonus -C $(LIBFTDIR)
 
-all:			${NAME}
+$(BUILDDIR):
+				@mkdir $(BUILDDIR)
 
-clean:	
-				@${RM} ${OBJS}
-				@${RM} ${BOBJS}
-				@$(MAKE) clean -C ${LIBFT}
-				@echo "${GREEN}*******************  CLEANED  *******************${ESCAPE}"
+all:			$(NAME)
+
+clean:
+				@$(RM) -rf $(BUILDDIR)
+				@$(MAKE) clean -C $(LIBFTDIR)
+				@echo "$(GREEN)*******************  CLEANED  *******************$(ESCAPE)"
 
 fclean:			clean
-				@${RM} ${NAME}
-				@$(MAKE) fclean -C ${LIBFT}
+				@$(RM) $(NAME)
+				@$(MAKE) fclean -C $(LIBFTDIR)
 
 re:				fclean all
 
 .PHONY:			all clean fclean re
+
