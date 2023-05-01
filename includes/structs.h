@@ -22,6 +22,7 @@ typedef struct s_info		t_info;
 typedef struct s_info
 {
 	t_list		*env_lst;
+	t_list		*user_vars;
 	t_commands	*commands;
 	int			exit_code;
 }   t_info;

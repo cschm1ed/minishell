@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-int	var_lst_add(t_list *list, char **arg)
+int	var_lst_add(t_list **list, char **arg)
 {
 	t_variable	*var;
 	char		**split;
@@ -30,7 +30,8 @@ int	var_lst_add(t_list *list, char **arg)
 		var->name = ft_strdup(split[0]);
 		var->value = ft_strdup(split[1]);
 		ft_free_dbl_ptr(split);
-		ft_lstadd_back(&list, ft_lstnew((void *)var));
+		ft_lstadd_back(list, ft_lstnew((void *)(var)));
 		i ++;
 	}
+	return (SUCCESS);
 }

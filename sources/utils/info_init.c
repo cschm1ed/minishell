@@ -29,7 +29,7 @@ t_info	*info_init(char **env)
 
 	info = ft_calloc(sizeof(t_info), 1);
 	if (info == NULL)
-		return (NULL);
+		return (perror("malloc"), NULL);
 	info->env_lst = var_list_init(env);
 	if (info->env_lst == NULL)
 		return (NULL);
@@ -48,7 +48,7 @@ static t_list	*var_list_init(char **env)
 	t_list		*ret;
 
 	ret = NULL;
-	if (var_lst_add(ret, env) == FAILURE)
+	if (var_lst_add(&ret, env) == FAILURE)
 		return (ft_lstclear(&ret, delete_variable), NULL);
 	return (ret);
 }

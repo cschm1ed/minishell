@@ -49,7 +49,7 @@ int			ft_isredirect(char c);
 char		**str_arr_add(char **arr, char *toadd);
 void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
 void		delete_variable(void *content);
-int			var_lst_add(t_list *list, char **arg);
+int			var_lst_add(t_list **list, char **arg);
 t_variable	*lst_get_var(t_list *lst);
 
 // signals

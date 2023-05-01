@@ -14,5 +14,5 @@
 
 t_variable	*lst_get_var(t_list *lst)
 {
-	return (((t_variable*)lst)->content);
+	return ((t_variable*)(lst->content));
 }

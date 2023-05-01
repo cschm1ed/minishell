@@ -13,29 +13,28 @@
 #include "../../includes/minishell.h"
 
 static int	print_sorted_lst(t_info *info);
-static char	*cpy_lst_to_array(t_list *lst);
-static void	bubble_sort_str_array(char *array, int len);
+static char	**cpy_lst_to_array(t_list *lst);
+static void	bubble_sort_str_array(char **array, int len);
 
 int	export(t_info *info, char **arg)
 {
-	int i;
-
-	i = 0;
 	if (arg == NULL)
 		return (print_sorted_lst(info));
-	return (var_lst_add(info->env_lst, arg)
+	return (var_lst_add(&(info->env_lst), arg));
 }
 
-static char	*cpy_lst_to_array(t_list *lst)
+static char	**cpy_lst_to_array(t_list *lst)
 {
 	int		i;
-	char	*arr;
+	char	**arr;
+	int		len;
 
 	i = 0;
 	arr = ft_calloc(sizeof(char*), ft_lstsize(lst) + 1);
 	if (!arr)
 		return (perror("malloc"), NULL);
-	while (i < ft_lstsize(lst))
+	len = ft_lstsize(lst);
+	while (i < len)
 	{
 		arr[i] = lst_get_var(lst)->name;
 		i ++;
@@ -44,7 +43,7 @@ static char	*cpy_lst_to_array(t_list *lst)
 	return (arr);
 }
 
-static void	bubble_sort_str_array(char *array, int len)
+static void	bubble_sort_str_array(char **array, int len)
 {
 	int 	i;
 	int		j;
@@ -71,14 +70,15 @@ static void	bubble_sort_str_array(char *array, int len)
 static int	print_sorted_lst(t_info *info)
 {
 	int 	i;
-	char 	*array;
+	char 	**array;
 	t_list	*ptr;
 
 	i = 0;
 	array = cpy_lst_to_array(info->env_lst);
 	if (!array)
 		return (FAILURE);
-	bubble_sort_str_array(array, ft_lstsize(lst));
+	i = 0;
+	bubble_sort_str_array(array, ft_lstsize(info->env_lst));
 	while (i < ft_lstsize(info->env_lst))
 	{
 		ptr = info->env_lst;

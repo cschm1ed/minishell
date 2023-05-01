@@ -36,9 +36,16 @@
 int main(int argc, char **argv, char **envp)
 {
 	t_commands  commands;
+	t_info		*info;
 	// char *cmd = "echo";
 	// char *args[] = {"Hello", "World", "Kein", "Ding", NULL};
-	
+
+	signal(SIGINT, handle_keybindings);
+	signal(SIGQUIT, handle_keybindings);
+	info = info_init(envp);
+	if (!info)
+		return (printf("info error\n"), 1);
+	export(info, NULL);
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
