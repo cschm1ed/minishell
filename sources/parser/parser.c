@@ -29,7 +29,7 @@ static int	check_special(char **str, int *i, t_parsed *cmd_info);
  * one struct per command.
  * @return - parser() returns a linked list of commands and their context.
  */
-t_parsed	*parser(t_parsed **parsed, char **lexed)
+t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed)
 {
 	int			first;
 	int			i;
@@ -45,7 +45,7 @@ t_parsed	*parser(t_parsed **parsed, char **lexed)
 		{
 			if (lexed[i][0] == '|' || lexed[i][0] == ';')
 			{
-				if (parser(&((*parsed)->next), &lexed[i + 1]) == NULL)
+				if (parser(info, &((*parsed)->next), &lexed[i + 1]) == NULL)
 					return (NULL);
 				return (*parsed);
 			}
@@ -121,7 +121,7 @@ int	test_parser(void)
 	while (input[i])
 		printf("%s ",input[i++]);
 	printf("\n");
-	parsed = parser(&parsed, input);
+	parsed = parser(NULL, &parsed, input);
 	if (!parsed)
 		return (FAILURE);
 	print_parsed(parsed);

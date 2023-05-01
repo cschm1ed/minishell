@@ -34,7 +34,6 @@ OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
 CC				:= cc
 
 CFLAGS			:= -g -Wall -Wextra -O2
-# CFLAGS			:= -g -Wall -Wextra -Werror -O2
 
 LDFLAGS			:= -lreadline -g -Wall -Wextra
 
@@ -52,7 +51,7 @@ ESCAPE			:= \033[0m
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
 				@${CC} $(CFLAGS) -c $< -o $@
 
-${NAME}:		${OBJS} ${LIBFT}/libft.a
+${NAME}:		${OBJS} ${LIBFT}/$(LIBFT)
 				@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
 				@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
 				@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"

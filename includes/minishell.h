@@ -38,7 +38,7 @@ void rl_replace_line (const char *text, int clear_undo);
 t_info		*info_init(char **env);
 
 // parser
-t_parsed	*parser(t_parsed **parsed, char **lexed);
+t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed);
 
 // utils
 char		*ft_readline(const char *str);
