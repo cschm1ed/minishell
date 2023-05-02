@@ -15,11 +15,24 @@
 static int	print_sorted_lst(t_info *info);
 static char	**cpy_lst_to_array(t_list *lst);
 static void	bubble_sort_str_array(char **array, int len);
+static int	check_if_arg_is_valid(char *arg);
 
 int	export(t_info *info, char **arg)
 {
+	int i;
+
+	i = 0;
 	if (arg == NULL)
 		return (print_sorted_lst(info));
+	while (arg[i])
+	{
+		if (check_if_arg_is_valid(*arg) == FALSE)
+		{
+			printf("minishell: export: '%s': not a valid identifier\n", arg[i]);
+			return (FAILURE);
+		}
+		i ++;
+	}
 	return (var_lst_add(&(info->env_lst), arg));
 }
 
@@ -88,4 +101,22 @@ static int	print_sorted_lst(t_info *info)
 		i ++;
 	}
 	return (SUCCESS);
+}
+
+static int check_if_arg_is_valid(char *str)
+{
+	int i;
+
+	i = 0;
+	if (ft_isalpha(str[0]) == FALSE
+		&& str[i] != '_')
+		return (FALSE);
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == FALSE
+			&& str[i] != '_')
+			return (FALSE);
+		i ++;
+	}
+	return (TRUE);
 }

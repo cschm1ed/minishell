@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspecial.c                                     :+:      :+:    :+:   */
+/*   find_var_val.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 16:38:56 by lspohle          ###   ########.fr       */
+/*   Created: 2023/05/01 16:59:16 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/01 16:59:16 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * @brief checks if c is a special character ('>' '<' '$' ';' '|' '=')
- * @param c character to check
- * @return true or false
- */
-int	ft_isspecial(char c)
+char *find_var_val(t_info *info, char *name)
 {
-	return (c == '>' || c == '<' || c == '|'
-		|| c == '=' || c == '$' || c == ';');
+	if (lst_find_var_val(info->env_lst, name))
+		return (lst_find_var_val(info->env_lst, name));
+	return (lst_find_var_val(info->user_vars, name));
 }

@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_get_var.c                                      :+:      :+:    :+:   */
+/*   str_in_arr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/29 15:05:15 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/29 15:07:37 by cschmied         ###   ########.fr       */
+/*   Created: 2023/05/01 17:29:06 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/01 17:30:42 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief Returns a pointer to the variable contained in a given node of a linked list.
+ * @brief Checks if a given string is in an array of strings.
  *
- * @param lst A pointer to the node in the linked list.
+ * @param arr A null-terminated array of strings.
+ * @param find The string to search for in the array.
  *
- * @return A pointer to the variable contained in the node.
+ * @return TRUE if the string is in the array, or FALSE otherwise.
  */
-t_variable	*lst_get_var(t_list *lst)
+int str_in_arr(char **arr, char *find)
 {
-	return ((t_variable*)(lst->content));
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		if (ft_strcmp(arr[i], find) != 0)
+			return (TRUE);
+	return (FALSE);
 }

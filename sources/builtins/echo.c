@@ -14,9 +14,9 @@
 
 void    execute_echo(void)
 {
-	char    *args[] = {"Hello", "World", "REihe", "Na", NULL};
+	char    *args[] = {"Hello", "World", "Reihe", "Na", NULL};
     int     i;
-    
+
     i = -1;
     while (args[++i])
     {

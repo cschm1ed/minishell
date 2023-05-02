@@ -19,7 +19,6 @@
  * expands an existing str array with another string, frees the old array.
  * @return char** 
  */
-
 char	**str_arr_add(char **array, char *toadd)
 {
 	int		size;

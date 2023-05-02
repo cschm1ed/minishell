@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspecial.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 16:38:56 by lspohle          ###   ########.fr       */
+/*   Created: 2023/05/01 14:39:38 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/01 14:40:56 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/**
- * @brief checks if c is a special character ('>' '<' '$' ';' '|' '=')
- * @param c character to check
- * @return true or false
- */
-int	ft_isspecial(char c)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	return (c == '>' || c == '<' || c == '|'
-		|| c == '=' || c == '$' || c == ';');
+	return (ft_strncmp(str1, str2, ft_strlen(str1) + 1));
 }

@@ -19,7 +19,5 @@
  */
 int	ft_isredirect(char c)
 {
-	if (c == '>' || c == '<')
-		return (TRUE);
-	return (FALSE);
+	return (c == '>' || c == '<');
 }

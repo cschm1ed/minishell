@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:14:05 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 16:49:58 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/01 23:59:08 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,5 @@
  */
 int	ft_isquote(char c)
 {
-	if (c == '"' || c == '\'')
-		return (TRUE);
-	return (FALSE);
+	return (c == '"' || c == '\'');
 }

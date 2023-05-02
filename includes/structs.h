@@ -21,6 +21,7 @@ typedef struct s_info		t_info;
 
 typedef struct s_info
 {
+	t_list		*lex_list;
 	t_list		*env_lst;
 	t_list		*user_vars;
 	t_commands	*commands;
@@ -48,6 +49,7 @@ typedef struct s_commands
 {
 	char		*raw;
 	char		**lexed;
+	t_list		*token_lst;
 	t_parsed	*parsed;
 }	t_commands;
 
