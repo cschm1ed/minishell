@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+         #
+#    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/01 12:06:45 by cschmied         ###   ########.fr        #
+#    Updated: 2023/05/03 17:35:17 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT			:= libft.a
 
 UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
 					ft_lstrmone.c delete_variable.c var_lst_add.c lst_get_var.c find_var_val.c lst_find_var_val.c\
-					str_in_arr.c ft_strcmp.c str_arr_to_lst.c replace_variables.c
+					str_in_arr.c ft_strcmp.c str_arr_to_lst.c replace_variables.c ft_isvariable.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 

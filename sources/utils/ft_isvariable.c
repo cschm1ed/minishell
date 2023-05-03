@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspecial.c                                     :+:      :+:    :+:   */
+/*   ft_isvariable.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/03 15:11:54 by lspohle          ###   ########.fr       */
+/*   Created: 2023/05/03 17:25:47 by lspohle           #+#    #+#             */
+/*   Updated: 2023/05/03 17:31:37 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /**
- * @brief checks if c is a special character ('>' '<' '$' ';' '|' '=')
- * @param c character to check
+ * @brief checks if c is '$' followed by a sequence of characters
+ * @param c character to check if '$'
+ * @param next character to check if sequence of characters 
  * @return true or false
  */
-int	ft_isspecial(char c)
+int	ft_isvariable(char c, char next)
 {
-	return (c == '>' || c == '<' || c == '|'
-		|| c == '=' || c == ';');
+	return (c == '$' && !ft_isspace(next));
 }

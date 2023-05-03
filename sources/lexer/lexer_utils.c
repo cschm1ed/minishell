@@ -6,14 +6,14 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 17:23:58 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:33:46 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static void	skip_specials(char *cmd, size_t *i);
-static void	skip_until_delimiter(char *cmd, size_t *i, char c);
+static int	skip_until_delimiter(char *cmd, size_t *i, char c);
 static void	skip_quotes(char *cmd, size_t *start, size_t *end);
 
 /**
@@ -31,12 +31,12 @@ int	count_substrs(char *cmd)
 	cnt = 1;
 	while (cmd[++i])
 	{
-		if (ft_isspace(cmd[i])
+		if (ft_isspace(cmd[i]) || ft_isvariable(cmd[i], cmd[i + 1])
 			|| ft_isspecial(cmd[i]) || ft_isspecial(cmd[i - 1]))
 		{
 			skip_specials(cmd, &i);
-			skip_until_delimiter(cmd, &i, cmd[i]);
-			cnt++;
+			if (skip_until_delimiter(cmd, &i, cmd[i]))
+				cnt++;
 		}
 	}
 	return (cnt);
@@ -57,6 +57,8 @@ int	locate_substr(char *cmd, size_t *start, size_t *end)
 	while (cmd[(*end)] && ft_isspecial(cmd[(*end)]))
 		if (!ft_isspecial(cmd[(++(*end))]))
 			return (FALSE);
+	if (ft_isvariable(cmd[*end], cmd[*end]))
+		(*end)++;
 	if (ft_isquote(cmd[(*end)]))
 	{
 		skip_quotes(cmd, start, end);
@@ -92,13 +94,17 @@ static void	skip_specials(char *cmd, size_t *i)
  * @param c the char to determine if spaces need to be skipped (within quotes)
  * @return void
  */
-static void	skip_until_delimiter(char *cmd, size_t *i, char c)
+static int	skip_until_delimiter(char *cmd, size_t *i, char c)
 {
+	if (!cmd[(*i) + 1])
+		return (FALSE);
 	if (ft_isquote(c))
 		while (ft_isquote(cmd[*i]))
 			(*i)++;
-	while (cmd[*i] && cmd[*i] != c && !ft_isspecial(cmd[*i]))
+	while (cmd[*i] && cmd[*i] != c && !ft_isspecial(cmd[*i])
+		&& !ft_isvariable(cmd[*i], cmd[*i + 1]))
 		(*i)++;
+	return (TRUE);
 }
 
 /**

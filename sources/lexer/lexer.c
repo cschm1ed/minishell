@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 20:53:10 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:54:54 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr);
  * @param cmd the user's input that was read from the line
  * @return char** - the lexed array of the user's cmd
  */
-char	**lexer(char *cmd)
+char	**lexer(char *cmd, t_info *info)
 {
 	char	**substr;
 	int		amt_substr;
 
-	if (*cmd == 0 || !cmd || !valid_num_of_quotes(cmd))
+	if (*cmd == 0 || !cmd || !valid_num_of_quotes(cmd, info))
 		return (NULL);
 	amt_substr = count_substrs(cmd);
 	substr = (char **) malloc (sizeof(char *) * (amt_substr + 1));
@@ -32,7 +32,7 @@ char	**lexer(char *cmd)
 		return (perror("malloc"), NULL);
 	printf(GREEN"Count: %d\n"ESC, amt_substr);
 	iterate_through_cmd(cmd, substr, amt_substr);
-	if (!valid_num_of_specials(substr))
+	if (!valid_num_of_specials(substr, info))
 		return (ft_free_dbl_ptr(substr));
 	return (substr);
 }
@@ -58,13 +58,12 @@ static char	**iterate_through_cmd(char *cmd, char **substr, int amt_substr)
 		if (cmd[end] == 0 && i != amt_substr - 1)
 			return (printf(SYNERR), ft_free_dbl_ptr(substr));
 		substr[i] = ft_substr(cmd, start, end - start);
-		substr[i] = ft_strtrim(substr[i], " ");
 		if (!substr[i])
 			return (ft_free_dbl_ptr(substr));
 		start = end;
 		while (trim_quotes && ft_isquote(cmd[start]))
 			start++;
-		printf(YELLOW"String: %s\n"ESC, substr[i]);
+		printf(YELLOW"String: %s$\n"ESC, substr[i]);
 	}
 	substr[i] = NULL;
 	return (substr);

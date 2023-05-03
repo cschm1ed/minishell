@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/28 16:53:38 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:01:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	count_specials(char *lxd, int *i, char c);
  * @param cmd the user's input that was read from the line
  * @return true or false
  */
-int	valid_num_of_quotes(char *cmd)
+int	valid_num_of_quotes(char *cmd, t_info *info)
 {
 	int		dbl_qte;
 	int		sng_qte;
@@ -36,8 +36,7 @@ int	valid_num_of_quotes(char *cmd)
 			sng_qte++;
 	}
 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
-		return (printf(SYNERR), FALSE);
-		// suggestion: exit (258)
+		return (printf(SYNERR), info->exit_code = 258, FALSE);
 	return (TRUE);
 }
 
@@ -46,7 +45,7 @@ int	valid_num_of_quotes(char *cmd)
  * @param lxd the lexed array of the user's cmd
  * @return true or false
  */
-int	valid_num_of_specials(char **lxd)
+int	valid_num_of_specials(char **lxd, t_info *info)
 {
 	int	s;
 	int	i;
@@ -59,12 +58,10 @@ int	valid_num_of_specials(char **lxd)
 		{
 			if (lxd[s + 1] && ft_isredirect(lxd[s][i])
 				&& ft_isredirect(lxd[s + 1][i]))
-				return (printf(RED SYNERR ESC), FALSE);
-				// exit(258)
+				return (printf(SYNERR), info->exit_code = 258, FALSE);
 			if (ft_isredirect(lxd[s][i]) || lxd[s][i] == '|')
 				if (count_specials(lxd[s], &i, lxd[s][i]) > 2)
-					return (printf(RED SYNERR ESC), FALSE);
-					// exit(258)
+					return (printf(SYNERR), info->exit_code = 258, FALSE);
 		}
 	}
 	return (TRUE);
