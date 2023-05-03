@@ -38,28 +38,17 @@ int main(int argc, char **argv, char **envp)
 	t_commands  commands;
 	t_info		*info;
 	// char *cmd = "echo";
-	// char *args[] = {"Hello", "World", "Kein", "Ding", NULL};
+	char *args[] = {"Hello", "World", "Kein", "$PATH", NULL};
 
 	signal(SIGINT, handle_keybindings);
 	signal(SIGQUIT, handle_keybindings);
 	info = info_init(envp);
-	if (!info)
+	info->commands = &commands;
+	if (info == NULL)
 		return (printf("info error\n"), 1);
-	export(info, NULL);
-    while (1)
-    {
-        commands.raw = ft_readline("minishell: ");
-        commands.lexed = lexer(commands.raw);
-		execute_echo();
-		
-        // if (commands.lexed)
-        // {
-		//     commands.parsed = parser(&commands.parsed, commands.lexed);
-        //     print_parsed(commands.parsed);
-        // }
-		// if (ft_strncmp(commands.parsed->cmd, "pwd", 4) == 0)
-		// {
-		// 	execute_pwd(envp);
-		// }
-    }
+	commands.parsed = parser(info, &commands.parsed, args);
+	print_parsed(commands.parsed);
+	(void)argc;
+	(void)argv;
+	return (0);
 }
