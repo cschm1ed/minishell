@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 23:12:27 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/02 14:45:37 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_info		t_info;
 
 typedef struct s_info
 {
-	t_list		*lex_list;
+	t_list		*lex_lst;
 	t_list		*env_lst;
 	t_list		*user_vars;
 	t_commands	*commands;

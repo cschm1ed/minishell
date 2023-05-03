@@ -26,9 +26,12 @@ UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 
+PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
+					parser.c
+
 BUILTINS		:= echo.c env.c pwd.c export.c
 
-SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) parser.c ft_readline.c main.c
+SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) ft_readline.c main.c
 
 OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
 

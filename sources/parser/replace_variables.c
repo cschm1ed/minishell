@@ -24,7 +24,7 @@ void	replace_variables(t_info *info, t_list *token_lst)
 	{
 		str = (char*)token_lst->content;
 		if (ft_strchr(str, '$'))
-			replace(info, token_lst, ft_strchr(str, '$'));
+			replace(info, token_lst, ft_strchr(str, '$') + 1);
 		token_lst = token_lst->next;
 	}
 }
@@ -36,7 +36,9 @@ static void replace(t_info *info, t_list *node, char *name)
 	value = lst_find_var_val(info->env_lst, name);
 	if (value)
 	{
-		node->content = (void *)value;
+		node->content = (void *) lst_find_var_val(info->env_lst, name);
+		if (!node->content)
+			exit(1);
 		return ;
 	}
 	node->content = (void *)lst_find_var_val(info->user_vars, name);

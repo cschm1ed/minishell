@@ -40,6 +40,8 @@ t_info		*info_init(char **env);
 // parser
 t_parsed	*parser(t_info *info, t_parsed **parsed, char **lexed);
 void		replace_variables(t_info *info, t_list *token_lst);
+void		*find_and_remove_redirects(t_list *tokens, t_parsed *parsed);
+void	*find_and_remove_delimiter_and_append(t_list *tokens, t_parsed *parsed);
 
 // utils
 char		*ft_readline(const char *str);

@@ -27,6 +27,7 @@ t_list	*str_arr_to_lst(char **arr)
 	t_list	*new_node;
 
 	i = 0;
+	new_lst = NULL;
 	while (arr[i])
 	{
 		new_node = ft_lstnew((void*)arr[i]);
