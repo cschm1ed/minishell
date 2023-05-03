@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/03 18:14:29 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/03 19:19:40 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,13 @@ int main(int argc, char **argv, char **envp)
     {
         commands.raw = ft_readline("minishell: ");
         commands.lexed = lexer(commands.raw, info);
-		//execute_echo();
-		
-        // if (commands.lexed)
-        // {
-		//     commands.parsed = parser(&commands.parsed, commands.lexed);
-        //     print_parsed(commands.parsed);
-        // }
-		// if (ft_strncmp(commands.parsed->cmd, "pwd", 4) == 0)
-		// {
-		// 	execute_pwd(envp);
-		// }
+        if (commands.lexed)
+        {
+		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
+            print_parsed(commands.parsed);
+        }
+		printf(RED"info->env_lst->content: %s\n"ESC, info->env_lst->content);
+		executer(info, commands);
+		// printf(MAGENTA"Exit_code: %d\n"ESC, info->exit_code);
     }
 }

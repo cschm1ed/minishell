@@ -6,11 +6,11 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/03 17:35:17 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/03 18:58:31 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins
+VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer
 
 BUILDDIR		:= build
 
@@ -31,7 +31,9 @@ PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
 
 BUILTINS		:= echo.c env.c pwd.c export.c
 
-SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) ft_readline.c main.c
+EXECUTER		:= executer.c
+
+SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) $(EXECUTER) ft_readline.c main.c
 
 OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
 

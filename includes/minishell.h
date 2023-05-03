@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/03 17:55:31 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/03 19:15:18 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,13 @@ int			locate_substr(char *s, size_t *start, size_t *end);
 char		**lexer(char *cmd, t_info *info);
 
 // bultins
-void		execute_pwd(char **envp);
-void		execute_echo(void);
+void		execute_pwd(t_info *info);
+void	    execute_echo(t_parsed *parsed);
 void		builtin_env(t_info *info);
 void    	execute_exit(t_info *info);
 int			export(t_info *info, char **arg);
+
+// executer/executer.c
+int			executer(t_info *info, t_commands commands);
 
 #endif
