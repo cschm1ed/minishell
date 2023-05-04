@@ -30,6 +30,12 @@ t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed)
 		return (perror("parser got no token lst\n"), NULL);
 	replace_variables(info, token_lst);
 	tmp_begin = token_lst;
+	if (ft_lstsize(token_lst) == 1)
+	{
+		*parsed = ft_calloc(1, sizeof(t_parsed));
+		(*parsed)->cmd = token_lst->content;
+		return (*parsed);
+	}
 	while (token_lst && token_lst->next)
 	{
 		if (first == TRUE)
@@ -82,29 +88,10 @@ static void *parse_command(t_parsed **head, t_list **begin)
 	while (tokens && ft_strcmp(tokens->content, "|") != 0)
 	{
 		if (str_arr_add(&(current->args), tokens->content) == NULL)
-			return (NULL);
+			return (perror("failed to create array\n"), NULL);
 		tokens = tokens->next;
 	}
 	return (current);
-}
-
-int	test_parser(void)
-{
-	char		*input[] = {"<", "infile", "cat",
-							"-e", "|", "wc", "-l", ">", "outfile", NULL};
-	t_parsed	*parsed;
-	int			i;
-
-	i = 0;
-	printf("input: ");
-	while (input[i])
-		printf("%s ",input[i++]);
-	printf("\n");
-	parsed = parser(NULL, &parsed, input);
-	if (!parsed)
-		return (FAILURE);
-	print_parsed(parsed);
-	return (SUCCESS);
 }
 
 void	print_parsed(t_parsed *parsed)
@@ -117,23 +104,23 @@ void	print_parsed(t_parsed *parsed)
 		printf("parsed does not exist\n");
 	while (parsed)
 	{
-		printf("Node %d:\n", i);
-		printf("cmd:\n\t%s\n", parsed->cmd);
+		printf(YELLOW"Node %d:\n"ESC, i);
+		printf(GREEN"cmd:\t%s\n"ESC, parsed->cmd);
 		j = 0;
 		if (parsed->args)
 		{
-			printf("args:\n");
+			printf(GREEN"args:"ESC);
 			while (parsed->args[j])
 			{
-				printf("\t%s, ", parsed->args[j]);
+				printf(GREEN"\t%s, "ESC, parsed->args[j]);
 				j ++;
 			}
 		}
 		printf("\n");
-		printf("redirect input:\n\t%s\n", parsed->redirect_input);
-		printf("redirect output:\n\t%s\n", parsed->redirect_output);
-		printf("delimiter:\n\t%s\n", parsed->delimiter);
-		printf("append mode:\n\t%d\n\n", parsed->append_mode);
+		printf(GREEN"redirect input:\t%s\n"ESC, parsed->redirect_input);
+		printf(GREEN"redirect output:\t%s\n"ESC, parsed->redirect_output);
+		printf(GREEN"delimiter:\t%s\n"ESC, parsed->delimiter);
+		printf(GREEN"append mode:\t%d\n\n"ESC, parsed->append_mode);
 		parsed = parsed->next;
 		i ++;
 	}
