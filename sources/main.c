@@ -33,7 +33,6 @@ int main(int argc, char **argv, char **envp)
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
             print_parsed(commands.parsed);
         }
-		printf(RED"info->env_lst->content: %s\n"ESC, info->env_lst->content);
 		executer(info, commands);
 		// printf(MAGENTA"Exit_code: %d\n"ESC, info->exit_code);
     }

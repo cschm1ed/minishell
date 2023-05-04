@@ -14,14 +14,6 @@
 
 void execute_pwd(t_info *info)
 {
-	t_list	*ptr;
-
-	ptr = info->env_lst;
-	while (ptr && ft_strncmp(ptr->content, "PWD=", 4))
-	{
-		//printf(MAGENTA"Content: %s\n"ESC, ptr->content);
-		ptr = ptr->next;
-	}	
-    printf("%s\n", ptr->content + 4);
-	// printf("%s\n", *envp + 4);
+	//printf("%s\n", info->env_lst->pwd);
+	printf("%s\n", lst_find_var_val(info->env_lst, "PWD"));
 }
