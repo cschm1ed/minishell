@@ -12,101 +12,80 @@
 
 #include "../../includes/minishell.h"
 
-static int	check_special(char **str, int *i, t_parsed *cmd_info);
+static void *parse_command(t_parsed **head, t_list **begin);
 
-/**
- * @brief 
- * 
- * @param lexed - str-array the lexer created from user input
- * @return t_parsed* - a structure in which the information from the use
- * 									input will be stored
- * Iterates through the tokens the lexer created. 
- * If a special token (specified in check_special) is recognized it will be 
- * handled by an appropriate function.
- * The first non special token is interpreted as the command,
- * other tokens will be interpreted as arguments of the command.
- * The function will only read till a pipe operator or semicolon and create
- * one struct per command.
- * @return - parser() returns a linked list of commands and their context.
- */
+void	print_linked_lst(t_list *lst);
+
 t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed)
 {
-	int			first;
-	int			i;
+	t_list	*token_lst;
+	t_list	*tmp_begin;
+	t_list	*tmp;
+	int 	first;
 
-	i = 0;
 	first = TRUE;
-	*parsed = ft_calloc(sizeof(t_parsed), 1);
-	if (!*parsed)
-		return (perror("malloc"), NULL);
-	while (lexed[i])
+	*parsed = NULL;
+	token_lst = str_arr_to_lst(lexed);
+	if (token_lst == NULL)
+		return (perror("parser got no token lst\n"), NULL);
+	replace_variables(info, token_lst);
+	tmp_begin = token_lst;
+	while (token_lst && token_lst->next)
 	{
-		if (check_special(lexed, &i, *parsed) == FAILURE)
+		if (first == TRUE)
 		{
-			if (lexed[i][0] == '|' || lexed[i][0] == ';')
-			{
-				if (parser(info, &((*parsed)->next), &lexed[i + 1]) == NULL)
-					return (NULL);
-				return (*parsed);
-			}
-			else if (first == TRUE) {
-				(*parsed)->cmd = lexed[i];
-				first = FALSE;
-			}
-			else
-			{
-				(*parsed)->args = str_arr_add((*parsed)->args, lexed[i]);
-				if ((*parsed)->args == NULL)
-					return (NULL);
-			}
+			parse_command(parsed, &token_lst);
+			first = FALSE;
 		}
-		i ++;
+		else if (ft_strcmp((char *)token_lst->next->content, "|") == 0)
+		{
+			tmp = token_lst->next;
+			token_lst->next = NULL;
+			if (tmp->next)
+				tmp_begin = tmp->next;
+			else
+				tmp_begin = NULL; // error missing
+			parse_command(parsed, &tmp_begin);
+		}
+		token_lst = token_lst->next;
 	}
 	return (*parsed);
 }
 
-/**
- * @check_special - checks if token is a special expression
- * @param str - token from lexed input
- * @param i - position of token
- * @param parsed - struct to safe information to
- * checks if token from the lexer is a special token
- * these include: delimiters, redirections and wildcards.
- * If the special token is in relation to another input argument, e.g a file
- * a redirection points to, check special will also manage that input, and
- * adjust i accordingly.
- * @return int 
- */
-static int	check_special(char **str, int *i, t_parsed *info)
+static void *parse_command(t_parsed **head, t_list **begin)
 {
-	if (ft_strncmp(str[*i], ">", 2) == 0)
+	t_parsed	*current;
+	t_parsed	*ptr;
+	t_list		*tokens;
+
+	current = ft_calloc(1, sizeof(t_parsed));
+	if (!current)
 	{
-		*i += 1;
-		info->redirect_output = str[*i];
-		return (SUCCESS);
+		return (perror("malloc"), NULL);
 	}
-	else if (ft_strncmp(str[*i], "<", 2) == 0)
+	if (!*head)
+		*head = current;
+	else
 	{
-		*i += 1;
-		info->redirect_input = str[*i];
-		return (SUCCESS);
+		ptr = *head;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = current;
 	}
-	else if (ft_strncmp(str[*i], ">>", 3) == 0)
+	if (find_and_remove_redirects(begin, current) == FAILURE)
+		return (printf("failed on redirects\n"), NULL); // add appropriate free of current in future
+	if (find_and_remove_delimiter_and_append(begin, current) == FAILURE)
+		return (printf("failed on delimiters\n"), NULL);
+	tokens = *begin;
+	current->cmd = tokens->content;
+	tokens = tokens->next;
+	while (tokens && ft_strcmp(tokens->content, "|") != 0)
 	{
-		info->append_mode = TRUE;
-		return (SUCCESS);
+		if (str_arr_add(&(current->args), tokens->content) == NULL)
+			return (NULL);
+		tokens = tokens->next;
 	}
-	else if (ft_strncmp(str[*i], "=", 2) == 0)
-	{
-		(void)i;
-	}
-	else if (ft_strncmp(str[*i], "<<", 3) == 0)
-	{
-		*i += 1;
-		info->delimiter = str[*i];
-		return (SUCCESS);
-	}
-	return (FAILURE);
+	return (current);
 }
 
 int	test_parser(void)
@@ -134,6 +113,8 @@ void	print_parsed(t_parsed *parsed)
 	int	j;
 
 	i = 0;
+	if (parsed == NULL)
+		printf("parsed does not exist\n");
 	while (parsed)
 	{
 		printf("Node %d:\n", i);
@@ -155,5 +136,14 @@ void	print_parsed(t_parsed *parsed)
 		printf("append mode:\n\t%d\n\n", parsed->append_mode);
 		parsed = parsed->next;
 		i ++;
+	}
+}
+
+void	print_linked_lst(t_list *lst)
+{
+	while (lst)
+	{
+		printf("%s\n", (char*)lst->content);
+		lst = lst->next;
 	}
 }

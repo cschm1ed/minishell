@@ -26,6 +26,7 @@ typedef struct s_info
 	t_list		*user_vars;
 	t_commands	*commands;
 	int			exit_code;
+	char 		*pwd;
 }   t_info;
 
 typedef struct s_parsed

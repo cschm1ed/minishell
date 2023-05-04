@@ -12,60 +12,60 @@
 
 #include "../../includes/minishell.h"
 
-static t_list *set_append(t_list *tokens, t_parsed *parsed, t_list **head);
-static t_list *set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head);
+static int set_append(t_list *tokens, t_parsed *parsed, t_list **head);
+static int set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head);
 
-void	*find_and_remove_delimiter_and_append(t_list *tokens, t_parsed *parsed)
+int find_and_remove_delimiter_and_append(t_list **tokens, t_parsed *parsed)
 {
-	t_list	**head;
+	t_list	*ptr;
 
-	head = &tokens;
-	while (tokens)
+	ptr = *tokens;
+	while (ptr && ft_strcmp(ptr->content, "|") != 0)
 	{
-		if (ft_strcmp((char *)tokens->content, ">>") == 0)
+		if (ft_strcmp((char *)ptr->content, ">>") == 0)
 		{
-			tokens = set_append(tokens, parsed, head);
-			if (tokens == NULL)
-				return (NULL);
+			if (set_append(*tokens, parsed, tokens) == FAILURE)
+				return (FAILURE);
+			ptr = *tokens;
 		}
-		else if (ft_strcmp((char *)tokens->content, "<<") == 0)
+		else if (ft_strcmp((char *)ptr->content, "<<") == 0)
 		{
-			tokens = set_delimiter(tokens, parsed, head);
-			if (tokens == NULL)
-				return (NULL);
+			if (set_delimiter(ptr, parsed, tokens) == FAILURE)
+				return (FAILURE);
+			ptr = *tokens;
 		}
 		else
-			tokens = tokens->next;
+			ptr = ptr->next;
 	}
-	return ((void*)(*head));
+	return (SUCCESS);
 }
 
-static t_list *set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
+static int set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list *tmp;
 
 	if (tokens->next == NULL)
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
 	parsed->delimiter = (char *)tokens->next->content;
 	tmp = tokens;
 	tokens = tokens->next->next;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
-	return tokens;
+	return (SUCCESS);
 }
 
 
-static t_list *set_append(t_list *tokens, t_parsed *parsed, t_list **head)
+static int set_append(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list *tmp;
 
 	if (tokens->next == NULL)
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
 	parsed->redirect_input = (char *)tokens->next->content;
 	parsed->append_mode = TRUE;
 	tmp = tokens;
 	tokens = tokens->next->next;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
-	return tokens;
+	return (SUCCESS);
 }

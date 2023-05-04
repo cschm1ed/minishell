@@ -14,27 +14,25 @@
 
 void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 {
-	t_list	*ptr;
-	t_list	*prev;
-	t_list	*next;
+	t_list *prev;
+	t_list *next;
 
-	prev = NULL;
-	next = NULL;
-	ptr = (*head)->next;
-	if (!ptr)
+	prev = *head;
+	if (node == NULL)
+		return ;
+	if (*head == NULL)
+		return ;
+	if (node == *head)
 	{
-		free(*head);
-		*head = NULL;
+		*head = node->next;
+		ft_lstdelone(node, del);
 		return ;
 	}
-	prev = *head;
-	while (ptr && ptr != node)
-	{
-		ptr = ptr->next;
+	while (prev && prev->next != node)
 		prev = prev->next;
-	}
-	next = ptr->next;
-	del(ptr->content);
-	free(ptr);
-	ft_lstadd_back(&prev, next);
+	if (prev == NULL)
+		return;
+	next = prev->next->next;
+	ft_lstdelone(node, del);
+	prev->next = next;
 }

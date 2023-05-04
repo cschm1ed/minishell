@@ -16,7 +16,7 @@ OBJS		= ${SRCS:.c=.o}
 
 BOBJS		= ${BSRCS:.c=.o}
 
-GCCW		= gcc -Wall -Wextra -Werror
+GCCW		= gcc -Wall -Wextra -Werror -g
 
 AR			= ar -rc
 

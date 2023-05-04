@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+static void	cpy_arr(char **src, char **dst);
+
 /**
  * @brief str_arr_add - expands an existing str array with another string
  * @param arr - array to be expanded
@@ -19,30 +21,42 @@
  * expands an existing str array with another string, frees the old array.
  * @return char** 
  */
-char	**str_arr_add(char **array, char *toadd)
+char	**str_arr_add(char ***array, char *toadd)
 {
-	int		size;
-	int		j;
 	char	**new;
+	int		size;
 
-	j = 0;
 	size = 0;
-	if (!array)
+	if (toadd == NULL)
+		return (*array);
+	if (*array == NULL)
+		size = 0;
+	else
 	{
-		array = ft_calloc(sizeof(char *), 2);
-		if (!array)
-			return (perror("malloc"), NULL);
-		return (array);
+		while ((*array)[size])
+			size ++;
 	}
-	if (!toadd)
-		return (array);
-	while (array[size])
-		size ++;
-	new = ft_calloc(sizeof(char *), (size + 2));
-	if (!new)
+	new = ft_calloc(size + 2, sizeof(char *));
+	if (new == NULL)
 		return (perror("malloc"), NULL);
-	ft_memmove(new, array, sizeof(char *) * size);
-	new[j] = toadd;
-	free(array);
+	cpy_arr(*array, new);
+	new[size] = toadd;
+	if (*array != NULL)
+		free (*array);
+	*array = new;
 	return (new);
+}
+
+static void	cpy_arr(char **src, char **dst)
+{
+	int i;
+
+	i = 0;
+	if (src == NULL)
+		return ;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i ++;
+	}
 }
