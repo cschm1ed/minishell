@@ -19,6 +19,8 @@ int find_and_remove_redirects(t_list **tokens, t_parsed *parsed)
 {
 	t_list	*ptr;
 
+	if (tokens == NULL || *tokens == NULL)
+		return (SUCCESS);
 	ptr = *tokens;
 	while (ptr && ft_strcmp(ptr->content, "|") != 0)
 	{

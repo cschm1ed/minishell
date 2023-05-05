@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **envp)
 {
 	t_commands  commands;
 	t_info		*info;
+	char 		args[] = {"< indatei"};
 
 	signal(SIGINT, handle_keybindings);
 	signal(SIGQUIT, handle_keybindings);
@@ -33,7 +34,6 @@ int main(int argc, char **argv, char **envp)
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
             print_parsed(commands.parsed);
         }
-		executer(info, commands);
 		// printf(MAGENTA"Exit_code: %d\n"ESC, info->exit_code);
     }
 }
