@@ -84,9 +84,12 @@ static int	print_sorted_lst(t_info *info)
 {
 	int 	i;
 	char 	**array;
+	t_list	*last;
 	t_list	*ptr;
 
 	i = 0;
+	last = ft_lstlast(info->env_lst);
+	last->next = info->export_lst;
 	array = cpy_lst_to_array(info->env_lst);
 	if (!array)
 		return (FAILURE);
@@ -100,6 +103,8 @@ static int	print_sorted_lst(t_info *info)
 		printf("declare -x %s=%s\n", lst_get_var(ptr)->name, lst_get_var(ptr)->value);
 		i ++;
 	}
+	ft_free_dbl_ptr(array);
+	last->next = NULL;
 	return (SUCCESS);
 }
 

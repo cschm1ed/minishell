@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_and_remove_redirects.c                        :+:      :+:    :+:   */
+/*   redirects.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-static int redirect_input(t_list *tokens, t_parsed *parsed, t_list **head);
-static int redirect_output(t_list *tokens, t_parsed *parsed, t_list **head);
+static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head);
+static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head);
 
-int find_and_remove_redirects(t_list **tokens, t_parsed *parsed)
+int	redirects(t_list **tokens, t_parsed *parsed)
 {
 	t_list	*ptr;
 
@@ -26,7 +26,7 @@ int find_and_remove_redirects(t_list **tokens, t_parsed *parsed)
 	{
 		if (ft_strcmp(ptr->content, ">") == 0)
 		{
-			if  (redirect_output(ptr, parsed, tokens) == FAILURE)
+			if (redirect_output(ptr, parsed, tokens) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}
@@ -42,12 +42,12 @@ int find_and_remove_redirects(t_list **tokens, t_parsed *parsed)
 	return (SUCCESS);
 }
 
-static int redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
+static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (tokens->next == NULL)
-		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
+		return (unexpected_token("newline"));
 	parsed->redirect_output = ft_strdup(tokens->next->content);
 	if (parsed->redirect_output == NULL)
 		return (perror("malloc"), FAILURE);
@@ -58,12 +58,12 @@ static int redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 	return (SUCCESS);
 }
 
-static int redirect_input(t_list *tokens, t_parsed *parsed, t_list **head)
+static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (tokens->next == NULL)
-		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
+		return (unexpected_token("newline"));
 	parsed->redirect_input = ft_strdup(tokens->next->content);
 	if (parsed->redirect_input == NULL)
 		return (perror("malloc"), FAILURE);

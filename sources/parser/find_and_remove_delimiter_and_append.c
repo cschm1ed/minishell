@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_and_remove_delimiter_and_append.c             :+:      :+:    :+:   */
+/*   delimiter_and_append.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-static int set_append(t_list *tokens, t_parsed *parsed, t_list **head);
-static int set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head);
+static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head);
+static int	set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head);
 
-int find_and_remove_delimiter_and_append(t_list **tokens, t_parsed *parsed)
+int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 {
 	t_list	*ptr;
 
@@ -42,12 +42,14 @@ int find_and_remove_delimiter_and_append(t_list **tokens, t_parsed *parsed)
 	return (SUCCESS);
 }
 
-static int set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
+static int	set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (tokens->next == NULL)
-		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
+		return (printf
+			("minishell: syntax error near unexpected token `newline'\n"),
+			FAILURE);
 	parsed->delimiter = (char *)tokens->next->content;
 	tmp = tokens;
 	tokens = tokens->next->next;
@@ -56,13 +58,14 @@ static int set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
 	return (SUCCESS);
 }
 
-
-static int set_append(t_list *tokens, t_parsed *parsed, t_list **head)
+static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	if (tokens->next == NULL)
-		return (printf("minishell: syntax error near unexpected token `newline'\n"), FAILURE);
+		return (printf
+			("minishell: syntax error near unexpected token `newline'\n"),
+			FAILURE);
 	parsed->redirect_input = (char *)tokens->next->content;
 	parsed->append_mode = TRUE;
 	tmp = tokens;

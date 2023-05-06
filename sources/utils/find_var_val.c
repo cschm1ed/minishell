@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char *find_var_val(t_info *info, char *name)
+char	*find_var_val(t_info *info, char *name)
 {
 	if (lst_find_var_val(info->env_lst, name))
 		return (lst_find_var_val(info->env_lst, name));

@@ -35,10 +35,14 @@ void	print_parsed(t_list *parsed)
 			}
 		}
 		printf("\n");
-		printf(GREEN"redirect input:\t%s\n"ESC, lst_get_parsed(parsed)->redirect_input);
-		printf(GREEN"redirect output:\t%s\n"ESC, lst_get_parsed(parsed)->redirect_output);
-		printf(GREEN"delimiter:\t%s\n"ESC, lst_get_parsed(parsed)->delimiter);
-		printf(GREEN"append mode:\t%d\n\n"ESC, lst_get_parsed(parsed)->append_mode);
+		printf(GREEN"redirect input:\t%s\n"ESC,
+			   lst_get_parsed(parsed)->redirect_input);
+		printf(GREEN"redirect output:\t%s\n"ESC,
+			   lst_get_parsed(parsed)->redirect_output);
+		printf(GREEN"delimiter:\t%s\n"ESC,
+			   lst_get_parsed(parsed)->delimiter);
+		printf(GREEN"append mode:\t%d\n\n"ESC,
+			   lst_get_parsed(parsed)->append_mode);
 		parsed = parsed->next;
 		i ++;
 	}

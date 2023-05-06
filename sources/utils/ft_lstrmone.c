@@ -14,8 +14,8 @@
 
 void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 {
-	t_list *prev;
-	t_list *next;
+	t_list	*prev;
+	t_list	*next;
 
 	prev = *head;
 	if (node == NULL)
@@ -31,7 +31,7 @@ void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 	while (prev && prev->next != node)
 		prev = prev->next;
 	if (prev == NULL)
-		return;
+		return ;
 	next = prev->next->next;
 	ft_lstdelone(node, del);
 	prev->next = next;

@@ -22,7 +22,7 @@
  */
 t_list	*str_arr_to_lst(char **arr)
 {
-	int 	i;
+	int		i;
 	t_list	*new_lst;
 	t_list	*new_node;
 
@@ -30,7 +30,7 @@ t_list	*str_arr_to_lst(char **arr)
 	new_lst = NULL;
 	while (arr[i])
 	{
-		new_node = ft_lstnew((void*)arr[i]);
+		new_node = ft_lstnew((void *)arr[i]);
 		if (!new_node)
 			return (perror("malloc"), NULL);
 		ft_lstadd_back(&new_lst, new_node);

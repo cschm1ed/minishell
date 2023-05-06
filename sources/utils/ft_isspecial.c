@@ -20,5 +20,5 @@
 int	ft_isspecial(char c)
 {
 	return (c == '>' || c == '<' || c == '|'
-		|| c == '=' || c == ';');
+		|| c == ';');
 }

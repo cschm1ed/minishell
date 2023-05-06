@@ -25,7 +25,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 		ret = execute_env(info);
 	else if (ft_strcmp(cmd, "exit") == 0)
 		ret = execute_exit(info);
-	else if (ft_strcmp(cmd, "execute_export") == 0)
+	else if (ft_strcmp(cmd, "export") == 0)
 		ret = execute_export(info, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		ret = execute_pwd(info);

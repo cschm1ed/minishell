@@ -16,7 +16,7 @@ void	delete_variable(void *content)
 {
 	t_variable	*ptr;
 
-	ptr = (t_variable*)content;
+	ptr = (t_variable *)content;
 	if (ptr == NULL)
 		return ;
 	if (ptr->name)

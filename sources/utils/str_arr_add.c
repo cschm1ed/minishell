@@ -49,7 +49,7 @@ char	**str_arr_add(char ***array, char *toadd)
 
 static void	cpy_arr(char **src, char **dst)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (src == NULL)

@@ -24,7 +24,7 @@ static int	str_isspace(char *str);
 
 char	*ft_readline(const char *str)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = readline(str);
 	if (tmp && !str_isspace(tmp))

@@ -13,7 +13,8 @@
 #include "../../includes/minishell.h"
 
 /**
- * @brief Returns a pointer to the variable contained in a given node of a linked list.
+ * @brief Returns a pointer to the variable contained in a
+ * 										given node of a linked list.
  *
  * @param lst A pointer to the node in the linked list.
  *
@@ -21,11 +22,10 @@
  */
 t_variable	*lst_get_var(t_list *lst)
 {
-	return ((t_variable*)(lst->content));
+	return ((t_variable *)(lst->content));
 }
-
 
 t_parsed	*lst_get_parsed(t_list *lst)
 {
-	return ((t_parsed*)(lst->content));
+	return ((t_parsed *)(lst->content));
 }

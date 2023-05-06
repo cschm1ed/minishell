@@ -21,7 +21,7 @@
  * @return A pointer to the value of the variable,
  * 								or NULL if the variable is not found.
  */
-char *lst_find_var_val(t_list *lst, char *name)
+char	*lst_find_var_val(t_list *lst, char *name)
 {
 	while (lst)
 	{

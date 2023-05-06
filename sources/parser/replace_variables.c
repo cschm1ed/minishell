@@ -12,26 +12,26 @@
 
 #include "../../includes/minishell.h"
 
-static void replace(t_info *info, t_list *node, char *name);
+static void	replace(t_info *info, t_list *node, char *name);
 
 void	replace_variables(t_info *info, t_list *token_lst)
 {
-	char *str;
+	char	*str;
 
 	if (!token_lst)
 		return ;
 	while (token_lst)
 	{
-		str = (char*)token_lst->content;
+		str = (char *)token_lst->content;
 		if (ft_strchr(str, '$'))
 			replace(info, token_lst, ft_strchr(str, '$') + 1);
 		token_lst = token_lst->next;
 	}
 }
 
-static void replace(t_info *info, t_list *node, char *name)
+static void	replace(t_info *info, t_list *node, char *name)
 {
-	char *value;
+	char	*value;
 
 	value = lst_find_var_val(info->env_lst, name);
 	if (value)
