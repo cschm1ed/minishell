@@ -12,11 +12,18 @@
 
 #include "../../includes/minishell.h"
 
-int	executer(t_info *info, t_commands commands)
+int executer(t_info *info)
 {
-	if (ft_strncmp(commands.parsed->cmd, "pwd", 4) == 0)
-		execute_pwd(info);
-	else if (ft_strncmp(commands.parsed->cmd, "echo", 5) == 0)
-		execute_echo(commands.parsed);
-	return (TRUE);
+	t_list	*parsed;
+
+	parsed = info->commands->parsed;
+	if (parsed->content == NULL)
+		return (SUCCESS);
+	while (parsed)
+	{
+		if (execute_builtin_if(info, parsed) == FAILURE)
+			return (FAILURE);
+		parsed = parsed->next;
+	}
+	return (SUCCESS);
 }

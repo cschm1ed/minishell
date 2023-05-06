@@ -21,6 +21,8 @@
 
 #include "libft.h"
 
+static void	free_arr(char **arr);
+
 static int	ft_count_strings(const char *s, char c)
 {
 	int	i;
@@ -60,7 +62,7 @@ static char	**ft_split_string(char **result, const char *s, char c)
 			result[j] = ft_substr(s, start, i - start);
 			if (!result[j++])
 			{
-				free(result);
+				free_arr(result);
 				return (NULL);
 			}
 			if (s[i] == '\0')
@@ -71,7 +73,22 @@ static char	**ft_split_string(char **result, const char *s, char c)
 	return (result);
 }
 
-// Allocates and returns an array of strings obtained by splitting ’s’ using 
+static void	free_arr(char **arr)
+{
+	int i;
+
+	i = 0;
+	if (arr == NULL)
+		return;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i ++;
+	}
+	free(arr);
+}
+
+// Allocates and returns an array of strings obtained by splitting ’s’ using
 // the character ’c’ as a delimiter
 // The array must end with a NULL pointer
 // Returns array of new strings resulting from the split
@@ -80,7 +97,7 @@ char	**ft_split(const char *s, char c)
 {
 	char	**result;
 
-	result = (char **)malloc ((ft_count_strings(s, c) + 1) * sizeof(char *));
+	result = ft_calloc((ft_count_strings(s, c) + 1), sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (ft_split_string(result, s, c) == NULL)

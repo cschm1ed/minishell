@@ -18,9 +18,6 @@
 # define TRUE 1
 # define FALSE 0
 
-# define SYNERR "minishell: syntax error\n"
-# define PARERR "minishell: parse error\n"
-
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
@@ -38,7 +35,7 @@ void rl_replace_line (const char *text, int clear_undo);
 t_info		*info_init(char **env);
 
 // parser
-t_parsed	*parser(t_info *info, t_parsed **parsed, char **lexed);
+t_list 		*parser(t_info *info, t_list **parsed, char **lexed);
 void		replace_variables(t_info *info, t_list *token_lst);
 int			find_and_remove_redirects(t_list **tokens, t_parsed *parsed);
 int			find_and_remove_delimiter_and_append(t_list **tokens, t_parsed *parsed);
@@ -60,14 +57,14 @@ char		*lst_find_var_val(t_list *lst, char *name);
 char		*find_var_val(t_info *info, char *name);
 int			str_in_arr(char **arr, char *find);
 t_list		*str_arr_to_lst(char **arr);
-
-
+void		delete_parsed(void *content);
+t_parsed	*lst_get_parsed(t_list *lst);
 
 // signals
 void		handle_keybindings(int signum);
 
 // tests
-void		print_parsed(t_parsed *parsed);
+void		print_parsed(t_list *parsed);
 int			test_parser(void);
 
 // lexer/lexer_checks.c
@@ -83,13 +80,15 @@ int			locate_substr(char *s, size_t *start, size_t *end);
 char		**lexer(char *cmd, t_info *info);
 
 // bultins
-void		execute_pwd(t_info *info);
-void	    execute_echo(t_parsed *parsed);
-void		builtin_env(t_info *info);
-void    	execute_exit(t_info *info);
-int			export(t_info *info, char **arg);
+int			execute_pwd(t_info *info);
+int			execute_echo(t_parsed *parsed);
+int			execute_env(t_info *info);
+int			execute_exit(t_info *info);
+int			execute_export(t_info *info, char **arg);
+int			execute_unset(t_info *info, char **arg);
 
 // executer/executer.c
-int			executer(t_info *info, t_commands commands);
+int executer(t_info *info);
+int			execute_builtin_if(t_info *info, t_list *parsed);
 
 #endif

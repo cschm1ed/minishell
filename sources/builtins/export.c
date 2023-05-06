@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   execute_export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@ static char	**cpy_lst_to_array(t_list *lst);
 static void	bubble_sort_str_array(char **array, int len);
 static int	check_if_arg_is_valid(char *arg);
 
-int	export(t_info *info, char **arg)
+int	execute_export(t_info *info, char **arg)
 {
 	int i;
 
@@ -28,7 +28,7 @@ int	export(t_info *info, char **arg)
 	{
 		if (check_if_arg_is_valid(*arg) == FALSE)
 		{
-			printf("minishell: export: '%s': not a valid identifier\n", arg[i]);
+			printf("minishell: execute_export: '%s': not a valid identifier\n", arg[i]);
 			return (FAILURE);
 		}
 		i ++;

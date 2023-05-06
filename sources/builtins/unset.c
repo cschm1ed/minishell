@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	unset(t_info *info, char **arg)
+int execute_unset(t_info *info, char **arg)
 {
 	t_list	*ptr;
 	int 	i;
@@ -27,4 +27,5 @@ void	unset(t_info *info, char **arg)
 		ft_lstrmone(&(info->env_lst), ptr, delete_variable);
 		i++;
 	}
+	return (SUCCESS);
 }

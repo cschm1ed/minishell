@@ -12,9 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-void    execute_exit(t_info *info)
+int execute_exit(t_info *info)
 {
     // free
 	(void)info;
     exit(0);
+	return (SUCCESS);
 }

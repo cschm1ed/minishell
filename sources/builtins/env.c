@@ -14,11 +14,11 @@
 
 static void	print_var(void *content);
 
-void	builtin_env(t_info *info)
+int execute_env(t_info *info)
 {
 	ft_lstiter(info->env_lst, print_var);
 	printf("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n");
-	exit(0);
+	return (SUCCESS);
 }
 
 static void	print_var(void *content)

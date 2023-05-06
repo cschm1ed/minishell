@@ -12,19 +12,22 @@
 
 #include "../../includes/minishell.h"
 
-void	execute_echo(t_parsed *parsed)
+int execute_echo(t_parsed *parsed)
 {
-	int	i;
+	char	**args;
+	int		i;
 	
 	i = -1;
-	if (!ft_strncmp(parsed->args[0], "-n", 3))
+	args = parsed->args;
+	if (ft_strcmp(args[0], "-n") == 0)
 		i++;
-	while (parsed->args[++i])
+	while (args[++i])
 	{
-		printf("%s", parsed->args[i]);
-		if (parsed->args[i + 1])
+		printf("%s", args[i]);
+		if (args[i + 1])
 			printf(" ");
 	}
-	if (ft_strncmp(parsed->args[0], "-n", 3))
+	if (ft_strcmp(args[0], "-n") != 0)
 		printf("\n");
+	return (SUCCESS);
 }

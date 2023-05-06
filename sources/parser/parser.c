@@ -12,11 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-static int	parse_command(t_parsed **p_lst, t_list **t_start);
-static void	parsed_add_back(t_parsed **head, t_parsed *new_node);
-static int	distribute_commands(t_list **token_lst, t_parsed **parsed);
+static int	parse_command(t_list **p_lst, t_list **t_start);
+static int	distribute_commands(t_list **token_lst, t_list **parsed);
 
-t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed)
+t_list *parser(t_info *info, t_list **parsed, char **lexed)
 {
 	t_list	*token_lst;
 
@@ -30,7 +29,7 @@ t_parsed *parser(t_info *info, t_parsed **parsed, char **lexed)
 	return (*parsed);
 }
 
-static int distribute_commands(t_list **token_lst, t_parsed **parsed)
+static int distribute_commands(t_list **token_lst, t_list **parsed)
 {
 	int 	first;
 	t_list	*node;
@@ -61,15 +60,20 @@ static int distribute_commands(t_list **token_lst, t_parsed **parsed)
 	return (SUCCESS);
 }
 
-static int parse_command(t_parsed **p_lst, t_list **t_start)
+static int parse_command(t_list **p_lst, t_list **t_start)
 {
 	t_parsed	*current;
 	t_list 		*args;
+	t_list		*node;
 
 	current = ft_calloc(1, sizeof(t_parsed));
 	if (current == NULL)
 		return (perror("malloc"), FAILURE);
-	parsed_add_back(p_lst, current);
+	node = ft_lstnew(current);
+	if (node == NULL)
+		return (perror("malloc"), FAILURE);
+	node->content = (void *)current;
+	ft_lstadd_back(p_lst, node);
 	if (t_start == NULL)
 		return (printf("minishell: syntax error near unexpected token `|'\n"), FAILURE);
 	if (find_and_remove_redirects(t_start, current) == FAILURE
@@ -88,19 +92,4 @@ static int parse_command(t_parsed **p_lst, t_list **t_start)
 		args = args->next;
 	}
 	return (SUCCESS);
-}
-
-static	void	parsed_add_back(t_parsed **head, t_parsed *new_node)
-{
-	t_parsed	*ptr;
-
-	if (!*head)
-		*head = new_node;
-	else
-	{
-		ptr = *head;
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = new_node;
-	}
 }

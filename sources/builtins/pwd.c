@@ -12,8 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-void execute_pwd(t_info *info)
+int execute_pwd(t_info *info)
 {
 	//printf("%s\n", info->env_lst->pwd);
 	printf("%s\n", lst_find_var_val(info->env_lst, "PWD"));
+	return (SUCCESS);
 }

@@ -19,6 +19,8 @@ typedef struct s_history	t_history;
 typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 
+#define SYNERR "sth errormsg"
+
 typedef struct s_info
 {
 	t_list		*lex_lst;
@@ -37,7 +39,6 @@ typedef struct s_parsed
 	char		*redirect_output;
 	char 		*delimiter;
 	int			append_mode;
-	t_parsed	*next;
 }	t_parsed;
 
 typedef struct s_variable
@@ -51,7 +52,7 @@ typedef struct s_commands
 	char		*raw;
 	char		**lexed;
 	t_list		*token_lst;
-	t_parsed	*parsed;
+	t_list		*parsed;
 }	t_commands;
 
 typedef struct s_history

@@ -16,15 +16,16 @@ int main(int argc, char **argv, char **envp)
 {
 	t_commands  commands;
 	t_info		*info;
-	char 		args[] = {"< indatei"};
 
 	signal(SIGINT, handle_keybindings);
 	signal(SIGQUIT, handle_keybindings);
 	info = info_init(envp);
+	if (info == NULL)
+		return (perror("info"), 1);
 	info->commands = &commands;
 	if (info == NULL)
 		return (printf("info error\n"), 1);
-	//export(info, NULL);
+	//execute_export(info, NULL);
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
@@ -32,8 +33,11 @@ int main(int argc, char **argv, char **envp)
         if (commands.lexed)
         {
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
-            print_parsed(commands.parsed);
+			print_parsed(commands.parsed);
+			executer(info);
         }
 		// printf(MAGENTA"Exit_code: %d\n"ESC, info->exit_code);
     }
+	(void)argc;
+	(void)argv;
 }
