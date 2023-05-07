@@ -22,7 +22,8 @@ LIBFT			:= libft.a
 
 UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
 					ft_lstrmone.c delete_struct.c var_lst_add.c lst_get_struct.c find_var_val.c lst_find_var_val.c\
-					str_in_arr.c ft_strcmp.c str_arr_to_lst.c replace_variables.c ft_isvariable.c utils.c
+					str_in_arr.c ft_strcmp.c str_arr_to_lst.c replace_variables.c ft_isvariable.c utils.c\
+					lst_newparsed_node.c unexpected_token.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c
 

@@ -26,6 +26,7 @@ typedef struct s_info
 	t_list		*lex_lst;
 	t_list		*env_lst;
 	t_list		*user_vars;
+	t_list		*export_lst;
 	t_commands	*commands;
 	int			exit_code;
 	char 		*pwd;

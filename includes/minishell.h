@@ -37,8 +37,8 @@ t_info		*info_init(char **env);
 // parser
 t_list 		*parser(t_info *info, t_list **parsed, char **lexed);
 void		replace_variables(t_info *info, t_list *token_lst);
-int			find_and_remove_redirects(t_list **tokens, t_parsed *parsed);
-int			find_and_remove_delimiter_and_append(t_list **tokens, t_parsed *parsed);
+int			redirects(t_list **tokens, t_parsed *parsed);
+int			delimiter_and_append(t_list **tokens, t_parsed *parsed);
 
 // utils
 char		*ft_readline(const char *str);
@@ -59,6 +59,8 @@ int			str_in_arr(char **arr, char *find);
 t_list		*str_arr_to_lst(char **arr);
 void		delete_parsed(void *content);
 t_parsed	*lst_get_parsed(t_list *lst);
+t_list		*lst_newparsed_node();
+int unexpected_token(char *token);
 
 // signals
 void		handle_keybindings(int signum);
