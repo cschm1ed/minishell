@@ -53,4 +53,4 @@ dkms.conf
 
 # CLine
 *.clang-format
-*.idea
+*.idea/
