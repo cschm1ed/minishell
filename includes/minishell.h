@@ -60,14 +60,8 @@ t_list		*str_arr_to_lst(char **arr);
 void		delete_parsed(void *content);
 t_parsed	*lst_get_parsed(t_list *lst);
 t_list		*lst_newparsed_node();
-<<<<<<< HEAD
 int unexpected_token(char *token);
 char		*ft_strsjoin(const char *s1, const char *s2, const char *s3);
-=======
-int			unexpected_token(char *token);
-t_list		*lst_newvar_node(char *name, char *value);
-t_list		*lst_find_node(t_list *lst, char *name);
->>>>>>> refs/remotes/origin/main
 
 // signals
 void		handle_keybindings(int signum);
