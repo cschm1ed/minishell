@@ -18,7 +18,7 @@
  * @param next character to check if sequence of characters 
  * @return true or false
  */
-int	ft_isvariable(char c, char next)
+int	ft_isvariable(char before, char c, char next)
 {
-	return (c == '$' && !ft_isspace(next));
+	return (!ft_isspace(before) && c == '$' && !ft_isspace(next));
 }

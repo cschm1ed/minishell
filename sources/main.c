@@ -25,18 +25,19 @@ int main(int argc, char **argv, char **envp)
 	info->commands = &commands;
 	if (info == NULL)
 		return (printf("info error\n"), 1);
-	//execute_export(info, NULL);
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
         commands.lexed = lexer(commands.raw, info);
         if (commands.lexed)
         {
+			print_lexed(commands.lexed);
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
+			ft_free_dbl_ptr(commands.lexed);
 			print_parsed(commands.parsed);
 			executer(info);
         }
-		// printf(MAGENTA"Exit_code: %d\n"ESC, info->exit_code);
+		printf(RED"Exit: %d\n"ESC, info->exit_code);
     }
 	(void)argc;
 	(void)argv;

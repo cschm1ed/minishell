@@ -19,7 +19,7 @@ typedef struct s_history	t_history;
 typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 
-#define SYNERR "sth errormsg"
+#define SYNERR "sth errormsg\n"
 
 typedef struct s_info
 {

@@ -45,7 +45,7 @@ char		*ft_readline(const char *str);
 int			ft_isspace(char c);
 int			ft_isquote(char c);
 int			ft_isspecial(char c);
-int     	ft_isvariable(char c, char next);
+int			ft_isvariable(char before, char c, char next);
 int			ft_isredirect(char c);
 char		**str_arr_add(char ***arr, char *toadd);
 void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
@@ -61,6 +61,7 @@ void		delete_parsed(void *content);
 t_parsed	*lst_get_parsed(t_list *lst);
 t_list		*lst_newparsed_node();
 int unexpected_token(char *token);
+char		*ft_strsjoin(const char *s1, const char *s2, const char *s3);
 
 // signals
 void		handle_keybindings(int signum);
@@ -74,12 +75,20 @@ int			valid_num_of_quotes(char *s, t_info *info);
 int			valid_quotes(char **substr);
 int			valid_num_of_specials(char **substr, t_info *info);
 
-// lexer/lexer_utils.c
+// lexer/lexer_trim.c
+char		*trim_quotes(char *str);
+
+// lexer/lexer_split.c
 int			count_substrs(char *s);
-int			locate_substr(char *s, size_t *start, size_t *end);
+char		**split_if_isspace(char **split, char *s, int amt_substrs);
+
+// lexer/lexer_utils.c
+void		skip_until_quote(const char *s, size_t *i);
+int			skip_specials(char *s, size_t *i);
 
 // lexer/lexer.c
 char		**lexer(char *cmd, t_info *info);
+void		print_lexed(char **array);
 
 // bultins
 int			execute_pwd(t_info *info);
