@@ -23,10 +23,17 @@
  */
 char	*lst_find_var_val(t_list *lst, char *name)
 {
+	if (lst_find_node(lst, name) != NULL)
+		return (lst_get_var(lst_find_node(lst, name))->name);
+	return (NULL);
+}
+
+t_list	*lst_find_node(t_list *lst, char *name)
+{
 	while (lst)
 	{
 		if (ft_strcmp(lst_get_var(lst)->name, name) == 0)
-			return (lst_get_var(lst)->value);
+			return (lst);
 		lst = lst->next;
 	}
 	return (NULL);

@@ -60,7 +60,9 @@ t_list		*str_arr_to_lst(char **arr);
 void		delete_parsed(void *content);
 t_parsed	*lst_get_parsed(t_list *lst);
 t_list		*lst_newparsed_node();
-int unexpected_token(char *token);
+int			unexpected_token(char *token);
+t_list		*lst_newvar_node(char *name, char *value);
+t_list		*lst_find_node(t_list *lst, char *name);
 
 // signals
 void		handle_keybindings(int signum);
@@ -88,6 +90,12 @@ int			execute_env(t_info *info);
 int			execute_exit(t_info *info);
 int			execute_export(t_info *info, char **arg);
 int			execute_unset(t_info *info, char **arg);
+
+// export utils
+char		**cpy_lst_to_array(t_list *lst);
+void		bubble_sort_str_array(char **array, int len);
+int			print_sorted_lst(t_info *info);
+int			check_if_varname_is_valid(char *str);
 
 // executer/executer.c
 int executer(t_info *info);

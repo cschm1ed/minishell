@@ -23,6 +23,8 @@ void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 	t_list	*prev;
 	t_list	*next;
 
+	if (node == NULL)
+		return ;
 	prev = *head;
 	if (node == NULL)
 		return ;

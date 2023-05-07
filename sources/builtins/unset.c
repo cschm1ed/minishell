@@ -14,18 +14,18 @@
 
 int execute_unset(t_info *info, char **arg)
 {
-	t_list	*ptr;
 	int 	i;
 
 	i = 0;
 	while (arg[i])
 	{
-		ptr = info->env_lst;
-		while (ptr && ft_strncmp(lst_get_var(ptr)->name, arg[i],
-								 ft_strlen(arg[i]) + 1) != 0)
-			ptr = ptr->next;
-		ft_lstrmone(&(info->env_lst), ptr, delete_variable);
-		i++;
+		ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
+					delete_variable);
+		ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst, arg[i]),
+					delete_variable);
+		ft_lstrmone(&(info->user_vars), lst_find_node(info->user_vars, arg[i]),
+					delete_variable);
+		i ++;
 	}
 	return (SUCCESS);
 }
