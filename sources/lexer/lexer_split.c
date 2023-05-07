@@ -1,7 +1,6 @@
 #include "../../includes/minishell.h"
 
-static void	terminate_string_to_count(char *s, size_t *i);
-static void	terminate_string_to_split(char *s, size_t *i, size_t *start);
+static void	terminate_string(char *s, size_t *i);
 static char *allocate_string(char *s, size_t *i, size_t *start);
 
 int	count_substrs(char *s)
@@ -15,23 +14,12 @@ int	count_substrs(char *s)
 		if (!ft_isspace(s[i]))
 		{
 			cnt++;
-			terminate_string_to_count(s, &i);
+			terminate_string(s, &i);
 			if (s[i - 1] && ft_isspecial(s[i]) && !ft_isspace(s[i - 1]))
 				cnt++;
 			skip_specials(s, &i);
 		}
 	return (cnt);
-}
-
-static void	terminate_string_to_count(char *s, size_t *i)
-{
-	while (s[*i] && !ft_isspace(s[*i]) && !ft_isspecial(s[*i])
-		&& !ft_isvariable(s[*i - 1], s[*i], s[*i + 1]))
-	{
-		if (ft_isquote(s[*i]))
-			skip_until_quote(s, i);
-		(*i)++;
-	}
 }
 
 char	**split_if_isspace(char **split, char *s, int amt_substrs)
@@ -46,7 +34,7 @@ char	**split_if_isspace(char **split, char *s, int amt_substrs)
 		if (s[i] && !ft_isspace(s[i]))
 		{
 			start = i;
-			terminate_string_to_split(s, &i, &start);
+			terminate_string(s, &i);
 			if (s[i - 1] && ft_isspecial(s[i]) && !ft_isspace(s[i - 1]))
 			{
 				split[j] = ft_substr(s, start, i - start);
@@ -62,11 +50,9 @@ char	**split_if_isspace(char **split, char *s, int amt_substrs)
 	return (split);
 }
 
-static void	terminate_string_to_split(char *s, size_t *i, size_t *start)
+static void	terminate_string(char *s, size_t *i)
 {
-	while (s[*i] && !ft_isspace(s[*i]) && !ft_isspecial(s[*i])
-		&& ((s[*i - 1] && s[*i + 1] && !ft_isvariable(s[*i - 1], s[*i], s[*i + 1]))
-			|| *start == *i || !s[*i + 1]))
+	while (s[*i] && !ft_isspace(s[*i]) && !ft_isspecial(s[*i]))
 	{
 		if (ft_isquote(s[*i]))
 			skip_until_quote(s, i);
@@ -82,7 +68,5 @@ static char *allocate_string(char *s, size_t *i, size_t *start)
 		split = ft_substr(s, *start, (*i + 1) - *start);
 	else
 		split = ft_substr(s, *start, *i - *start);
-	if (s[*i - 1] && s[*i + 1] && ft_isvariable(s[*i - 1], s[*i], s[*i + 1]))
-		(*i)--;
 	return (split);
 }

@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer
+VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
 
 BUILDDIR		:= build
 

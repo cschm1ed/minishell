@@ -33,9 +33,9 @@ int main(int argc, char **argv, char **envp)
         {
 			print_lexed(commands.lexed);
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
-			ft_free_dbl_ptr(commands.lexed);
 			print_parsed(commands.parsed);
 			executer(info);
+			// ft_free_dbl_ptr(commands.lexed);
         }
 		printf(RED"Exit: %d\n"ESC, info->exit_code);
     }
