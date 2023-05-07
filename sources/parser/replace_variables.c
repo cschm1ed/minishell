@@ -14,6 +14,13 @@
 
 static void	replace(t_info *info, t_list *node, char *name);
 
+/**
+ * Replaces each Variable - declared with '$' - and replaces it with its
+ * corresponding value.
+ *
+ * @param info - general info struct
+ * @param token_lst - list of tokens where variables should be replaced
+ */
 void	replace_variables(t_info *info, t_list *token_lst)
 {
 	char	*str;

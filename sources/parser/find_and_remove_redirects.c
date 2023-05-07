@@ -15,6 +15,15 @@
 static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head);
 static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head);
 
+/**
+ * @brief checks token list for redirect '>' or delimiter '<' symbols
+ * 			and stores information in the parsed struct accordingly.
+ * 			Said tokens are removed afterwards.
+ *
+ * @param tokens - the beginning of the token list
+ * @param parsed - the struct into which information should be stored
+ * @return - returns FAILURE in case of an error otherwise SUCCESS
+ */
 int	redirects(t_list **tokens, t_parsed *parsed)
 {
 	t_list	*ptr;

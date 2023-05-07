@@ -12,6 +12,14 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * returns the value of the variable searched for by looking through
+ * the env_lst and user_vars list.
+ *
+ * @param info - general info struct
+ * @param name - name of the variable whose value is sought
+ * @return
+ */
 char	*find_var_val(t_info *info, char *name)
 {
 	if (lst_find_var_val(info->env_lst, name))

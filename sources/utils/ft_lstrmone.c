@@ -11,12 +11,20 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/**
+ * Removes one node from a linked list and frees all its memory.
+ *
+ * @param head - head of the list from which the node should be deleted
+ * @param node - pointer to the node to be deleted
+ * @param del - function used to delete the content of the node
+ */
 void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 {
 	t_list	*prev;
 	t_list	*next;
 
+	if (node == NULL)
+		return ;
 	prev = *head;
 	if (node == NULL)
 		return ;

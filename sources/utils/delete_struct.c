@@ -12,6 +12,11 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * frees all memory, a s_variable struct holds.
+ *
+ * @param content pointer to the struct to be deleted.
+ */
 void	delete_variable(void *content)
 {
 	t_variable	*ptr;
@@ -32,6 +37,11 @@ void	delete_variable(void *content)
 	free(ptr);
 }
 
+/**
+ * frees all memory held by a s_parsed struct.
+ *
+ * @param content - pointer to the struct to be freed
+ */
 void	delete_parsed(void *content)
 {
 	t_parsed	*parsed;
