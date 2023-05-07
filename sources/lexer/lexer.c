@@ -28,7 +28,7 @@ char	**lexer(char *cmd, t_info *info)
 	char	**lexed;
 	int		amt_substrs;
 
-	if (*cmd == 0 || !cmd || !valid_num_of_quotes(cmd, info))
+	if (cmd == NULL || *cmd == 0 || !valid_num_of_quotes(cmd, info))
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
 	printf(GREEN"Count: %d\n"ESC, amt_substrs);

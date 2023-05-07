@@ -43,7 +43,7 @@ static void	replace(t_info *info, t_list *node, char *name)
 	value = lst_find_var_val(info->env_lst, name);
 	if (value)
 	{
-		node->content = (void *) lst_find_var_val(info->env_lst, name);
+		node->content = lst_find_var_val(info->env_lst, name);
 		if (!node->content)
 			exit(1);
 		return ;
