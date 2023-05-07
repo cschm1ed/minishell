@@ -12,6 +12,13 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * Displays the following error message: "minishell: syntax error
+ * near unexpected token `<token>'\n".
+ *
+ * @param token - str to be displayed in error message
+ * @return
+ */
 int	unexpected_token(char *token)
 {
 	printf("minishell: syntax error near unexpected token `%s'\n", token);

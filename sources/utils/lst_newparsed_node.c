@@ -12,6 +12,12 @@
 
 #include "../../includes/minishell.h"
 
+/**
+ * Creates a t_list node and allocates memory for a t_paesed struct
+ * as its content.
+ *
+ * @return - pointer to the created t_list node.
+ */
 t_list	*lst_newparsed_node(void)
 {
 	t_parsed	*current;
