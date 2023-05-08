@@ -24,5 +24,8 @@ char	*find_var_val(t_info *info, char *name)
 {
 	if (lst_find_var_val(info->env_lst, name))
 		return (lst_find_var_val(info->env_lst, name));
-	return (lst_find_var_val(info->user_vars, name));
+    if (lst_find_var_val(info->export_lst, name))
+        return (lst_find_var_val(info->export_lst, name));
+    else
+	    return (lst_find_var_val(info->user_vars, name));
 }

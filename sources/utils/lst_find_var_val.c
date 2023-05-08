@@ -24,7 +24,7 @@
 char	*lst_find_var_val(t_list *lst, char *name)
 {
 	if (lst_find_node(lst, name) != NULL)
-		return (lst_get_var(lst_find_node(lst, name))->name);
+		return (lst_get_var(lst_find_node(lst, name))->value);
 	return (NULL);
 }
 
