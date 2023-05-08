@@ -34,7 +34,6 @@ t_list	*parser(t_info *info, t_list **parsed, char **lexed)
 	token_lst = str_arr_to_lst(lexed);
 	if (token_lst == NULL)
 		return (perror("parser got no token lst\n"), NULL);
-	replace_variables(info, token_lst);
 	if (distribute_commands(&token_lst, parsed) == FAILURE)
 		return (NULL);
 	return (*parsed);
@@ -79,8 +78,8 @@ static int	parse_command(t_list **p_lst, t_list **t_start)
 	ft_lstadd_back(p_lst, node);
 	if (t_start == NULL)
 		return (unexpected_token("|"));
-	if (redirects(t_start, lst_get_parsed(node)) == FAILURE
-		|| delimiter_and_append(t_start, lst_get_parsed(node)) == FAILURE)
+	if (delimiter_and_append(t_start, lst_get_parsed(node)) == FAILURE
+        || redirects(t_start, lst_get_parsed(node)) == FAILURE)
 		return (FAILURE);
 	if (add_args(t_start, node) == FAILURE)
 		return (FAILURE);
