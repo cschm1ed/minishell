@@ -6,7 +6,7 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/03 18:58:31 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/09 10:40:13 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT			:= libft.a
 
 UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
 					ft_lstrmone.c delete_struct.c var_lst_add.c lst_get_struct.c find_var_val.c lst_find_var_val.c\
-					str_in_arr.c ft_strcmp.c str_arr_to_lst.c replace_variables.c ft_isvariable.c utils.c\
+					str_in_arr.c ft_strcmp.c str_arr_to_lst.c ft_isvariable.c utils.c\
 					unexpected_token.c ft_strsjoin.c lst_new_node.c
 
 LEXER			:= lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c
