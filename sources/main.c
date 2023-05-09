@@ -37,7 +37,7 @@ int main(int argc, char **argv, char **envp)
 			executer(info);
 			// ft_free_dbl_ptr(commands.lexed);
         }
-		printf(RED"Exit: %d\n"ESC, info->exit_code);
+		// printf(RED"Exit: %d\n"ESC, info->exit_code);
     }
 	(void)argc;
 	(void)argv;

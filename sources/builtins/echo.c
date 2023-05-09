@@ -6,28 +6,50 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:55:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/03 19:00:47 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:50:32 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static void	print_args(char **args, int j)
+{
+	while (args[j])
+	{
+		printf("%s", args[j]);
+		if (args[++j])
+			printf(" ");
+	}
+}
+
+static int	ft_isoption(char *args)
+{
+	int	i;
+
+	i = -1;
+	if (args[++i] == '-')
+	{
+		while (args[++i])
+			if (args[i] != 'n')
+				return (FALSE);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 int execute_echo(t_parsed *parsed)
 {
 	char	**args;
-	int		i;
+	int		j;
 	
-	i = -1;
 	args = parsed->args;
-	if (ft_strcmp(args[0], "-n") == 0)
-		i++;
-	while (args[++i])
-	{
-		printf("%s", args[i]);
-		if (args[i + 1])
-			printf(" ");
-	}
-	if (ft_strcmp(args[0], "-n") != 0)
+	j = 0;
+	if (ft_isoption(args[j]))
+		while (args[++j])
+			if (!ft_isoption(args[j]))
+				break;
+	print_args(args, j);
+	if (!ft_isoption(args[0]))
 		printf("\n");
 	return (SUCCESS);
 }
