@@ -87,10 +87,19 @@ static char	*process_string(size_t *j, char **lexed, int i, t_info *info)
 static char	*replace_var(char *str, size_t *j, t_info *info)
 {
 	char	*name;
+	char 	*value;
 	char	*ret;
 
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
-	ret = rejoin(str, find_var_val(info, name), *j, get_name_len(str + *j));
+	if (ft_strcmp(name, "?") == 0)
+	{
+		value = ft_itoa(info->exit_code);
+		if (value == NULL)
+			return (NULL);
+	}
+	else
+		value = find_var_val(info, name);
+	ret = rejoin(str, value, *j, get_name_len(str + *j));
 	*j += (int)ft_strlen(find_var_val(info, name));
 	return (ret);
 }
