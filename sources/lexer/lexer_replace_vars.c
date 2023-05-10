@@ -12,22 +12,23 @@
 
 #include "../../includes/minishell.h"
 
-static int  get_name_len(const char *str);
-static char *rejoin(char *str, char *value, int j, int len);
-static char *replace_var(char *str, int *j, t_info *info);
-static char *process_string(int *j, char **lexed, int i, t_info *info);
+static int	get_name_len(const char *str);
+static char	*rejoin(char *str, char *value, int j, int len);
+static char	*replace_var(char *str, int *j, t_info *info);
+static char	*process_string(int *j, char **lexed, int i, t_info *info);
 
 /**
  * @brief Replace variables in the given lexed array.
  *
  * @param info A pointer to the t_info structure containing variable values.
  * @param lexed The lexed strings array.
- * @return int SUCCESS if all variables are replaced successfully, FAILURE otherwise.
+ * @return int SUCCESS if all variables are replaced successfully,
+ * 					FAILURE otherwise.
  */
-int replace_variables(t_info *info, char **lexed)
+int	replace_variables(t_info *info, char **lexed)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (lexed[i])
@@ -53,9 +54,9 @@ int replace_variables(t_info *info, char **lexed)
  * @param info A pointer to the t_info structure containing variable values.
  * @return char* The processed string with variables replaced if necessary.
  */
-static char *process_string(int *j, char **lexed, int i, t_info *info)
+static char	*process_string(int *j, char **lexed, int i, t_info *info)
 {
-	char    *str;
+	char	*str;
 
 	str = lexed[i];
 	if (str[*j] == '$')
@@ -72,7 +73,7 @@ static char *process_string(int *j, char **lexed, int i, t_info *info)
 	}
 	else
 		(*j)++;
-	return str;
+	return (str);
 }
 
 /**
@@ -83,10 +84,10 @@ static char *process_string(int *j, char **lexed, int i, t_info *info)
  * @param info A pointer to the t_info structure containing variable values.
  * @return char* The string with the replaced variable value.
  */
-static char *replace_var(char *str, int *j, t_info *info)
+static char	*replace_var(char *str, int *j, t_info *info)
 {
-	char    *name;
-	char    *ret;
+	char	*name;
+	char	*ret;
 
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	ret = rejoin(str, find_var_val(info, name), *j, get_name_len(str + *j));
@@ -103,12 +104,12 @@ static char *replace_var(char *str, int *j, t_info *info)
  * @param len The length of the variable name.
  * @return char* The new string with the replaced variable value.
  */
-static char *rejoin(char *str, char *value, int j, int len)
+static char	*rejoin(char *str, char *value, int j, int len)
 {
-	char    *ret;
-	char    *s1;
-	char    *s2;
-	char    *s3;
+	char	*ret;
+	char	*s1;
+	char	*s2;
+	char	*s3;
 
 	if (*str != '$')
 	{
@@ -128,11 +129,7 @@ static char *rejoin(char *str, char *value, int j, int len)
 	if (s3 == NULL)
 		return (free(s1), free(s2), NULL);
 	ret = ft_strsjoin(s1, s2, s3);
-	free(s1);
-	free(s2);
-	free(s3);
-	free(str);
-	return (ret);
+	return (free(str), free(s3), free(s2), free(s1), ret);
 }
 
 /**
@@ -141,9 +138,9 @@ static char *rejoin(char *str, char *value, int j, int len)
  * @param str The input string containing the variable name.
  * @return int The length of the variable name.
  */
-static int  get_name_len(const char *str)
+static int	get_name_len(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*str == '$')
