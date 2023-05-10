@@ -12,14 +12,15 @@
 
 #include "../../includes/minishell.h"
 
-void skip_until_quote(const char *s, size_t *i)
+int skip_until_quote(const char *s, size_t *i)
 {
 	char	quote;
 
 	quote = s[*i];
-	(*i)++;
-	while (s[*i] != quote)
-		(*i)++;
+	while (s[++(*i)] != quote)
+		if (!s[*i])
+			return (FALSE);
+	return (TRUE);
 }
 
 int	skip_specials(char *s, size_t *i)

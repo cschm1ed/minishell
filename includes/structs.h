@@ -19,7 +19,7 @@ typedef struct s_history	t_history;
 typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 
-#define SYNERR "sth errormsg\n"
+#define SYNERR "minishell: syntax error\n"
 
 typedef struct s_info
 {

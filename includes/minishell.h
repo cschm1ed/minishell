@@ -85,7 +85,7 @@ int			count_substrs(char *s);
 char		**split_if_isspace(char **split, char *s, int amt_substrs);
 
 // lexer/lexer_utils.c
-void		skip_until_quote(const char *s, size_t *i);
+int			skip_until_quote(const char *s, size_t *i);
 int			skip_specials(char *s, size_t *i);
 
 // lexer/lexer.c

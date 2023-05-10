@@ -14,31 +14,43 @@
 
 static int	count_specials(char *lxd, int *i, char c);
 
-/**
- * @brief checks if the user's cmd contains an even number of quotation marks
- * @param cmd the user's input that was read from the line
- * @return true or false
- */
 int	valid_num_of_quotes(char *cmd, t_info *info)
 {
-	int		dbl_qte;
-	int		sng_qte;
-	int		i;
+	size_t	i;
 
-	dbl_qte = 0;
-	sng_qte = 0;
 	i = -1;
 	while (cmd[++i])
-	{
-		if (cmd[i] == '"')
-			dbl_qte++;
-		else if (cmd[i] == '\'')
-			sng_qte++;
-	}
-	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
-		return (printf(SYNERR), info->exit_code = 258, FALSE);
+		if (ft_isquote(cmd[i]))
+			if (!skip_until_quote(cmd, &i))
+				return (printf(SYNERR), info->exit_code = 258, FALSE);
 	return (TRUE);
 }
+
+// /**
+//  * @brief checks if the user's cmd contains an even number of quotation marks
+//  * @param cmd the user's input that was read from the line
+//  * @return true or false
+//  */
+// int	valid_num_of_quotes(char *cmd, t_info *info)
+// {
+// 	int		dbl_qte;
+// 	int		sng_qte;
+// 	int		i;
+
+// 	dbl_qte = 0;
+// 	sng_qte = 0;
+// 	i = -1;
+// 	while (cmd[++i])
+// 	{
+// 		if (cmd[i] == '"')
+// 			dbl_qte++;
+// 		else if (cmd[i] == '\'')
+// 			sng_qte++;
+// 	}
+// 	if (dbl_qte % 2 != 0 || sng_qte % 2 != 0)
+// 		return (printf(SYNERR), info->exit_code = 258, FALSE);
+// 	return (TRUE);
+// }
 
 /**
  * @brief checks if the lexed array only contains valid specials ('>' '<' '|')
