@@ -3,7 +3,10 @@
 static char	*join_edge_cases(const char *s1, const char *s2, const char *s3)
 {
 	if (!s1 && !s2 && !s3)
+	{
+		printf("HERE\n");
 		return (NULL);
+	}
 	else if (!s1 && !s2)
 		return (ft_strdup(s3));
 	else if (!s1 && !s3)

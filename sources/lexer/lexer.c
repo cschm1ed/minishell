@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/05 12:47:20 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/10 15:33:13 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	**lexer(char *cmd, t_info *info)
 	lexed = split_if_isspace(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
-	if (replace_variables(info, lexed) == FAILURE)
+	// if (!replace_variables(info, lexed))
+	// 	return (NULL);
 	lexed = iterate_through_cmd(lexed);
 	if (!valid_num_of_specials(lexed, info))
 		return (ft_free_dbl_ptr(lexed));

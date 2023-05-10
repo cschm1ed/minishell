@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/03 19:19:40 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/10 16:48:22 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int main(int argc, char **argv, char **envp)
         {
 			print_lexed(commands.lexed);
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
+			execute_builtin_if(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);
         }
 		// printf(RED"Exit: %d\n"ESC, info->exit_code);
