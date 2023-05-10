@@ -18,6 +18,7 @@ typedef struct s_commands	t_commands;
 typedef struct s_history	t_history;
 typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
+typedef struct s_list       t_list;
 
 #define SYNERR "minishell: syntax error\n"
 
@@ -36,8 +37,8 @@ typedef struct s_parsed
 {
 	char		*cmd;
 	char		**args;
-	char		*redirect_input;
-	char		*redirect_output;
+	t_list		*redirect_input;
+	t_list		*redirect_output;
 	char 		*delimiter;
 	int			append_mode;
 }	t_parsed;

@@ -22,6 +22,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
@@ -36,7 +38,6 @@ t_info		*info_init(char **env);
 
 // parser
 t_list 		*parser(t_info *info, t_list **parsed, char **lexed);
-void		replace_variables(t_info *info, t_list *token_lst);
 int			redirects(t_list **tokens, t_parsed *parsed);
 int			delimiter_and_append(t_list **tokens, t_parsed *parsed);
 
@@ -87,6 +88,7 @@ char		**split_if_isspace(char **split, char *s, int amt_substrs);
 // lexer/lexer_utils.c
 int			skip_until_quote(const char *s, size_t *i);
 int			skip_specials(char *s, size_t *i);
+int         replace_variables(t_info *info, char **lexed);
 
 // lexer/lexer.c
 char		**lexer(char *cmd, t_info *info);
@@ -107,7 +109,13 @@ int			print_sorted_lst(t_info *info);
 int			check_if_varname_is_valid(char *str);
 
 // executer/executer.c
-int executer(t_info *info);
+int         executer(t_info *info);
 int			execute_builtin_if(t_info *info, t_list *parsed);
+int         open_in(char *name);
+int         open_out(char *name);
+char        *get_path(char *cmd, t_info *info);
+int         check_infiles(t_list *parsed);
+void        close_pipes(int **pipes);
+
 
 #endif

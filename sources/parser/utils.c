@@ -36,9 +36,9 @@ void	print_parsed(t_list *parsed)
 		}
 		printf("\n");
 		printf(GREEN"redirect input:\t%s\n"ESC,
-			   lst_get_parsed(parsed)->redirect_input);
+			   ft_lstlast(lst_get_parsed(parsed)->redirect_input)->content);
 		printf(GREEN"redirect output:\t%s\n"ESC,
-			   lst_get_parsed(parsed)->redirect_output);
+			   ft_lstlast(lst_get_parsed(parsed)->redirect_output)->content);
 		printf(GREEN"delimiter:\t%s\n"ESC,
 			   lst_get_parsed(parsed)->delimiter);
 		printf(GREEN"append mode:\t%d\n\n"ESC,

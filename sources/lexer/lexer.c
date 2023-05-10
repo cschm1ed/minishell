@@ -38,6 +38,7 @@ char	**lexer(char *cmd, t_info *info)
 	lexed = split_if_isspace(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
+	if (replace_variables(info, lexed) == FAILURE)
 	lexed = iterate_through_cmd(lexed);
 	if (!valid_num_of_specials(lexed, info))
 		return (ft_free_dbl_ptr(lexed));

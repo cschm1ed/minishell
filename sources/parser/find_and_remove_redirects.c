@@ -57,11 +57,10 @@ static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
-	parsed->redirect_output = ft_strdup(tokens->next->content);
+	ft_lstlast(parsed->redirect_output)->content = ft_strdup(tokens->next->content);
 	if (parsed->redirect_output == NULL)
 		return (perror("malloc"), FAILURE);
 	tmp = tokens;
-	tokens = tokens->next->next;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
 	return (SUCCESS);
@@ -73,11 +72,10 @@ static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head)
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
-	parsed->redirect_input = ft_strdup(tokens->next->content);
+	ft_lstlast(parsed->redirect_input)->content = ft_strdup(tokens->next->content);
 	if (parsed->redirect_input == NULL)
 		return (perror("malloc"), FAILURE);
 	tmp = tokens;
-	tokens = tokens->next->next;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
 	return (SUCCESS);

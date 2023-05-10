@@ -75,7 +75,7 @@ static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head)
 		return (printf
 			("minishell: syntax error near unexpected token `newline'\n"),
 			FAILURE);
-	parsed->redirect_input = (char *)tokens->next->content;
+	ft_lstlast(parsed->redirect_input)->content = (char *)tokens->next->content;
 	parsed->append_mode = TRUE;
 	tmp = tokens;
 	tokens = tokens->next->next;

@@ -12,18 +12,18 @@
 
 #include "../../includes/minishell.h"
 
+typedef struct s_exec
+{
+    int     fd_in;
+    int     fd_out;
+    int     *pipes;
+    t_list  *pids;
+}   t_exec;
+
 int executer(t_info *info)
 {
 	t_list	*parsed;
+    t_exec  exec;
 
-	parsed = info->commands->parsed;
-	if (parsed->content == NULL)
-		return (SUCCESS);
-	while (parsed)
-	{
-		if (execute_builtin_if(info, parsed) == FAILURE)
-			return (FAILURE);
-		parsed = parsed->next;
-	}
 	return (SUCCESS);
 }

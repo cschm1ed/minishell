@@ -25,14 +25,14 @@ UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.
 					str_in_arr.c ft_strcmp.c str_arr_to_lst.c ft_isvariable.c utils.c\
 					unexpected_token.c ft_strsjoin.c lst_new_node.c
 
-LEXER			:= lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c
+LEXER			:= lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
 
 PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
 					parser.c
 
 BUILTINS		:= echo.c env.c pwd.c export.c exit.c unset.c export_utils.c
 
-EXECUTER		:= executer.c execute_builtin_if.c
+EXECUTER		:= executer.c execute_builtin_if.c executer_utils.c
 
 SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) $(EXECUTER) ft_readline.c main.c
 
