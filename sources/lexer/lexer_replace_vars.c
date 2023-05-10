@@ -13,9 +13,9 @@
 #include "../../includes/minishell.h"
 
 static int	get_name_len(const char *str);
-static char	*rejoin(char *str, char *value, int j, int len);
-static char	*replace_var(char *str, int *j, t_info *info);
-static char	*process_string(int *j, char **lexed, int i, t_info *info);
+static char	*rejoin(char *str, char *value, size_t j, int len);
+static char	*replace_var(char *str, size_t *j, t_info *info);
+static char	*process_string(size_t *j, char **lexed, int i, t_info *info);
 
 /**
  * @brief Replace variables in the given lexed array.
@@ -27,8 +27,8 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info);
  */
 int	replace_variables(t_info *info, char **lexed)
 {
-	int	i;
-	int	j;
+	int		 i;
+	size_t	j;
 
 	i = 0;
 	while (lexed[i])
@@ -54,7 +54,7 @@ int	replace_variables(t_info *info, char **lexed)
  * @param info A pointer to the t_info structure containing variable values.
  * @return char* The processed string with variables replaced if necessary.
  */
-static char	*process_string(int *j, char **lexed, int i, t_info *info)
+static char	*process_string(size_t *j, char **lexed, int i, t_info *info)
 {
 	char	*str;
 
@@ -62,7 +62,7 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 	if (str[*j] == '$')
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
-		skip_until_quote(str, (size_t *)j);
+		skip_until_quote(str, (unsigned long*)j);
 	else if (str[*j] == '"')
 	{
 		(*j)++;
@@ -84,7 +84,7 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
  * @param info A pointer to the t_info structure containing variable values.
  * @return char* The string with the replaced variable value.
  */
-static char	*replace_var(char *str, int *j, t_info *info)
+static char	*replace_var(char *str, size_t *j, t_info *info)
 {
 	char	*name;
 	char	*ret;
@@ -104,7 +104,7 @@ static char	*replace_var(char *str, int *j, t_info *info)
  * @param len The length of the variable name.
  * @return char* The new string with the replaced variable value.
  */
-static char	*rejoin(char *str, char *value, int j, int len)
+static char	*rejoin(char *str, char *value, size_t j, int len)
 {
 	char	*ret;
 	char	*s1;
