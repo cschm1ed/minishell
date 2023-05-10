@@ -70,12 +70,16 @@ static int	set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
 static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
+	t_list	*node;
 
 	if (tokens->next == NULL)
 		return (printf
 			("minishell: syntax error near unexpected token `newline'\n"),
 			FAILURE);
-	ft_lstlast(parsed->redirect_input)->content = (char *)tokens->next->content;
+	node = ft_lstnew(tokens->next->content);
+	if (node == NULL)
+		return (FAILURE);
+	ft_lstadd_back(&(parsed->redirect_output), node);
 	parsed->append_mode = TRUE;
 	tmp = tokens;
 	tokens = tokens->next->next;

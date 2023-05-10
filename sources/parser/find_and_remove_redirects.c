@@ -54,10 +54,14 @@ int	redirects(t_list **tokens, t_parsed *parsed)
 static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
+	t_list	*node;
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
-	ft_lstlast(parsed->redirect_output)->content = ft_strdup(tokens->next->content);
+	node = ft_lstnew(tokens->next->content);
+	if (node == NULL)
+		return (FAILURE);
+	ft_lstadd_back(&(parsed->redirect_output), node);
 	if (parsed->redirect_output == NULL)
 		return (perror("malloc"), FAILURE);
 	tmp = tokens;
