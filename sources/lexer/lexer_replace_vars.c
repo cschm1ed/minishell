@@ -55,8 +55,9 @@ int replace_variables(t_info *info, char **lexed)
  */
 static char *process_string(int *j, char **lexed, int i, t_info *info)
 {
-	char *str = lexed[i];
+	char    *str;
 
+	str = lexed[i];
 	if (str[*j] == '$')
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
@@ -84,12 +85,12 @@ static char *process_string(int *j, char **lexed, int i, t_info *info)
  */
 static char *replace_var(char *str, int *j, t_info *info)
 {
-	char *name;
-	char *ret;
+	char    *name;
+	char    *ret;
 
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	ret = rejoin(str, find_var_val(info, name), *j, get_name_len(str + *j));
-	*j += ft_strlen(find_var_val(info, name));
+	*j += (int)ft_strlen(find_var_val(info, name));
 	return (ret);
 }
 
@@ -104,10 +105,10 @@ static char *replace_var(char *str, int *j, t_info *info)
  */
 static char *rejoin(char *str, char *value, int j, int len)
 {
-	char *ret;
-	char *s1;
-	char *s2;
-	char *s3;
+	char    *ret;
+	char    *s1;
+	char    *s2;
+	char    *s3;
 
 	if (*str != '$')
 	{
@@ -140,7 +141,7 @@ static char *rejoin(char *str, char *value, int j, int len)
  * @param str The input string containing the variable name.
  * @return int The length of the variable name.
  */
-static int get_name_len(const char *str)
+static int  get_name_len(const char *str)
 {
 	int i;
 
