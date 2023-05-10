@@ -58,7 +58,7 @@ static char *process_string(int *j, char **lexed, int i, t_info *info)
 	char *str = lexed[i];
 
 	if (str[*j] == '$')
-		return replace_var(str, j, info);
+		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
 		skip_until_quote(str, (size_t *)j);
 	else if (str[*j] == '"')
@@ -67,7 +67,7 @@ static char *process_string(int *j, char **lexed, int i, t_info *info)
 		while (str[*j] && str[*j] != '"' && str[*j] != '$')
 			(*j)++;
 		if (str[*j] == '$')
-			return replace_var(str, j, info);
+			return (replace_var(str, j, info));
 	}
 	else
 		(*j)++;
