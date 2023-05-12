@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/03 18:44:21 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:27:27 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_history	t_history;
 typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 typedef struct s_list       t_list;
+typedef struct s_data      t_data;
 
 typedef struct s_info
 {
@@ -60,5 +61,13 @@ typedef struct s_history
 	char		*cmd;
 	t_history	*next;
 }	t_history;
+
+typedef struct s_data
+{
+	int		pipe_fd[2];
+	int		file_fd[2];
+	pid_t	pid;
+	char	*cmd_path;
+}	t_data;
 
 #endif

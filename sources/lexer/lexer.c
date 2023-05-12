@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/10 15:33:13 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 12:09:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_lexed(char **array)
 
 	i = -1;
 	while (array[++i])
-		printf(CYAN"%s$\n"ESC, array[i]);
+		printf(CYAN"%s\n"ESC, array[i]);
 }
 
 char	**lexer(char *cmd, t_info *info)
