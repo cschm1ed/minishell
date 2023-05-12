@@ -101,6 +101,7 @@ int			execute_env(t_info *info);
 int			execute_exit(t_info *info);
 int			execute_export(t_info *info, char **arg);
 int			execute_unset(t_info *info, char **arg);
+int			execute_cd(t_info *info, char *directory);
 
 // export utils
 char		**cpy_lst_to_array(t_list *lst);

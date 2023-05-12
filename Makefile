@@ -30,7 +30,7 @@ LEXER			:= lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer
 PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
 					parser.c
 
-BUILTINS		:= echo.c env.c pwd.c export.c exit.c unset.c export_utils.c
+BUILTINS		:= echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
 
 EXECUTER		:= executer.c execute_builtin_if.c executer_utils.c
 

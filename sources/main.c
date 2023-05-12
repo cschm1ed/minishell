@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **envp)
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
-        commands.lexed = lexer(commands.raw, info);
+        // commands.lexed = lexer(commands.raw, info);
         if (commands.lexed)
         {
 			print_lexed(commands.lexed);
@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **envp)
 			execute_builtin_if(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);
         }
-		// printf(RED"Exit: %d\n"ESC, info->exit_code);
+		printf(RED"Exit: %d\n"ESC, info->exit_code);
     }
 	(void)argc;
 	(void)argv;
