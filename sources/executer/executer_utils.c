@@ -42,7 +42,7 @@ int check_infiles(t_list *parsed)
 
 	if (parsed == NULL)
 		return (STDIN_FILENO);
-	redirects = lst_get_parsed(parsed)->redirect_output;
+	redirects = lst_get_parsed(parsed)->redirect_input;
 	while (redirects)
 	{
 		filename = redirects->content;
