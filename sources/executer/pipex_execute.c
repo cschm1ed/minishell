@@ -17,6 +17,8 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 	t_parsed  *content;
 	
 	content = lst_get_parsed(parsed);
+	pipex->file_fd[1] = create_outfiles(parsed);
+	pipex->file_fd[0] = check_infiles(parsed);
 	// dup2(pipex->file_fd[0], STDIN_FILENO);
 	// close(pipex->file_fd[0]);
 	// close(pipex->pipe_fd[0]);
@@ -39,7 +41,7 @@ void	ft_parent_process(t_data *pipex)
 {
 	// int		status;
 	// int		exit_status;
-
+	(void) pipex;
 	// if (waitpid(pipex->pid, &status, WNOHANG) == -1)
 	// {
 	// 	perror("waitpid: ");
@@ -51,8 +53,9 @@ void	ft_parent_process(t_data *pipex)
 	// 	if (exit_status == 2)
 	// 		exit(exit_status);
 	// }
-	waitpid(pipex->pid, 0, WNOHANG);
-	close(pipex->pipe_fd[1]);
-	dup2(pipex->pipe_fd[0], STDIN_FILENO);
-	close(pipex->pipe_fd[0]);
+	// waitpid(pipex->pid, 0, WNOHANG);
+	wait(NULL);
+	// close(pipex->pipe_fd[1]);
+	// dup2(pipex->pipe_fd[0], STDIN_FILENO);
+	// close(pipex->pipe_fd[0]);
 }

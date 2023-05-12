@@ -16,7 +16,6 @@ int main(int argc, char **argv, char **envp)
 {
 	t_commands  commands;
 	t_info		*info;
-	int x = 0;
 
 	signal(SIGINT, handle_keybindings);
 	signal(SIGQUIT, handle_keybindings);
@@ -35,12 +34,12 @@ int main(int argc, char **argv, char **envp)
 			// print_lexed(commands.lexed);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
 			print_parsed(commands.parsed);
-			x = pipex(info, commands.parsed);
+			// pipex(info, commands.parsed);
 			execute_builtin_if(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);
         }
-		printf("%d\n", x);
 		// printf(RED"Exit: %d\n"ESC, info->exit_code);
+		free(commands.raw);
     }
 	(void)argc;
 	(void)argv;
