@@ -42,10 +42,6 @@ int	pipex(t_info *info, t_list *parsed)
 		// pipex->cmd_path = NULL;
 		parsed = parsed->next;
 	}
-	if (pipex.file_fd[0] != STDIN_FILENO)
-		close (pipex.file_fd[0]);
-	if (pipex.file_fd[1] != STDOUT_FILENO)
-		close (pipex.file_fd[1]);
 	return (3);
 }
 

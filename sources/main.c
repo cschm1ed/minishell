@@ -34,9 +34,8 @@ int main(int argc, char **argv, char **envp)
 			// print_lexed(commands.lexed);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
 			print_parsed(commands.parsed);
-			// pipex(info, commands.parsed);
-			execute_builtin_if(info, commands.parsed);
-			// ft_free_dbl_ptr(commands.lexed);
+			pipex(info, commands.parsed);
+			ft_free_dbl_ptr(commands.lexed);
         }
 		// printf(RED"Exit: %d\n"ESC, info->exit_code);
 		free(commands.raw);
