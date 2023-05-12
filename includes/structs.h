@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 15:27:27 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:07:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_info
 {
 	t_list		*lex_lst;
 	t_list		*env_lst;
+	char		**env;
 	t_list		*user_vars;
 	t_list		*export_lst;
 	t_commands	*commands;

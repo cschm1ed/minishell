@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 15:42:40 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:21:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,7 @@ int         check_infiles(t_list *parsed);
 void        close_pipes(int **pipes);
 int			pipex(t_info *info, t_list *parsed);
 int			create_outfiles(t_list *parsed);
+int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info);
+void	ft_parent_process(t_data *pipex);
 
 #endif

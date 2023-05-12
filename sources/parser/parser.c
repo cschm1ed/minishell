@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 17:16:14 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:37:37 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	add_args(t_list **t_start, t_list *node)
 	if (args != NULL)
 	{
 		lst_get_parsed(node)->cmd = args->content;
-		args = args->next;
+		// args = args->next;
 	}
 	while (args && ft_strcmp(args->content, "|") != 0)
 	{

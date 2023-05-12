@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:48:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 13:14:28 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:58:50 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int check_infiles(t_list *parsed)
 	char    *filename;
 	int     fd;
 
-	if (parsed == NULL)
-		return (STDIN_FILENO);
 	redirects = lst_get_parsed(parsed)->redirect_input;
+	if (redirects == NULL)
+		return (STDIN_FILENO);
 	while (redirects)
 	{
 		filename = lst_get_var(redirects)->value;
@@ -51,7 +51,7 @@ int check_infiles(t_list *parsed)
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
 			return (printf("minishell: %s: :%s\n", filename, strerror(errno)));
-		if (redirects != lst_get_parsed(ft_lstlast(parsed))->redirect_output)
+		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;
 	}
@@ -65,9 +65,9 @@ int create_outfiles(t_list *parsed)
 	int     fd;
 	int		flags;
 
-	if (parsed == NULL)
-		return (STDIN_FILENO);
 	redirects = lst_get_parsed(parsed)->redirect_output;
+	if (redirects == NULL)
+		return (STDOUT_FILENO);
 	while (redirects)
 	{
 		filename = lst_get_var(redirects)->value;
@@ -80,7 +80,7 @@ int create_outfiles(t_list *parsed)
 		fd = open(filename, flags, 0644);
 		if (fd == -1)
 			return (printf("minishell open failed: %s: :%s\n", filename, strerror(errno)));
-		if (redirects != lst_get_parsed(ft_lstlast(parsed))->redirect_input)
+		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;
 	}

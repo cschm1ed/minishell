@@ -6,7 +6,7 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/12 12:58:20 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/12 16:20:37 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
 
 BUILTINS		:= echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
 
-EXECUTER		:= executer.c execute_builtin_if.c executer_utils.c pipex_main.c
+EXECUTER		:= executer.c execute_builtin_if.c executer_utils.c pipex_main.c pipex_execute.c
 
 SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) $(EXECUTER) ft_readline.c main.c
 

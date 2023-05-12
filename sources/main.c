@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 14:27:51 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:25:54 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int main(int argc, char **argv, char **envp)
 	info->commands = &commands;
 	if (info == NULL)
 		return (printf("info error\n"), 1);
-    while (1)
-    {
+    // while (1)
+    // {
         commands.raw = ft_readline("minishell: ");
         commands.lexed = lexer(commands.raw, info);
         if (commands.lexed)
@@ -39,7 +39,7 @@ int main(int argc, char **argv, char **envp)
 			// ft_free_dbl_ptr(commands.lexed);
         }
 		printf(RED"Exit: %d\n"ESC, info->exit_code);
-    }
+    // }
 	(void)argc;
 	(void)argv;
 }

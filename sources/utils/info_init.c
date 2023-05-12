@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/26 15:48:50 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/12 16:08:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_info	*info_init(char **env)
 	info->pwd = ft_strdup(find_var_val(info, "PWD"));
 	if (!info->pwd)
 		return (perror("malloc"), NULL);
+	info->env = env;
 	return (info);
 }
 
