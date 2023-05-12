@@ -31,7 +31,7 @@ char *get_path(char *cmd, t_info *info)
 			return (ft_free_dbl_ptr(paths), joined);
 		i ++;
 	}
-	return (NULL);
+	return (printf("minishell: %s: command not found\n", cmd), NULL);
 }
 
 int check_infiles(t_list *parsed)

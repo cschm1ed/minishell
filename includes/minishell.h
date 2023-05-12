@@ -113,7 +113,6 @@ void		bubble_sort_str_array(char **array, int len);
 int			print_sorted_lst(t_info *info);
 int			check_if_varname_is_valid(char *str);
 
-// executer/executer.c
 int         executer(t_info *info);
 int			execute_builtin_if(t_info *info, t_list *parsed);
 int         open_in(char *name);

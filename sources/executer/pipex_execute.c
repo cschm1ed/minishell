@@ -17,6 +17,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 	t_parsed  *content;
 	
 	content = lst_get_parsed(parsed);
+
 	pipex->file_fd[1] = create_outfiles(parsed);
 	pipex->file_fd[0] = check_infiles(parsed);
 	// dup2(pipex->file_fd[0], STDIN_FILENO);
