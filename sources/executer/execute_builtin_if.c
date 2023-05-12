@@ -20,7 +20,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 	cmd = lst_get_parsed(parsed)->cmd;
 	ret = SUCCESS;
 	if (ft_strcmp(cmd, "echo") == 0)
-		ret = execute_echo(lst_get_parsed(parsed));
+		ret = execute_echo(info, lst_get_parsed(parsed));
 	else if (ft_strcmp(cmd, "env") == 0)
 		ret = execute_env(info);
 	else if (ft_strcmp(cmd, "exit") == 0)
@@ -36,5 +36,5 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 	else
 		return (printf("minishell: %s: command not found\n", cmd),
 			info->exit_code = 127, FAILURE);
-	return (info->exit_code = 0, ret);
+	return (ret);
 }

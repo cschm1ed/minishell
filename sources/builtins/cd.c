@@ -1,6 +1,23 @@
 #include "../../includes/minishell.h"
 
-static	int go_up_one_dir(t_info *info, char *dir)
+static void	go_up_one_dir(t_info *info);
+
+int	execute_cd(t_info *info, char *dir)
+{
+	if (!chdir(dir))
+	{
+		if (!ft_strcmp(dir, ".."))
+			go_up_one_dir(info);
+		else if (dir[0] == '.')
+			return (info->exit_code = 0, SUCCESS);
+		else
+			info->pwd = ft_strsjoin(info->pwd, "/", dir);
+		return (info->exit_code = 0, SUCCESS);
+	}
+	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)), info->exit_code = 1, FAILURE);
+}
+
+static void	go_up_one_dir(t_info *info)
 {
 	char	*trimmed_pwd;
 	char	*current_dir;
@@ -11,20 +28,4 @@ static	int go_up_one_dir(t_info *info, char *dir)
 	trimmed_pwd = ft_substr(info->pwd, 0, len);
 	free (info->pwd);
 	info->pwd = trimmed_pwd;
-}
-
-int	execute_cd(t_info *info, char *dir)
-{
-	if (!chdir(dir))
-	{
-		if (!ft_strcmp(dir, ".."))
-			go_up_one_dir(info, dir);
-		else if (dir[0] == '.')
-			return (SUCCESS);
-		else
-			info->pwd = ft_strsjoin(info->pwd, "/", dir);
-		return (SUCCESS);
-	}
-	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)),
-		info->exit_code = 1, FAILURE);
 }

@@ -28,10 +28,10 @@ int main(int argc, char **argv, char **envp)
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
-        // commands.lexed = lexer(commands.raw, info);
+        commands.lexed = lexer(commands.raw, info);
         if (commands.lexed)
         {
-			print_lexed(commands.lexed);
+			// print_lexed(commands.lexed);
 		    commands.parsed = parser(info, &commands.parsed, commands.lexed);
 			execute_builtin_if(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);

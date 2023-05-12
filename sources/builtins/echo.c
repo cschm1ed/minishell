@@ -37,7 +37,7 @@ static int	ft_isoption(char *args)
 	return (FALSE);
 }
 
-int execute_echo(t_parsed *parsed)
+int execute_echo(t_info *info, t_parsed *parsed)
 {
 	char	**args;
 	int		j;
@@ -51,5 +51,5 @@ int execute_echo(t_parsed *parsed)
 	print_args(args, j);
 	if (!ft_isoption(args[0]))
 		printf("\n");
-	return (SUCCESS);
+	return (info->exit_code = 0, SUCCESS);
 }

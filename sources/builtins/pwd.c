@@ -15,5 +15,5 @@
 int execute_pwd(t_info *info)
 {
 	printf("%s\n", info->pwd);
-	return (SUCCESS);
+	return (info->exit_code = 0, SUCCESS);
 }

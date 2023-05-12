@@ -96,7 +96,7 @@ void		print_lexed(char **array);
 
 // bultins
 int			execute_pwd(t_info *info);
-int			execute_echo(t_parsed *parsed);
+int			execute_echo(t_info *info, t_parsed *parsed);
 int			execute_env(t_info *info);
 int			execute_exit(t_info *info);
 int			execute_export(t_info *info, char **arg);
