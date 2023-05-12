@@ -69,7 +69,7 @@ int create_outfiles(t_list *parsed)
 	redirects = lst_get_parsed(parsed)->redirect_input;
 	while (redirects)
 	{
-		filename = redirects->content;
+		filename = lst_get_var(redirects->content)->name;
 		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1)
 			return (printf("minishell: %s: %s\n", filename, strerror(errno)), FAILURE);
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);

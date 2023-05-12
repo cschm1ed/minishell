@@ -55,15 +55,17 @@ static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
 	t_list	*node;
+	char	*name;
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
-	node = ft_lstnew(tokens->next->content);
-	if (node == NULL)
+	name = ft_strdup(tokens->next->content);
+	if (name == NULL)
 		return (FAILURE);
+	node = lst_newvar_node(NULL, name, REDIRECT);
+	if (node == NULL)
+		return (free(name), FAILURE);
 	ft_lstadd_back(&(parsed->redirect_output), node);
-	if (parsed->redirect_output == NULL)
-		return (perror("malloc"), FAILURE);
 	tmp = tokens;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
@@ -73,12 +75,18 @@ static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head)
 static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
+	t_list	*node;
+	char 	*name;
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
-	ft_lstlast(parsed->redirect_input)->content = ft_strdup(tokens->next->content);
-	if (parsed->redirect_input == NULL)
-		return (perror("malloc"), FAILURE);
+	name = ft_strdup(tokens->next->content);
+	if (name == NULL)
+		return (FAILURE);
+	node = lst_newvar_node(NULL, name, REDIRECT);
+	if (node == NULL)
+		return (free(name), FAILURE);
+	ft_lstadd_back(&(parsed->redirect_input), node);
 	tmp = tokens;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);

@@ -54,14 +54,21 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 static int	set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
+	t_list	*node;
+	char	*name;
 
 	if (tokens->next == NULL)
 		return (printf
 			("minishell: syntax error near unexpected token `newline'\n"),
 			FAILURE);
-	parsed->delimiter = (char *)tokens->next->content;
+	name = ft_strdup(tokens->next->content);
+	if (name == NULL)
+		return (FAILURE);
+	node = lst_newvar_node(NULL, name, DELIMITER);
+	if (node == NULL)
+		return (free(name), FAILURE);
+	ft_lstadd_back(&(parsed->redirect_input), node);
 	tmp = tokens;
-	tokens = tokens->next->next;
 	ft_lstrmone(head, tmp->next, free);
 	ft_lstrmone(head, tmp, free);
 	return (SUCCESS);
@@ -71,14 +78,18 @@ static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head)
 {
 	t_list	*tmp;
 	t_list	*node;
+	char 	*name;
 
 	if (tokens->next == NULL)
 		return (printf
 			("minishell: syntax error near unexpected token `newline'\n"),
 			FAILURE);
-	node = ft_lstnew(tokens->next->content);
-	if (node == NULL)
+	name = ft_strdup(tokens->next->content);
+	if (name == NULL)
 		return (FAILURE);
+	node = lst_newvar_node(NULL, name, APPEND);
+	if (node == NULL)
+		return (free(name), FAILURE);
 	ft_lstadd_back(&(parsed->redirect_output), node);
 	parsed->append_mode = TRUE;
 	tmp = tokens;

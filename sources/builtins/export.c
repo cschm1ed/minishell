@@ -35,7 +35,7 @@ int	execute_export(t_info *info, char **arg)
 			value = ft_strdup("");
 			if (value == NULL)
 				return (free(name), FAILURE);
-			node = lst_newvar_node(arg[i], value);
+			node = lst_newvar_node(arg[i], value, 0);
 			if (node == NULL)
 				return (free(name), free(value), FAILURE);
 			ft_lstadd_back(&(info->export_lst), node);
@@ -50,7 +50,7 @@ int	execute_export(t_info *info, char **arg)
 			value = ft_strdup(ft_strchr(arg[i], '=') + 1);
 			if (value == NULL)
 				return (FAILURE);
-			node = lst_newvar_node(name, value);
+			node = lst_newvar_node(name, value, 0);
 			if (node == NULL)
 				return (free(name), free(value), FAILURE);
 			ft_lstadd_back(&(info->env_lst), node);

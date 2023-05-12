@@ -152,6 +152,8 @@ static int	get_name_len(const char *str)
 	int	i;
 
 	i = 0;
+	if (strcmp(str, "$") == 0)
+		return (1);
 	if (*str == '$')
 		str++;
 	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))

@@ -13,10 +13,14 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#define SYNERR "minishell: syntax error\n"
 # define SUCCESS 1
 # define FAILURE 0
 # define TRUE 1
 # define FALSE 0
+# define APPEND 1
+# define REDIRECT 0
+# define DELIMITER 1
 
 # include <unistd.h>
 # include <string.h>
@@ -37,7 +41,7 @@ void rl_replace_line (const char *text, int clear_undo);
 t_info		*info_init(char **env);
 
 // parser
-t_list 		*parser(t_info *info, t_list **parsed, char **lexed);
+t_list *parser(t_list **parsed, char **lexed);
 int			redirects(t_list **tokens, t_parsed *parsed);
 int			delimiter_and_append(t_list **tokens, t_parsed *parsed);
 
@@ -64,7 +68,7 @@ t_list		*lst_newparsed_node();
 int			unexpected_token(char *token);
 char		*ft_strsjoin(const char *s1, const char *s2, const char *s3);
 t_list  	*lst_find_node(t_list *lst, char *name);
-t_list		*lst_newvar_node(char *name, char *value);
+t_list *lst_newvar_node(char *name, char *value, int key);
 
 // signals
 void		handle_keybindings(int signum);

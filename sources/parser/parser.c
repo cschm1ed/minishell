@@ -26,7 +26,7 @@ static int	add_args(t_list	**t_start, t_list *node);
  *
  * @return - NULL in case of an error
  */
-t_list	*parser(t_info *info, t_list **parsed, char **lexed)
+t_list *parser(t_list **parsed, char **lexed)
 {
 	t_list	*token_lst;
 

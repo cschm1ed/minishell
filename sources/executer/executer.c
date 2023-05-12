@@ -14,11 +14,8 @@
 
 typedef struct s_exec
 {
-    int     fd_in;
-    int     fd_out;
-    int     *pipes;
-    t_list  *pids;
-}   t_exec;
+	int i;
+}	t_exec;
 
 int executer(t_info *info)
 {

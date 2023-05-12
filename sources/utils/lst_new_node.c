@@ -41,7 +41,7 @@ t_list	*lst_newparsed_node(void)
  * @param value - value assigned to new var
  * @return - pointer to new node
  */
-t_list	*lst_newvar_node(char *name, char *value)
+t_list *lst_newvar_node(char *name, char *value, int key)
 {
 	t_list		*node;
 	t_variable	*var;
@@ -51,6 +51,7 @@ t_list	*lst_newvar_node(char *name, char *value)
 		return (NULL);
 	var->name = name;
 	var->value = value;
+	var->key = key;
 	node = ft_lstnew((void*)var);
 	if (node == NULL)
 		return (free(var), perror("malloc"), NULL);

@@ -20,8 +20,6 @@ typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 typedef struct s_list       t_list;
 
-#define SYNERR "minishell: syntax error\n"
-
 typedef struct s_info
 {
 	t_list		*lex_lst;
@@ -39,12 +37,12 @@ typedef struct s_parsed
 	char		**args;
 	t_list		*redirect_input;
 	t_list		*redirect_output;
-	char 		*delimiter;
 	int			append_mode;
 }	t_parsed;
 
 typedef struct s_variable
 {
+	int			key;
 	char		*name;
 	char		*value;
 }	t_variable;
