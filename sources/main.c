@@ -33,7 +33,6 @@ int main(int argc, char **argv, char **envp)
         {
 			// print_lexed(commands.lexed);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
-			print_parsed(commands.parsed);
 			pipex(info, commands.parsed);
 			ft_free_dbl_ptr(commands.lexed);
         }

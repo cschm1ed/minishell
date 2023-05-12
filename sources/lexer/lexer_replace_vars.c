@@ -94,8 +94,7 @@ static char	*replace_var(char *str, size_t *j, t_info *info)
 	if (ft_strcmp(name, "?") == 0)
 	{
 		value = ft_itoa(info->exit_code);
-		if (value == NULL)
-			return (NULL);
+		return (value);
 	}
 	else
 		value = find_var_val(info, name);
@@ -156,6 +155,8 @@ static int	get_name_len(const char *str)
 		return (1);
 	if (*str == '$')
 		str++;
+	if (ft_strcmp(str, "?") == 0)
+		return (1);
 	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))
 		i++;
 	return (i);

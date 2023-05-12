@@ -24,8 +24,6 @@ int	pipex(t_info *info, t_list *parsed)
 		content = lst_get_parsed(parsed);
 		// pipex.file_fd[1] = create_outfiles(parsed);
 		// pipex.file_fd[0] = check_infiles(parsed);
-		printf("In: %d\n", pipex.file_fd[0]);
-		printf("Out: %d\n", pipex.file_fd[1]);
 		pipex.cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 		if (!pipex.cmd_path)
 			return (FAILURE);
