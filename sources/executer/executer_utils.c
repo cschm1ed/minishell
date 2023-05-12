@@ -42,10 +42,10 @@ int check_infiles(t_list *parsed)
 
 	if (parsed == NULL)
 		return (STDIN_FILENO);
-	redirects = lst_get_parsed(parsed)->redirect_output;
+	redirects = lst_get_parsed(parsed)->redirect_input;
 	while (redirects)
 	{
-		filename = redirects->content;
+		filename = lst_get_var(redirects)->value;
 		if (access(filename, F_OK) == -1 || access(filename, R_OK) == -1)
 			return (printf("minishell: %s: %s\n", filename, strerror(errno)), FAILURE);
 		fd = open(filename, O_RDONLY);
@@ -63,18 +63,23 @@ int create_outfiles(t_list *parsed)
 	t_list  *redirects;
 	char    *filename;
 	int     fd;
+	int		flags;
 
 	if (parsed == NULL)
 		return (STDIN_FILENO);
-	redirects = lst_get_parsed(parsed)->redirect_input;
+	redirects = lst_get_parsed(parsed)->redirect_output;
 	while (redirects)
 	{
-		filename = lst_get_var(redirects->content)->name;
-		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1)
-			return (printf("minishell: %s: %s\n", filename, strerror(errno)), FAILURE);
-		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		filename = lst_get_var(redirects)->value;
+		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1) {
+			return (printf("minishell no access: %s: %s\n", filename, strerror(errno)), FAILURE);
+		}
+		flags = O_WRONLY | O_TRUNC | O_CREAT;
+		if (lst_get_var(redirects)->key == APPEND)
+			flags = O_WRONLY | O_APPEND | O_CREAT;
+		fd = open(filename, flags, 0644);
 		if (fd == -1)
-			return (printf("minishell: %s: :%s\n", filename, strerror(errno)));
+			return (printf("minishell open failed: %s: :%s\n", filename, strerror(errno)));
 		if (redirects != lst_get_parsed(ft_lstlast(parsed))->redirect_input)
 			close(fd);
 		redirects = redirects->next;

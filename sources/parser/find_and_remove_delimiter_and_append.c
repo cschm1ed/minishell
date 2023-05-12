@@ -35,7 +35,7 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 	{
 		if (ft_strcmp((char *)ptr->content, ">>") == 0)
 		{
-			if (set_append(*tokens, parsed, tokens) == FAILURE)
+			if (set_append(ptr, parsed, tokens) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}

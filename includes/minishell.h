@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 13:08:49 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 15:42:40 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ char        *get_path(char *cmd, t_info *info);
 int         check_infiles(t_list *parsed);
 void        close_pipes(int **pipes);
 int			pipex(t_info *info, t_list *parsed);
-int create_outfiles(t_list *parsed);
-
+int			create_outfiles(t_list *parsed);
 
 #endif
