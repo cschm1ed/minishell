@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/12 16:21:49 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/12 16:57:42 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	pipex(t_info *info, t_list *parsed)
 		close (pipex.file_fd[0]);
 	if (pipex.file_fd[1] != STDOUT_FILENO)
 		close (pipex.file_fd[1]);
+	return (3);
 }
 
 // int	pipex(t_info *info, t_list *parsed)
