@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/13 17:42:10 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/13 18:12:43 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 	if (parsed->next)
 	{
 		close(pipex->pipe_fd[0]);
-		printf(MAGENTA"IF Executing command: %s\n"ESC, lst_get_parsed(parsed)->cmd);
 		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
 		close(pipex->pipe_fd[1]);
 	}
@@ -33,14 +32,13 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 	{
 		close(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[1]);
-		printf(MAGENTA"ELSE Executing command: %s\n"ESC, lst_get_parsed(parsed)->cmd);
 		dup2(pipex->file_fd[1], STDOUT_FILENO);
-		close(pipex->file_fd[1]);
+		if (pipex->file_fd[1] != STDOUT_FILENO)
+			close(pipex->file_fd[1]);
 	}
 	if (parsed != info->commands->parsed)
 	{
 		close(pipex->pipe_fd[1]);
-		printf(RED"IF Executing command: %s\n"ESC, lst_get_parsed(parsed)->cmd);
 		dup2(pipex->pipe_fd[0], STDIN_FILENO);
 		close(pipex->pipe_fd[0]);
 	}
@@ -48,11 +46,10 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 	{
 		close(pipex->pipe_fd[0]);
 		close(pipex->pipe_fd[1]);
-		printf(RED"ELSE Executing command: %s\n"ESC, lst_get_parsed(parsed)->cmd);
 		dup2(pipex->file_fd[0], STDIN_FILENO);
-		close(pipex->file_fd[0]);
+		if (pipex->file_fd[0] != STDIN_FILENO)
+			close(pipex->file_fd[0]);
 	}
-	// nur bei executable
 	ret = execute_builtin_if(info, parsed);
 	if (ret != 129)
 		exit (ret);
