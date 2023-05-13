@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 15:40:11 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/13 17:09:41 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 	int 	ret;
 
 	cmd = lst_get_parsed(parsed)->cmd;
-	ret = SUCCESS;
+	ret = 129;
 	if (ft_strcmp(cmd, "echo") == 0)
 		ret = execute_echo(info, lst_get_parsed(parsed));
 	else if (ft_strcmp(cmd, "env") == 0)
@@ -33,8 +33,8 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 		ret = execute_unset(info, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		ret = execute_cd(info, lst_get_parsed(parsed)->args[0]);
-	else
-		ret = pipex(info, info->commands->parsed);
+	// else
+	// 	ret = pipex(info, info->commands->parsed);
 	// else
 	// 	return (printf("minishell: %s: command not found\n", cmd),
 	// 		info->exit_code = 127, FAILURE);
