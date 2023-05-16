@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:55:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/12 12:10:18 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:20:07 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	print_args(char **args, int j)
 {
+	j++;
 	while (args[j])
 	{
 		printf("%s", args[j]);
