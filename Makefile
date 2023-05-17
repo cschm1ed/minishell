@@ -40,7 +40,7 @@ OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
 
 CC				:= cc
 
-CFLAGS			:= -g -Wall -Wextra -O2
+CFLAGS			:= -g -Wall -Wextra
 
 LDFLAGS			:= -lreadline -g -Wall -Wextra
 

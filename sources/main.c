@@ -32,6 +32,7 @@ int main(int argc, char **argv, char **envp)
         if (commands.lexed)
         {
 			// print_lexed(commands.lexed);
+			// printf(RED"PWD: %s\n"ESC, info->pwd);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
 			execute(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);

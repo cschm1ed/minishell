@@ -32,11 +32,6 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 	else if (ft_strcmp(cmd, "unset") == 0)
 		ret = execute_unset(info, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "cd") == 0)
-		ret = execute_cd(info, lst_get_parsed(parsed)->args[0]);
-	// else
-	// 	ret = pipex(info, info->commands->parsed);
-	// else
-	// 	return (printf("minishell: %s: command not found\n", cmd),
-	// 		info->exit_code = 127, FAILURE);
+		ret = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	return (ret);
 }

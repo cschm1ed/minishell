@@ -12,6 +12,7 @@ int	execute_cd(t_info *info, char *dir)
 			return (info->exit_code = 0, SUCCESS);
 		else
 			info->pwd = ft_strsjoin(info->pwd, "/", dir);
+		// printf(GREEN"PWD: %s\n"ESC, info->pwd);
 		return (info->exit_code = 0, SUCCESS);
 	}
 	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)), info->exit_code = 1, FAILURE);

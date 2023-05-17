@@ -33,6 +33,7 @@ int execute(t_info *info, t_list *parsed)
 {
 	t_data		pipex;
 	int			i;
+	int			status;
 
 	if (create_pipes(&pipex, parsed) == FAILURE)
 		return (info->exit_code = 1, FAILURE);
@@ -48,7 +49,7 @@ int execute(t_info *info, t_list *parsed)
 		close(pipex.pipe_fd[i][1]);
 		parsed = parsed->next;
 	}
-	while (waitpid(-1, 0, 0) != -1)
-		;
+	while (waitpid(-1, &status, WNOHANG) != -1)
+		info->exit_code = status >> 8;
 	return (SUCCESS);
 }

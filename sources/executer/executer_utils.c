@@ -22,7 +22,7 @@ char *get_path(char *cmd, t_info *info)
 	if (*cmd == '/')
 	{
 		if (access(cmd, F_OK) == -1)
-			return (printf("minishell: %s: command not found\n", cmd), NULL);
+			return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
 		return (ft_strdup(cmd));
 	}
 	paths = ft_split(lst_find_var_val(info->env_lst, "PATH"), ':');
@@ -37,7 +37,7 @@ char *get_path(char *cmd, t_info *info)
 			return (ft_free_dbl_ptr(paths), joined);
 		i ++;
 	}
-	return (printf("minishell: %s: command not found\n", cmd), NULL);
+	return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
 }
 
 int check_infiles(t_list *parsed)
