@@ -18,14 +18,19 @@ int	execute_export(t_info *info, char **arg)
 	char 	*name;
 	char 	*value;
 	int 	i;
+	int 	ex;
 
 	i = 0;
-	if (arg == NULL)
+	ex = 0;
+	if (*arg == NULL)
 		return (print_sorted_lst(info));
 	while (arg[i])
 	{
 		if (check_if_varname_is_valid(arg[i]) == FALSE)
+		{
 			printf("export: not an identifier: %s\n", arg[i]);
+			ex = 1;
+		}
 		if (ft_strchr(arg[i], '=') == NULL
 			|| *(ft_strchr(arg[i], '=') + 1) == '\0')
 		{
@@ -57,5 +62,5 @@ int	execute_export(t_info *info, char **arg)
 		}
 		i ++;
 	}
-	return (SUCCESS);
+	exit(ex);
 }

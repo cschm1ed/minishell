@@ -26,11 +26,11 @@ int	execute_builtin_if(t_info *info, t_list *parsed)
 	else if (ft_strcmp(cmd, "exit") == 0)
 		ret = execute_exit(info);
 	else if (ft_strcmp(cmd, "export") == 0)
-		ret = execute_export(info, lst_get_parsed(parsed)->args);
+		ret = execute_export(info, &(lst_get_parsed(parsed)->args[1]));
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		ret = execute_pwd(info);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		ret = execute_unset(info, lst_get_parsed(parsed)->args);
+		ret = execute_unset(info, lst_get_parsed(parsed)->args++);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		ret = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	return (ret);

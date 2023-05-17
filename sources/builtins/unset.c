@@ -15,17 +15,26 @@
 int execute_unset(t_info *info, char **arg)
 {
 	int 	i;
+	int		ex;
 
+	ex = 0;
 	i = 0;
 	while (arg[i])
 	{
-		ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
-					delete_variable);
-		ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst, arg[i]),
-					delete_variable);
-		ft_lstrmone(&(info->user_vars), lst_find_node(info->user_vars, arg[i]),
-					delete_variable);
+		if (lst_find_var_val(info->env_lst, arg[i]) == NULL
+			&& lst_find_var_val(info->export_lst, arg[i]) == NULL
+			&& lst_find_var_val(info->user_vars, arg[i]) == NULL)
+			ex = 1;
+		else
+		{
+			ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
+						delete_variable);
+			ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst, arg[i]),
+						delete_variable);
+			ft_lstrmone(&(info->user_vars), lst_find_node(info->user_vars, arg[i]),
+						delete_variable);
+		}
 		i ++;
 	}
-	return (SUCCESS);
+	exit(ex);
 }

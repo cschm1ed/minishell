@@ -25,6 +25,18 @@ int main(int argc, char **argv, char **envp)
 	info->commands = &commands;
 	if (info == NULL)
 		return (printf("info error\n"), 1);
+	if (argc >= 3 && ft_strcmp(argv[1], "-c") == 0)
+	{
+		commands.raw = argv[2];
+		commands.lexed = lexer(commands.raw, info);
+		if (commands.lexed == NULL)
+			exit (1);
+		commands.parsed = parser(&(commands.parsed), commands.lexed);
+		if (commands.parsed == NULL)
+			exit (1);
+		execute_builtin_if(info, commands.parsed);
+		exit (0);
+	}
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
@@ -34,7 +46,10 @@ int main(int argc, char **argv, char **envp)
 			// print_lexed(commands.lexed);
 			// printf(RED"PWD: %s\n"ESC, info->pwd);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
+			execute_builtin_if(info, commands.parsed);
+/*
 			execute(info, commands.parsed);
+*/
 			// ft_free_dbl_ptr(commands.lexed);
         }
 		// printf(RED"Exit: %d\n"ESC, info->exit_code);

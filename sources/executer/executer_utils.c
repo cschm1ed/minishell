@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+static int isbuiltin(char *cmd);
+
 char *get_path(char *cmd, t_info *info)
 {
 	char *joined;
@@ -19,10 +21,12 @@ char *get_path(char *cmd, t_info *info)
 	int  i;
 
 	i = 0;
+	if (isbuiltin(cmd) == TRUE)
+		return (ft_strdup(cmd));
 	if (*cmd == '/')
 	{
 		if (access(cmd, F_OK) == -1)
-			return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
+			return (info->exit_code = 127, printf("c: (%d)minishell: %s: command not found\n", __LINE__, cmd), NULL);
 		return (ft_strdup(cmd));
 	}
 	paths = ft_split(lst_find_var_val(info->env_lst, "PATH"), ':');
@@ -37,7 +41,7 @@ char *get_path(char *cmd, t_info *info)
 			return (ft_free_dbl_ptr(paths), joined);
 		i ++;
 	}
-	return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
+	return (info->exit_code = 127, printf("c (%d): minishell: %s: command not found\n", __LINE__, cmd), NULL);
 }
 
 int check_infiles(t_list *parsed)
@@ -128,4 +132,14 @@ void    close_pipes(int **pipes)
 		pipes[i][0] = -1;
 		pipes[i][1] = -1;
 	}
+}
+
+static int isbuiltin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "exit") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "cd") == 0)
+		return (TRUE);
+	return (FALSE);
 }
