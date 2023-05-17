@@ -12,40 +12,40 @@
 
 #include "../../includes/minishell.h"
 
-// exectuable || builtin
-int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
+int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed  *content;
 	int		  ret;
 	
 	content = lst_get_parsed(parsed);
-
-	pipex->file_fd[1] = create_outfiles(parsed);
-	pipex->file_fd[0] = check_infiles(parsed);
+	if (content->redirect_output != STDOUT_FILENO)
+		pipex->file_fd[1] = create_outfiles(parsed);
+	if (content->redirect_input != STDIN_FILENO)
+		pipex->file_fd[0] = check_infiles(parsed);
 	if (parsed->next)
 	{
-		close(pipex->pipe_fd[0]);
-		dup2(pipex->pipe_fd[1], STDOUT_FILENO);
-		close(pipex->pipe_fd[1]);
+		close(pipex->pipe_fd[cnt][0]);
+		dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO);
+		close(pipex->pipe_fd[cnt][1]);
 	}
 	else
 	{
-		close(pipex->pipe_fd[0]);
-		close(pipex->pipe_fd[1]);
+		close(pipex->pipe_fd[cnt][0]);
+		close(pipex->pipe_fd[cnt][1]);
 		dup2(pipex->file_fd[1], STDOUT_FILENO);
 		if (pipex->file_fd[1] != STDOUT_FILENO)
 			close(pipex->file_fd[1]);
 	}
 	if (parsed != info->commands->parsed)
 	{
-		close(pipex->pipe_fd[1]);
-		dup2(pipex->pipe_fd[0], STDIN_FILENO);
-		close(pipex->pipe_fd[0]);
+		close(pipex->pipe_fd[cnt][1]);
+		dup2(pipex->pipe_fd[cnt - 1][0], STDIN_FILENO);
+		close(pipex->pipe_fd[cnt][0]);
 	}
 	else
 	{
-		close(pipex->pipe_fd[0]);
-		close(pipex->pipe_fd[1]);
+		close(pipex->pipe_fd[cnt][0]);
+		close(pipex->pipe_fd[cnt][1]);
 		dup2(pipex->file_fd[0], STDIN_FILENO);
 		if (pipex->file_fd[0] != STDIN_FILENO)
 			close(pipex->file_fd[0]);
@@ -58,27 +58,4 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info)
 		return (FAILURE);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
-}
-
-void	ft_parent_process(t_data *pipex)
-{
-	// int		status;
-	// int		exit_status;
-	(void) pipex;
-	// if (waitpid(pipex->pid, &status, WNOHANG) == -1)
-	// {
-	// 	perror("waitpid: ");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// if (WIFEXITED(status))
-	// {
-	// 	exit_status = WEXITSTATUS(status);
-	// 	if (exit_status == 2)
-	// 		exit(exit_status);
-	// }
-	// waitpid(pipex->pid, 0, WNOHANG);
-	wait(NULL);
-	// close(pipex->pipe_fd[1]);
-	// dup2(pipex->pipe_fd[0], STDIN_FILENO);
-	// close(pipex->pipe_fd[0]);
 }

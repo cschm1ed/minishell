@@ -33,9 +33,6 @@ int main(int argc, char **argv, char **envp)
         {
 			// print_lexed(commands.lexed);
 		    commands.parsed = parser(&commands.parsed, commands.lexed);
-			// execute
-			// --> pipe && fork (> 1)
-			// --> executable || builtin
 			execute(info, commands.parsed);
 			// ft_free_dbl_ptr(commands.lexed);
         }

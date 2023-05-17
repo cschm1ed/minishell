@@ -122,7 +122,7 @@ int         check_infiles(t_list *parsed);
 void        close_pipes(int **pipes);
 int			pipex(t_info *info, t_list *parsed);
 int			create_outfiles(t_list *parsed);
-int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info);
+int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt);
 void	ft_parent_process(t_data *pipex);
 int execute(t_info *info, t_list *parsed);
 
