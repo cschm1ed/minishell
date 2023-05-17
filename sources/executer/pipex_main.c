@@ -33,23 +33,32 @@ int execute(t_info *info, t_list *parsed)
 {
 	t_data		pipex;
 	int			i;
+	int 		j;
 	int			status;
 
 	if (create_pipes(&pipex, parsed) == FAILURE)
 		return (info->exit_code = 1, FAILURE);
-	i = -1;
+	i = 0;
+	pipex.pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
+	if (pipex.pid == NULL)
+		return (perror("malloc"), FAILURE);
 	while (parsed)
 	{
-		++i;
-		pipex.pid = fork();
-		if (pipex.pid == -1)
+		pipex.pid[i] = fork();
+		if (pipex.pid[i] == -1)
 			return (info->exit_code = 1, FAILURE);
-		if (pipex.pid == 0)
+		if (pipex.pid[i] == 0)
 			ft_child_process(&pipex, parsed, info, i);
 		close(pipex.pipe_fd[i][1]);
 		parsed = parsed->next;
+		i ++;
 	}
-	while (waitpid(-1, &status, WNOHANG) != -1)
+	j = 0;
+	while (j++ <= i)
+	{
+		waitpid(pipex.pid[j], &status, 0);
 		info->exit_code = status >> 8;
+	}
+	// free pipex
 	return (SUCCESS);
 }

@@ -67,7 +67,7 @@ typedef struct s_data
 {
 	int		**pipe_fd;
 	int		file_fd[2];
-	pid_t	pid;
+	pid_t	*pid;
 	char	*cmd_path;
 }	t_data;
 
