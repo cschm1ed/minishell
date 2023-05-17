@@ -29,6 +29,7 @@ typedef struct s_info
 	t_list		*user_vars;
 	t_list		*export_lst;
 	t_commands	*commands;
+	t_data		*pipex;
 	int			exit_code;
 	char 		*pwd;
 }   t_info;

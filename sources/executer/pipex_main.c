@@ -31,32 +31,33 @@ static int	create_pipes(t_data *pipex, t_list *parsed)
 
 int execute(t_info *info, t_list *parsed)
 {
-	t_data		pipex;
+	t_data		*pipex;
 	int			i;
 	int 		j;
 	int			status;
 
-	if (create_pipes(&pipex, parsed) == FAILURE)
+	pipex = info->pipex;
+	if (create_pipes(pipex, parsed) == FAILURE)
 		return (info->exit_code = 1, FAILURE);
 	i = 0;
-	pipex.pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
-	if (pipex.pid == NULL)
+	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
+	if (pipex->pid == NULL)
 		return (perror("malloc"), FAILURE);
 	while (parsed)
 	{
-		pipex.pid[i] = fork();
-		if (pipex.pid[i] == -1)
+		pipex->pid[i] = fork();
+		if (pipex->pid[i] == -1)
 			return (info->exit_code = 1, FAILURE);
-		if (pipex.pid[i] == 0)
-			ft_child_process(&pipex, parsed, info, i);
-		close(pipex.pipe_fd[i][1]);
+		if (pipex->pid[i] == 0)
+			ft_child_process(pipex, parsed, info, i);
+		close(pipex->pipe_fd[i][1]);
 		parsed = parsed->next;
 		i ++;
 	}
 	j = 0;
 	while (j++ <= i)
 	{
-		waitpid(pipex.pid[j], &status, 0);
+		waitpid(pipex->pid[j], &status, 0);
 		info->exit_code = status >> 8;
 	}
 	// free pipex
