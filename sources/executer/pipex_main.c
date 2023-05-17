@@ -43,6 +43,8 @@ int execute(t_info *info, t_list *parsed)
 	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
 	if (pipex->pid == NULL)
 		return (perror("malloc"), FAILURE);
+	if (ft_lstsize(parsed) == 1 && ft_strcmp(lst_get_parsed(parsed)->cmd, "exit") == 0)
+		execute_exit(info);
 	while (parsed)
 	{
 		pipex->pid[i] = fork();

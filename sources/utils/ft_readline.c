@@ -37,7 +37,7 @@ static int	str_isspace(char *str)
 	int	i;
 
 	i = -1;
-	if (!str)
+	if (str == NULL)
 		return (SUCCESS);
 	while (str[++i])
 		if (!ft_isspace(str[i]))
@@ -49,8 +49,7 @@ void	handle_keybindings(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("ctrl+c\n");
-		exit(1);
+		ft_putstr_fd("\n", 1);
 	}
 	else if (signum == SIGQUIT)
 		ft_printf("ctrl+backslash\n");
