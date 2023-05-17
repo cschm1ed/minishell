@@ -22,6 +22,8 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 		pipex->file_fd[1] = create_outfiles(parsed);
 	if (content->redirect_input != STDIN_FILENO)
 		pipex->file_fd[0] = check_infiles(parsed);
+	if (pipex->file_fd[0] == -1)
+		return (FAILURE);
 	if (parsed->next)
 	{
 		close(pipex->pipe_fd[cnt][0]);

@@ -18,7 +18,7 @@ int execute_env(t_info *info)
 {
 	ft_lstiter(info->env_lst, print_var);
 	printf("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n");
-	return (SUCCESS);
+	return (0);
 }
 
 static void	print_var(void *content)
