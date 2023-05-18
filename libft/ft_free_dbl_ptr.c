@@ -16,11 +16,11 @@ char	**ft_free_dbl_ptr(char **array)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (array)
 	{
-		while (array[++i] )
-			free(array[i]);
+		while (array[i])
+			free(array[i++]);
 		free(array);
 	}
 	return (NULL);

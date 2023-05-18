@@ -27,7 +27,7 @@ UTILS       := ft_isspace.c ft_isspecial.c str_arr_utils.c ft_isredirect.c ft_is
                unexpected_token.c ft_strsjoin.c lst_new_node.c debug.c
 
 LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
-PARSER      := find_and_remove_redirects.c find_and_remove_delimiter_and_append.c parser.c
+PARSER      := find_and_remove_redirects.c parser.c
 BUILTINS    := echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
 EXECUTER    := execute_builtin_if.c executer_utils.c executer_main.c executer_execute.c
 OTHER_SRCS  := ft_readline.c main.c

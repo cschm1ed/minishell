@@ -37,23 +37,24 @@ int main(int argc, char **argv, char **envp)
 				return (1);
 			if (execute(info, commands.parsed) == FAILURE)
 				return (1);
+			ft_free_dbl_ptr(commands.lexed);
+			free(commands.raw);
+			ft_lstclear(&(commands.parsed), delete_parsed);
 			return (0);
 		}
 	}
     while (1)
     {
         commands.raw = ft_readline("minishell: ");
-        commands.lexed = lexer(commands.raw, info);
-        if (commands.lexed)
+		commands.lexed = lexer(commands.raw, info);
+		if (commands.lexed)
         {
-			// print_lexed(commands.lexed);
-			// printf(RED"PWD: %s\n"ESC, info->pwd);
-		    commands.parsed = parser(&commands.parsed, commands.lexed);
+			commands.parsed = parser(&commands.parsed, commands.lexed);
 			execute(info, commands.parsed);
-			// ft_free_dbl_ptr(commands.lexed);
-        }
-		// printf(RED"Exit: %d\n"ESC, info->exit_code);
+		}
 		free(commands.raw);
+		ft_lstclear(&(commands.parsed), delete_parsed);
+		// printf(RED"Exit: %d\n"ESC, info->exit_code);
     }
 	(void)argc;
 	(void)argv;
