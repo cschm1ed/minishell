@@ -60,4 +60,5 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 		exit (ret);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
+	return (SUCCESS);
 }

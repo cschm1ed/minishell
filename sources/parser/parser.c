@@ -92,10 +92,7 @@ static int	add_args(t_list **t_start, t_list *node)
 
 	args = *t_start;
 	if (args != NULL)
-	{
 		lst_get_parsed(node)->cmd = args->content;
-		// args = args->next;
-	}
 	while (args && ft_strcmp(args->content, "|") != 0)
 	{
 		if (str_arr_add(&(lst_get_parsed(node)->args), args->content) == NULL)

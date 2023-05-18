@@ -10,78 +10,73 @@
 #                                                                              #
 # **************************************************************************** #
 
-VPATH			:= sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
+# Directories
+VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
+BUILDDIR    := build
+LIBFTDIR    := libft
 
-BUILDDIR		:= build
+# File names
+NAME        := minishell
+LIBFT       := libft.a
 
-NAME			:= minishell
-				
-LIBFTDIR		:= libft
+# Source files
+UTILS       := ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c \
+               ft_lstrmone.c delete_struct.c var_lst_add.c lst_get_struct.c find_var_val.c \
+               lst_find_var_val.c str_in_arr.c ft_strcmp.c str_arr_to_lst.c ft_isvariable.c \
+               utils.c unexpected_token.c ft_strsjoin.c lst_new_node.c
 
-LIBFT			:= libft.a
+LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
+PARSER      := find_and_remove_redirects.c find_and_remove_delimiter_and_append.c parser.c
+BUILTINS    := echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
+EXECUTER    := execute_builtin_if.c executer_utils.c executer_main.c executer_execute.c
+OTHER_SRCS  := ft_readline.c main.c
 
-UTILS			:= ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c\
-					ft_lstrmone.c delete_struct.c var_lst_add.c lst_get_struct.c find_var_val.c lst_find_var_val.c\
-					str_in_arr.c ft_strcmp.c str_arr_to_lst.c ft_isvariable.c utils.c\
-					unexpected_token.c ft_strsjoin.c lst_new_node.c
+SRCS        := $(UTILS) $(LEXER) $(PARSER) $(BUILTINS) $(EXECUTER) $(OTHER_SRCS)
 
-LEXER			:= lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
+# Objects
+OBJS        := $(SRCS:%.c=$(BUILDDIR)/%.o)
 
-PARSER			:= find_and_remove_redirects.c find_and_remove_delimiter_and_append.c\
-					parser.c
-
-BUILTINS		:= echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
-
-EXECUTER		:= execute_builtin_if.c executer_utils.c pipex_main.c pipex_execute.c
-
-SRCS			:= $(UTILS) $(BUILTINS) $(LEXER) $(PARSER) $(EXECUTER) ft_readline.c main.c
-
-OBJS			:= $(SRCS:%.c=$(BUILDDIR)/%.o)
-
-CC				:= cc
-
-CFLAGS			:= -g -Wall -Wextra -I ./includes
-
-LDFLAGS			:= -lreadline -g -Wall -Wextra -I ./includes
-
-RM				:= rm -f
-
-MAKE			:= make
+# Compiler
+CC          := cc
+CFLAGS      := -g -Wall -Wextra -I ./includes
+LDFLAGS     := -lreadline -g -Wall -Wextra -I ./includes
+MAKE        := make
+RM          := rm -f
 
 # Colors
-GREEN			:= \033[92m
-YELLOW			:= \033[0;33m
-BLUE			:= \033[0;34m
-MAGENTA			:= \033[0;35m
-ESCAPE			:= \033[0m
+GREEN       := \033[92m
+YELLOW      := \033[0;33m
+BLUE        := \033[0;34m
+ESCAPE      := \033[0m
 
+# Build rules
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
-				@${CC} $(CFLAGS) -c $< -o $@
-
-${NAME}:		$(OBJS) $(LIBFTDIR)/$(LIBFT)
-				@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
-				@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
-				@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
-
-
-${LIBFTDIR}/libft.a:
-				@echo "$(YELLOW)******************  COMPILING  ******************$(ESCAPE)"
-				@$(MAKE) bonus -C $(LIBFTDIR)
+	@${CC} $(CFLAGS) -c $< -o $@
 
 $(BUILDDIR):
-				@mkdir $(BUILDDIR)
+	@mkdir $(BUILDDIR)
 
-all:			$(NAME)
+${LIBFTDIR}/$(LIBFT):
+	@echo "$(YELLOW)******************  COMPILING  ******************$(ESCAPE)"
+	@$(MAKE) bonus -C $(LIBFTDIR)
+
+${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
+	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
+	@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
+	@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
+
+# Standard rules
+all: $(NAME)
 
 clean:
-				@$(RM) -rf $(BUILDDIR)
-				@$(MAKE) clean -C $(LIBFTDIR)
-				@echo "$(GREEN)*******************  CLEANED  *******************$(ESCAPE)"
+	@$(RM) -rf $(BUILDDIR)
+	@$(MAKE) clean -C $(LIBFTDIR)
+	@echo "$(GREEN)*******************  CLEANED  *******************$(ESCAPE)"
 
-fclean:			clean
-				@$(RM) $(NAME)
-				@$(MAKE) fclean -C $(LIBFTDIR)
+fclean: clean
+	@$(RM) $(NAME)
+	@$(MAKE) fclean -C $(LIBFTDIR)
 
-re:				fclean all
+re: fclean all
 
-.PHONY:			all clean fclean re
+.PHONY: all clean fclean re
