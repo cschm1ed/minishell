@@ -20,9 +20,9 @@ NAME        := minishell
 LIBFT       := libft.a
 
 # Source files
-UTILS       := ft_isspace.c ft_isspecial.c str_arr_add.c ft_isredirect.c ft_isquote.c info_init.c \
+UTILS       := ft_isspace.c ft_isspecial.c str_arr_utils.c ft_isredirect.c ft_isquote.c info_init.c \
                ft_lstrmone.c delete_struct.c var_lst_add.c lst_get_struct.c lst_find_var_val.c \
-               lsts_search_var_val.c str_in_arr.c ft_strcmp.c str_arr_to_lst.c \
+               lsts_search_var_val.c ft_strcmp.c \
                utils.c unexpected_token.c ft_strsjoin.c lst_new_node.c
 
 LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
