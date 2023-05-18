@@ -19,7 +19,7 @@ char *get_path(char *cmd, t_info *info)
 	int  i;
 
 	i = 0;
-	if (*cmd == '/')
+	if (ft_strchr(cmd, '/') != NULL)
 	{
 		if (access(cmd, F_OK) == -1)
 			return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
