@@ -2,7 +2,7 @@
 
 static int	go_to_home_dir(t_info *info);
 static int	go_up_one_dir(t_info *info);
-static int	go_to_dir(t_info *info, char *dir);
+static int	go_to_dir(t_info *info, char *dir, int is_joined);
 
 int	execute_cd(t_info *info, char *dir)
 {
@@ -10,13 +10,17 @@ int	execute_cd(t_info *info, char *dir)
 		return (go_to_home_dir(info));
 	if (!chdir(dir))
 	{
-		if (!ft_strcmp(dir, ".."))
+		if (!ft_strncmp(dir, "..", 2))
 			return (go_up_one_dir(info));
 		else if (dir[0] == '.')
 			return (0);
+		else if (ft_strchr(dir, '/'))
+			return (go_to_dir(info, dir, TRUE));
 		else
-			return (go_to_dir(info, dir));
+			return (go_to_dir(info, dir, FALSE));
 	}
+	if (ft_strchr(dir, '/'))
+		return (printf("minishell: %s: %s\n", dir, strerror(errno)), 127);
 	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)), 1);
 }
 
@@ -40,11 +44,14 @@ static int	go_up_one_dir(t_info *info)
 	return (0);
 }
 
-static int	go_to_dir(t_info *info, char *dir)
+static int	go_to_dir(t_info *info, char *dir, int is_joined)
 {
 	char	*joined;
 
-	joined = ft_strsjoin(info->pwd, "/", dir);
+	if (is_joined)
+		joined = ft_strdup(dir);
+	else
+		joined = ft_strsjoin(info->pwd, "/", dir);
 	if (!joined)
 		return (perror("malloc"), 1);
 	info->pwd = joined;
