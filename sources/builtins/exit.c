@@ -16,6 +16,8 @@ int execute_exit(t_info *info, char **arg)
 {
     // free
 	(void)info;
-    exit(ft_atoi(*arg));
+	if (*arg)
+    	exit(ft_atoi(*arg));
+	exit(0);
 	return (SUCCESS);
 }

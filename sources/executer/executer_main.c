@@ -78,11 +78,8 @@ static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
 		&& ft_strcmp(cmd, "cd") != 0))
 		return (FAILURE);
 	if (check_infiles(parsed) >= 0 && pipex->file_fd[1] >= 0)
-	{
-		if (pipex->file_fd[0] != -1 && pipex->file_fd[1] != -1)
-			info->exit_code= execute_builtin_if(info, parsed);
-		else
-			info->exit_code = 127;
-	}
+		info->exit_code= execute_builtin_if(info, parsed);
+	else
+		info->exit_code = 127;
 	return (SUCCESS);
 }
