@@ -12,6 +12,26 @@
 
 #include <minishell.h>
 
+static void	print_args(char **args, int j);
+static int	ft_isoption(char *args);
+
+int execute_echo(t_info *info, t_parsed *parsed)
+{
+	char	**args;
+	int		j;
+
+	args = parsed->args;
+	j = 0;
+	if (ft_isoption(args[j]))
+		while (args[++j])
+			if (!ft_isoption(args[j]))
+				break;
+	print_args(args, j);
+	if (!ft_isoption(args[0]))
+		printf("\n");
+	return (info->exit_code = 0, SUCCESS);
+}
+
 static void	print_args(char **args, int j)
 {
 	j++;
@@ -36,21 +56,4 @@ static int	ft_isoption(char *args)
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-int execute_echo(t_info *info, t_parsed *parsed)
-{
-	char	**args;
-	int		j;
-	
-	args = parsed->args;
-	j = 0;
-	if (ft_isoption(args[j]))
-		while (args[++j])
-			if (!ft_isoption(args[j]))
-				break;
-	print_args(args, j);
-	if (!ft_isoption(args[0]))
-		printf("\n");
-	return (info->exit_code = 0, SUCCESS);
 }

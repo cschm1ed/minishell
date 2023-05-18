@@ -35,22 +35,19 @@
 # include "colors.h"
 # include "structs.h"
 
-void rl_replace_line (const char *text, int clear_undo);
+# include "../sources/builtins/builtins.h"
+# include "../sources/executer/executer.h"
+# include "../sources/lexer/lexer.h"
+# include "../sources/parser/parser.h"
 
 // inits
 t_info		*info_init(char **env);
-
-// parser
-t_list *parser(t_list **parsed, char **lexed);
-int			redirects(t_list **tokens, t_parsed *parsed);
-int			delimiter_and_append(t_list **tokens, t_parsed *parsed);
 
 // utils
 char		*ft_readline(const char *str);
 int			ft_isspace(char c);
 int			ft_isquote(char c);
 int			ft_isspecial(char c);
-int			ft_isvariable(char before, char c, char next);
 int			ft_isredirect(char c);
 char		**str_arr_add(char ***arr, char *toadd);
 void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
@@ -76,54 +73,7 @@ void		handle_keybindings(int signum);
 // tests
 void		print_parsed(t_list *parsed);
 int			test_parser(void);
-
-// lexer/lexer_checks.c
-int			valid_num_of_quotes(char *s, t_info *info);
-int			valid_quotes(char **substr);
-int			valid_num_of_specials(char **substr, t_info *info);
-
-// lexer/lexer_trim.c
-char		*trim_quotes(char *str);
-
-// lexer/lexer_split.c
-int			count_substrs(char *s);
-char		**split_if_isspace(char **split, char *s, int amt_substrs);
-
-// lexer/lexer_utils.c
-int			skip_until_quote(const char *s, size_t *i);
-int			skip_specials(char *s, size_t *i);
-int         replace_variables(t_info *info, char **lexed);
-
-// lexer/lexer.c
-char		**lexer(char *cmd, t_info *info);
 void		print_lexed(char **array);
-
-// bultins
-int			execute_pwd(t_info *info);
-int			execute_echo(t_info *info, t_parsed *parsed);
-int			execute_env(t_info *info);
-int			execute_exit(t_info *info);
-int			execute_export(t_info *info, char **arg);
-int			execute_unset(t_info *info, char **arg);
-int			execute_cd(t_info *info, char *directory);
-
-// export utils
-char		**cpy_lst_to_array(t_list *lst);
-void		bubble_sort_str_array(char **array, int len);
-int			print_sorted_lst(t_info *info);
-int			check_if_varname_is_valid(char *str);
-
-int         executer(t_info *info);
-int			execute_builtin_if(t_info *info, t_list *parsed);
-int         open_in(char *name);
-int         open_out(char *name);
-char        *get_path(char *cmd, t_info *info);
-int         check_infiles(t_list *parsed);
-void        close_pipes(int **pipes);
-int			pipex(t_info *info, t_list *parsed);
-int			create_outfiles(t_list *parsed);
-int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt);
-void	ft_parent_process(t_data *pipex);
-int execute(t_info *info, t_list *parsed);
+void		print_linked_lst(t_list *lst);
 
 #endif
