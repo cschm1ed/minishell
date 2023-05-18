@@ -15,7 +15,7 @@
 static void	print_args(char **args, int j);
 static int	ft_isoption(char *args);
 
-int execute_echo(t_info *info, t_parsed *parsed)
+int execute_echo(t_parsed *parsed)
 {
 	char	**args;
 	int		j;
@@ -23,17 +23,15 @@ int execute_echo(t_info *info, t_parsed *parsed)
 	args = parsed->args;
 	j = 0;
 	if (ft_isoption(args[j]))
-	{
 		while (args[++j])
 		{
 			if (!ft_isoption(args[j]))
 				break;
 		}
-	}
 	print_args(args, j);
 	if (!ft_isoption(args[0]))
 		printf("\n");
-	return (info->exit_code = 0, SUCCESS);
+	return (0);
 }
 
 static void	print_args(char **args, int j)

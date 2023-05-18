@@ -16,7 +16,6 @@ int lst_replace_var_val(t_list *list, char *name, char *new)
 {
 	char *replacement;
 
-
 	replacement = ft_strdup(new);
 	if (replacement == NULL)
 		return (perror("malloc"), FAILURE);

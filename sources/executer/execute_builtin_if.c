@@ -15,23 +15,23 @@
 int	execute_builtin_if(t_info *info, t_list *parsed)
 {
 	char	*cmd;
-	int 	ret;
 
 	cmd = lst_get_parsed(parsed)->cmd;
-	ret = 129;
 	if (ft_strcmp(cmd, "echo") == 0)
-		ret = execute_echo(info, lst_get_parsed(parsed));
+		info->exit_code = execute_echo(lst_get_parsed(parsed));
 	else if (ft_strcmp(cmd, "env") == 0)
-		ret = execute_env(info);
+		info->exit_code = execute_env(info);
 	else if (ft_strcmp(cmd, "exit") == 0)
-		ret = execute_exit(info, &lst_get_parsed(parsed)->args[1]);
+		info->exit_code = execute_exit(info, &lst_get_parsed(parsed)->args[1]);
 	else if (ft_strcmp(cmd, "export") == 0)
-		ret = execute_export(info, lst_get_parsed(parsed)->args);
+		info->exit_code = execute_export(info, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "pwd") == 0)
-		ret = execute_pwd(info);
+		info->exit_code = execute_pwd(info);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		ret = execute_unset(info, lst_get_parsed(parsed)->args);
+		info->exit_code = execute_unset(info, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "cd") == 0)
-		ret = execute_cd(info, lst_get_parsed(parsed)->args[1]);
-	return (ret);
+		info->exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
+	else
+		return (129);
+	return (info->exit_code);
 }
