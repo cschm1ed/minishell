@@ -49,10 +49,6 @@ void	delete_parsed(void *content)
 	parsed = (t_parsed *)content;
 	if (parsed == NULL)
 		return ;
-	if (parsed->cmd)
-		free(parsed->cmd);
-	if (parsed->args)
-		ft_free_dbl_ptr(parsed->args);
 	if (parsed->redirect_input)
 		ft_lstclear(&(parsed->redirect_input), delete_variable);
 	if (parsed->redirect_output)

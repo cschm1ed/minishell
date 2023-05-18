@@ -57,5 +57,5 @@ int	execute_export(t_info *info, char **arg)
 		}
 		i ++;
 	}
-	return (SUCCESS);
+	return (0);
 }
