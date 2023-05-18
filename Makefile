@@ -50,6 +50,12 @@ BLUE        := \033[0;34m
 ESCAPE      := \033[0m
 
 # Build rules
+
+${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
+	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
+	@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
+	@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
+
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
 	@${CC} $(CFLAGS) -c $< -o $@
 
@@ -59,11 +65,6 @@ $(BUILDDIR):
 ${LIBFTDIR}/$(LIBFT):
 	@echo "$(YELLOW)******************  COMPILING  ******************$(ESCAPE)"
 	@$(MAKE) bonus -C $(LIBFTDIR)
-
-${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
-	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
-	@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
-	@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
 
 # Standard rules
 all: $(NAME)
