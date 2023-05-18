@@ -11,7 +11,8 @@
 # **************************************************************************** #
 
 # Directories
-VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
+VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft:sources/debug
+
 BUILDDIR    := build
 LIBFTDIR    := libft
 
@@ -23,7 +24,7 @@ LIBFT       := libft.a
 UTILS       := ft_isspace.c ft_isspecial.c str_arr_utils.c ft_isredirect.c ft_isquote.c info_init.c \
                ft_lstrmone.c delete_struct.c lst_get_struct.c lst_find_var_val.c \
                lsts_search_var_val.c ft_strcmp.c \
-               utils.c unexpected_token.c ft_strsjoin.c lst_new_node.c
+               unexpected_token.c ft_strsjoin.c lst_new_node.c debug.c
 
 LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
 PARSER      := find_and_remove_redirects.c find_and_remove_delimiter_and_append.c parser.c

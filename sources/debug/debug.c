@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/04 15:43:10 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/04 15:43:10 by cschmied         ###   ########.fr       */
+/*   Created: 2023/05/18 13:37:03 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/18 13:37:29 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	print_parsed(t_list *parsed)
 		printf("\n");
 		if (ft_lstlast(content->redirect_input) != NULL)
 			printf(GREEN"last redirect input:\t%s\n"ESC,
-				   lst_get_var(ft_lstlast(content->redirect_input))->value);
+				lst_get_var(ft_lstlast(content->redirect_input))->value);
 		else
-			printf(GREEN"no input redirection\n"ESC);
+		printf(GREEN"no input redirection\n"ESC);
 		if (ft_lstlast(content->redirect_output) != NULL)
 			printf(GREEN"last redirect output:\t%s\n"ESC,
-				   lst_get_var(ft_lstlast(content->redirect_output))->value);
+				lst_get_var(ft_lstlast(content->redirect_output))->value);
 		else
-			printf(GREEN"no output redirection\n"ESC);
+		printf(GREEN"no output redirection\n"ESC);
 		parsed = parsed->next;
 		i ++;
 	}
@@ -59,4 +59,13 @@ void	print_linked_lst(t_list *lst)
 		printf("%s\n", (char*)lst->content);
 		lst = lst->next;
 	}
+}
+
+void	print_lexed(char **array)
+{
+	int i;
+
+	i = -1;
+	while (array[++i])
+		ft_printf(CYAN"%s\n"ESC, array[i]);
 }

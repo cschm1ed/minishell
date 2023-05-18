@@ -71,4 +71,12 @@ char	*get_next_line(int fd);
 int		ft_printf(const char *str, ...);
 char	**ft_free_dbl_ptr(char **array);
 
+int		ft_isspace(char c);
+int		ft_isquote(char c);
+int		ft_isspecial(char c);
+int		ft_isredirect(char c);
+
+int		ft_strcmp(const char *str1, const char *str2);
+char	*ft_strsjoin(const char *s1, const char *s2, const char *s3);
+
 #endif

@@ -14,15 +14,6 @@
 
 static char	**iterate_through_cmd(char **lexed);
 
-void	print_lexed(char **array)
-{
-	int i;
-
-	i = -1;
-	while (array[++i])
-		ft_printf(CYAN"%s\n"ESC, array[i]);
-}
-
 char	**lexer(char *cmd, t_info *info)
 {
 	char	**lexed;
