@@ -25,6 +25,21 @@ int main(int argc, char **argv, char **envp)
 	info->commands = &commands;
 	if (info == NULL)
 		return (printf("info error\n"), 1);
+	if (argc >= 3)
+	{
+		if (ft_strcmp(argv[2], "-n") == 0)
+		{
+			commands.raw = argv[3];
+			commands.lexed = lexer(commands.raw, info);
+			if (commands.lexed == NULL)
+				return (1);
+			if  (parser(&(commands.parsed), commands.lexed) == NULL)
+				return (1);
+			if (execute(info, commands.parsed) == FAILURE)
+				return (1);
+			return (0);
+		}
+	}
     while (1)
     {
         commands.raw = ft_readline("minishell: ");

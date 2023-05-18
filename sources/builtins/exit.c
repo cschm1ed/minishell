@@ -12,10 +12,10 @@
 
 #include <minishell.h>
 
-int execute_exit(t_info *info)
+int execute_exit(t_info *info, char **arg)
 {
     // free
 	(void)info;
-    exit(0);
+    exit(ft_atoi(*arg));
 	return (SUCCESS);
 }

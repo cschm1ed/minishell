@@ -25,7 +25,7 @@ int			execute_echo(t_info *info, t_parsed *parsed);
 int execute_env(t_info *info);
 
 // exit
-int execute_exit(t_info *info);
+int execute_exit(t_info *info, char **arg);
 
 // export
 int		execute_export(t_info *info, char **arg);
