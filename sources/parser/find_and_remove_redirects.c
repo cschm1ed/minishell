@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static int	redirect_input(t_list *tokens, t_parsed *parsed, t_list **head);
 static int	redirect_output(t_list *tokens, t_parsed *parsed, t_list **head);

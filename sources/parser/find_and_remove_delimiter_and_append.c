@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static int	set_append(t_list *tokens, t_parsed *parsed, t_list **head);
 static int	set_delimiter(t_list *tokens, t_parsed *parsed, t_list **head);

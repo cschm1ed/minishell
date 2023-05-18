@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {

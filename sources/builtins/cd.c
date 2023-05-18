@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static void	go_up_one_dir(t_info *info);
 

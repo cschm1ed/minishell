@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static int	parse_command(t_list **p_lst, t_list **t_start);
 static int	distribute_commands(t_list **token_lst, t_list **parsed);

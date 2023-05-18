@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static int	get_name_len(const char *str);
 static char	*rejoin(char *str, char *value, size_t j, int len);
