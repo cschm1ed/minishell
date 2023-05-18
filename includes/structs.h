@@ -23,7 +23,6 @@ typedef struct s_data      t_data;
 
 typedef struct s_info
 {
-	t_list		*lex_lst;
 	t_list		*env_lst;
 	char		**env;
 	t_list		*user_vars;
@@ -40,7 +39,6 @@ typedef struct s_parsed
 	char		**args;
 	t_list		*redirect_input;
 	t_list		*redirect_output;
-	int			append_mode;
 }	t_parsed;
 
 typedef struct s_variable
@@ -54,7 +52,6 @@ typedef struct s_commands
 {
 	char		*raw;
 	char		**lexed;
-	t_list		*token_lst;
 	t_list		*parsed;
 }	t_commands;
 
