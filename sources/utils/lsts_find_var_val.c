@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_var_val.c                                     :+:      :+:    :+:   */
+/*   lsts_find_var_val.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,7 +20,7 @@
  * @param name - name of the variable whose value is sought
  * @return
  */
-char	*find_var_val(t_info *info, char *name)
+char	*lsts_find_var_val(t_info *info, char *name)
 {
 	if (lst_find_var_val(info->env_lst, name))
 		return (lst_find_var_val(info->env_lst, name));

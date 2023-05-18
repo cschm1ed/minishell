@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+static int execute_single(t_info *info, t_list *parsed, const t_data *pipex);
+
 static int	create_pipes(t_data *pipex, t_list *parsed)
 {
 	int	amt;
@@ -43,8 +45,8 @@ int execute(t_info *info, t_list *parsed)
 	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
 	if (pipex->pid == NULL)
 		return (perror("malloc"), FAILURE);
-	if (ft_lstsize(parsed) == 1 && ft_strcmp(lst_get_parsed(parsed)->cmd, "exit") == 0)
-		execute_exit(info);
+	if (execute_single(info, parsed, pipex) == SUCCESS)
+		return (SUCCESS);
 	while (parsed)
 	{
 		pipex->pid[i] = fork();
@@ -63,5 +65,24 @@ int execute(t_info *info, t_list *parsed)
 		info->exit_code = status >> 8;
 	}
 	// free pipex
+	return (SUCCESS);
+}
+
+static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
+{
+	char *cmd;
+
+	cmd = lst_get_parsed(parsed)->cmd;
+	if (ft_lstsize(parsed) != 1
+		|| (ft_strcmp(cmd, "exit") != 0
+		&& ft_strcmp(cmd, "cd") != 0))
+		return (FAILURE);
+	if (check_infiles(parsed) >= 0 && pipex->file_fd[1] >= 0)
+	{
+		if (pipex->file_fd[0] != -1 && pipex->file_fd[1] != -1)
+			info->exit_code= execute_builtin_if(info, parsed);
+		else
+			info->exit_code = 127;
+	}
 	return (SUCCESS);
 }

@@ -23,7 +23,8 @@ t_variable	*lst_get_var(t_list *lst);
 t_parsed	*lst_get_parsed(t_list *lst);
 t_list		*lst_newparsed_node(void);
 t_list 		*lst_newvar_node(char *name, char *value, int key);
-char		*find_var_val(t_info *info, char *name);
+char		*lsts_find_var_val(t_info *info, char *name);
+int 		lst_replace_var_val(t_list *list, char *name, char *new);
 
 // str_arr_utils
 int			str_in_arr(char **arr, char *find);

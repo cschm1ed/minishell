@@ -97,9 +97,9 @@ static char	*replace_var(char *str, size_t *j, t_info *info)
 		return (value);
 	}
 	else
-		value = find_var_val(info, name);
+		value = lsts_find_var_val(info, name);
 	ret = rejoin(str, value, *j, get_name_len(str + *j));
-	*j += (int)ft_strlen(find_var_val(info, name));
+	*j += (int)ft_strlen(lsts_find_var_val(info, name));
 	return (ret);
 }
 

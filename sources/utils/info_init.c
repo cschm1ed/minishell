@@ -36,7 +36,7 @@ t_info	*info_init(char **env)
 	info->env_lst = var_list_init(env);
 	if (info->env_lst == NULL)
 		return (NULL);
-	info->pwd = ft_strdup(find_var_val(info, "PWD"));
+	info->pwd = ft_strdup(lsts_find_var_val(info, "PWD"));
 	if (!info->pwd)
 		return (perror("malloc"), NULL);
 	info->env = env;

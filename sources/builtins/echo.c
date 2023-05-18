@@ -23,9 +23,13 @@ int execute_echo(t_info *info, t_parsed *parsed)
 	args = parsed->args;
 	j = 0;
 	if (ft_isoption(args[j]))
+	{
 		while (args[++j])
+		{
 			if (!ft_isoption(args[j]))
 				break;
+		}
+	}
 	print_args(args, j);
 	if (!ft_isoption(args[0]))
 		printf("\n");
