@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_execute.c                                    :+:      :+:    :+:   */
+/*   executer_execute.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/13 18:12:43 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/18 14:08:42 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	}
 	ret = execute_builtin_if(info, parsed);
 	if (ret != 129)
-		exit (ret);
+		exit (info->exit_code);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
 	return (SUCCESS);
