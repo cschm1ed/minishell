@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/18 14:07:23 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/19 16:16:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int main(int argc, char **argv, char **envp)
 			commands.parsed = parser(&commands.parsed, commands.lexed);
 			execute(info, commands.parsed);
 		}
+		ft_free_dbl_ptr(commands.lexed);
 		free(commands.raw);
 		ft_lstclear(&(commands.parsed), delete_parsed);
 		// printf(RED"Exit: %d\n"ESC, info->exit_code);

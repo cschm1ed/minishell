@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/16 14:39:31 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:44:08 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	count_substrs(char *s)
 		{
 			cnt++;
 			terminate_string(s, &i);
-			if (s[i - 1] && ft_isspecial(s[i]) && !ft_isspace(s[i - 1]))
+			if (s[i] && s[i - 1] && ft_isspecial(s[i]) && !ft_isspace(s[i - 1]))
 				cnt++;
 			skip_specials(s, &i);
 		}

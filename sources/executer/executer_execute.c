@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/18 14:08:42 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/19 16:12:43 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	if (parsed->next)
 	{
 		close(pipex->pipe_fd[cnt][0]);
-		dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO);
+		if (dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO) == -1)
 		close(pipex->pipe_fd[cnt][1]);
 	}
 	else
