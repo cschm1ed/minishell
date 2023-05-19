@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-static int	update_env(t_info *info, char *dir);
+static int	update_env(t_info *info);
 
 int	execute_cd(t_info *info, char *dir)
 {
@@ -10,11 +10,11 @@ int	execute_cd(t_info *info, char *dir)
 	if (!dir)
 		dir = ft_strjoin("/Users/", variable->value);
 	if (!chdir(dir))
-		return (update_env(info, dir));
+		return (update_env(info));
 	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)), 1);
 }
 
-static int	update_env(t_info *info, char *dir)
+static int	update_env(t_info *info)
 {
 	char	*updated_pwd;
 
