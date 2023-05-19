@@ -31,6 +31,10 @@ char	*ft_strjoin(const char *s1, const char *s2)
 
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
+	else if (s1 == NULL)
+		return (ft_strdup(s2));
+	else if (s2 == NULL)
+		return (ft_strdup(s1));
 	result = malloc (ft_strlen(s1) + (ft_strlen(s2) + 1) * sizeof(char));
 	if (result == NULL)
 		return (NULL);
