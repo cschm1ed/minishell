@@ -34,6 +34,8 @@ char		**str_arr_add(char ***array, char *toadd);
 // frees and deletes
 void		delete_variable(void *content);
 void		delete_parsed(void *content);
+void		free_pipex(t_data **pipex);
+void		free_info(t_info **info);
 
 // etc
 t_info		*info_init(char **env);
