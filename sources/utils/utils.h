@@ -36,6 +36,7 @@ void		delete_variable(void *content);
 void		delete_parsed(void *content);
 void		free_pipex(t_data **pipex);
 void		free_info(t_info **info);
+void		free_cmds(t_commands *commands);
 
 // etc
 t_info		*info_init(char **env);

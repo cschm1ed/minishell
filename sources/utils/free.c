@@ -42,14 +42,15 @@ void	free_pipex(t_data **pipex)
 	pipex = NULL;
 }
 
-void	free_cmds(t_commands **commands)
+void	free_cmds(t_commands *commands)
 {
-	if ((*commands)->raw)
-		free((*commands)->raw);
-	if ((*commands)->lexed)
-		ft_free_dbl_ptr((*commands)->lexed);
-	if ((*commands)->parsed)
-		ft_lstclear(&((*commands)->parsed), delete_parsed);
-	free(*commands);
-	commands = NULL;
+	if (commands->raw)
+		free(commands->raw);
+	if (commands->lexed)
+		ft_free_dbl_ptr(commands->lexed);
+	if (commands->parsed)
+		ft_lstclear(&(commands->parsed), delete_parsed);
+	commands->raw = NULL;
+	commands->lexed = NULL;
+	commands->parsed = NULL;
 }

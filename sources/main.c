@@ -52,10 +52,7 @@ int main(int argc, char **argv, char **envp)
 			commands.parsed = parser(&commands.parsed, commands.lexed);
 			execute(info, commands.parsed);
 		}
-		ft_free_dbl_ptr(commands.lexed);
-		free(commands.raw);
-		ft_lstclear(&(commands.parsed), delete_parsed);
-		// printf(RED"Exit: %d\n"ESC, info->exit_code);
+		free_cmds(&commands);
     }
 	(void)argc;
 	(void)argv;

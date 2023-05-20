@@ -36,7 +36,6 @@ int	valid_num_of_specials(char **lxd, t_info *info)
 	int	s;
 	int	i;
 
-	print_lexed(lxd);
 	s = -1;
 	while (lxd[++s])
 	{
