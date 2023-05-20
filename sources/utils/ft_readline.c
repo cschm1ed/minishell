@@ -22,11 +22,13 @@ static int	str_isspace(char *str);
  * @return char* - returns the line read
  */
 
-char	*ft_readline(const char *str)
+char	*ft_readline(const char *str, t_info *info)
 {
 	char	*tmp;
 
 	tmp = readline(str);
+	if (*tmp == EOF)
+		execute_exit(info, NULL);
 	if (tmp && !str_isspace(tmp))
 		add_history(tmp);
 	return (tmp);
@@ -49,7 +51,9 @@ void	handle_keybindings(int signum)
 {
 	if (signum == SIGINT)
 	{
-		ft_putstr_fd("\n", 1);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
 	}
 	else if (signum == SIGQUIT)
 		ft_printf("ctrl+backslash\n");

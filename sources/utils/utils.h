@@ -38,7 +38,7 @@ void		delete_parsed(void *content);
 // etc
 t_info		*info_init(char **env);
 int			unexpected_token(char *token);
-char		*ft_readline(const char *str);
+char		*ft_readline(const char *str, t_info *info);
 void		handle_keybindings(int signum);
 
 #endif

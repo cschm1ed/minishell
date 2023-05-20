@@ -19,6 +19,6 @@
 # define BLUE		"\x1B[34m"
 # define MAGENTA	"\x1B[35m"
 # define CYAN		"\x1B[36m"
-# define ESC		"\x1B[0m"
+# define ESCAPE		"\x1B[0m"
 
 #endif

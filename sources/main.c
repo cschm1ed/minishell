@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **envp)
 	}
     while (1)
     {
-        commands.raw = ft_readline("minishell: ");
+        commands.raw = ft_readline("minishell: ", info);
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed)
         {
