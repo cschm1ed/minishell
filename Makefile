@@ -39,7 +39,7 @@ OBJS        := $(SRCS:%.c=$(BUILDDIR)/%.o)
 
 # Compiler
 CC          := cc
-CFLAGS      := -g -Wall -Wextra -I ./includes -O2
+CFLAGS      := -g -Wall -Wextra -I ./includes -O2 -D BUFFER_SIZE=25
 LDFLAGS     := -lreadline -g -Wall -Wextra -I ./includes -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 MAKE        := make
 RM          := rm -f
