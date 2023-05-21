@@ -20,7 +20,7 @@ int	execute_export(t_info *info, char **arg)
 	int 	i;
 
 	i = 0;
-	if (arg == NULL)
+	if (*arg == NULL)
 		return (print_sorted_lst(info));
 	while (arg[i])
 	{

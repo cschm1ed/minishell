@@ -24,9 +24,6 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	pipex->file_fd[0] = check_infiles(parsed);
 	if (pipex->file_fd[0] == -1)
 		execute_exit(info, NULL, 1);
-	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
-	if (!pipex->cmd_path)
-		execute_exit(info, NULL, info->exit_code);
 	if (parsed->next)
 	{
 		close(pipex->pipe_fd[cnt][0]);
@@ -58,6 +55,9 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	is_builtin = execute_builtin_if(info, parsed);
 	if (is_builtin != 129)
 		exit (info->exit_code);
+	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
+	if (!pipex->cmd_path)
+		execute_exit(info, NULL, info->exit_code);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
 	return (SUCCESS);
