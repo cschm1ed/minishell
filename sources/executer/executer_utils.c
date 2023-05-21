@@ -12,7 +12,61 @@
 
 #include <minishell.h>
 
-int heredoc_redirect()
+static int compare_delimiter(const char *str, const char *delimiter)
+{
+	int i;
+
+	i = 0;
+	while (str[i] == delimiter[i])
+		i ++;
+	if (str[i] == '\n' && str[i + 1] == 0)
+		return (0);
+	return (1);
+}
+
+int heredoc_redirect(t_list *parsed)
+{
+	char 	*buffer;
+	t_list	*heredocs;
+	int 	hpipe[2];
+
+	heredocs = lst_get_parsed(parsed)->here_docs;
+	while (heredocs->next)
+	{
+		while (1)
+		{
+			ft_putendl_fd(">", STDIN_FILENO);
+			buffer = get_next_line(STDIN_FILENO);
+			if (buffer == NULL)
+				return (perror("get next line"), -1);
+			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 1)
+			{
+				free(buffer);
+				break ;
+			}
+			free(buffer);
+		}
+		heredocs = heredocs->next;
+	}
+	if (pipe(hpipe) == -1)
+		return (-1);
+	while (1)
+	{
+		ft_putchar_fd('>', STDIN_FILENO);
+		buffer = get_next_line(STDIN_FILENO);
+		if (buffer == NULL)
+			return (-1);
+		if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
+		{
+			close(hpipe[1]);
+			free(buffer);
+			return (hpipe[0]);
+		}
+		write(hpipe[0], buffer, ft_strlen(buffer));
+		free(buffer);
+	}
+	return (SUCCESS);
+}
 
 char *get_path(char *cmd, t_info *info)
 {
@@ -49,7 +103,7 @@ int check_infiles(t_list *parsed)
 	int     fd;
 
 	redirects = lst_get_parsed(parsed)->redirect_input;
-	if (redirects == NULL)
+	if (redirects == NULL && lst_get_parsed(parsed)->here_docs == NULL)
 		return (STDIN_FILENO);
 	while (redirects)
 	{
@@ -64,7 +118,8 @@ int check_infiles(t_list *parsed)
 		redirects = redirects->next;
 	}
 	if (lst_get_parsed(parsed)->here_docs != NULL)
-		fd = heredoc_redirect(fd, parsed);
+		fd = heredoc_redirect(parsed);
+	printf("returned fd: %d\n", fd);
 	return (fd);
 }
 

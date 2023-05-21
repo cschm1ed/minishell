@@ -98,7 +98,7 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 		}
 		else if (ft_strcmp((char *)ptr->content, "<<") == 0)
 		{
-			if (set_mode(ptr, tokens, &(parsed->redirect_input), DELIMITER) == FAILURE)
+			if (set_mode(ptr, tokens, &(parsed->here_docs), DELIMITER) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}

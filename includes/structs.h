@@ -39,6 +39,7 @@ typedef struct s_parsed
 	char		**args;
 	t_list		*redirect_input;
 	t_list		*redirect_output;
+	t_list		*here_docs;
 }	t_parsed;
 
 typedef struct s_variable
@@ -64,6 +65,7 @@ typedef struct s_history
 typedef struct s_data
 {
 	int		**pipe_fd;
+	int 	heredoc_pipe[2];
 	int		file_fd[2];
 	pid_t	*pid;
 	char	*cmd_path;
