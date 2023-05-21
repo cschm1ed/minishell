@@ -23,7 +23,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	
 	content = lst_get_parsed(parsed);
 	handle_files(pipex, parsed, info);
-	handle_duplications(pipex, parsed, info, cnt, content);
+	handle_duplications(pipex, parsed, info, cnt);
 	is_builtin = execute_builtin_if(info, parsed);
 	if (is_builtin != 129)
 		exit (info->exit_code);
