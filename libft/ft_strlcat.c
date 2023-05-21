@@ -15,7 +15,7 @@
 // size_t strlcat(char *restrict dst, const char *restrict src, size_t dstsize)
 // -> #include <string.h>
 // -> concatenates strings with the same input parameters and output result
-//    as snprintf(3)
+//    as snft_printf(3)
 // -> safer, more consistent, and less error prone replacements for the
 //    easily misused function strncat(3)
 // -> takes the full size of the destination buffer and guarantee

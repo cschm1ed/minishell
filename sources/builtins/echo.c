@@ -30,7 +30,7 @@ int execute_echo(t_parsed *parsed)
 		}
 	print_args(args, j);
 	if (!ft_isoption(args[0]))
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }
 
@@ -39,9 +39,9 @@ static void	print_args(char **args, int j)
 	j++;
 	while (args[j])
 	{
-		printf("%s", args[j]);
+		ft_printf("%s", args[j]);
 		if (args[++j])
-			printf(" ");
+			ft_printf(" ");
 	}
 }
 

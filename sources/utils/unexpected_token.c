@@ -21,6 +21,6 @@
  */
 int	unexpected_token(char *token)
 {
-	printf("minishell: syntax error near unexpected token `%s'\n", token);
+	ft_printf("minishell: syntax error near unexpected token `%s'\n", token);
 	return (FAILURE);
 }

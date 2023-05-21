@@ -14,5 +14,5 @@
 
 int execute_pwd(t_info *info)
 {
-	return (printf("%s\n", info->pwd), 0);
+	return (ft_printf("%s\n", info->pwd), 0);
 }

@@ -77,9 +77,9 @@ int	print_sorted_lst(t_info *info)
 		while (ft_strncmp(lst_get_var(ptr)->name, array[i], ft_strlen(array[i])) != 0)
 			ptr = ptr->next;
 		if (lst_get_var(ptr)->value[0])
-			printf("declare -x %s=%s\n", lst_get_var(ptr)->name, lst_get_var(ptr)->value);
+			ft_printf("declare -x %s=%s\n", lst_get_var(ptr)->name, lst_get_var(ptr)->value);
 		else
-			printf("declare -x %s\n", lst_get_var(ptr)->name);
+			ft_printf("declare -x %s\n", lst_get_var(ptr)->name);
 		i ++;
 	}
 	free(array);

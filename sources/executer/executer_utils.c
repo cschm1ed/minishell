@@ -78,7 +78,7 @@ char *get_path(char *cmd, t_info *info)
 	if (ft_strchr(cmd, '/') != NULL)
 	{
 		if (access(cmd, F_OK) == -1)
-			return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
+			return (info->exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 		return (ft_strdup(cmd));
 	}
 	paths = ft_split(lst_find_var_val(info->env_lst, "PATH"), ':');
@@ -93,7 +93,7 @@ char *get_path(char *cmd, t_info *info)
 			return (ft_free_dbl_ptr(paths), joined);
 		i ++;
 	}
-	return (info->exit_code = 127, printf("minishell: %s: command not found\n", cmd), NULL);
+	return (info->exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 }
 
 int check_infiles(t_list *parsed)
@@ -109,10 +109,10 @@ int check_infiles(t_list *parsed)
 	{
 		filename = lst_get_var(redirects)->value;
 		if (access(filename, F_OK) == -1 || access(filename, R_OK) == -1)
-			return (printf("minishell: %s: %s\n", filename, strerror(errno)), -1);
+			return (ft_printf("minishell: %s: %s\n", filename, strerror(errno)), -1);
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
-			return (printf("minishell: %s: :%s\n", filename, strerror(errno)), -1);
+			return (ft_printf("minishell: %s: :%s\n", filename, strerror(errno)), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;
@@ -136,14 +136,14 @@ int create_outfiles(t_list *parsed)
 	{
 		filename = lst_get_var(redirects)->value;
 		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1) {
-			return (printf("minishell no access: %s: %s\n", filename, strerror(errno)), -1);
+			return (ft_printf("minishell no access: %s: %s\n", filename, strerror(errno)), -1);
 		}
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 		if (lst_get_var(redirects)->key == APPEND)
 			flags = O_WRONLY | O_APPEND | O_CREAT;
 		fd = open(filename, flags, 0644);
 		if (fd == -1)
-			return (printf("minishell open failed: %s: :%s\n", filename, strerror(errno)), -1);
+			return (ft_printf("minishell open failed: %s: :%s\n", filename, strerror(errno)), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;

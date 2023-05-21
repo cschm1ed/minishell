@@ -22,7 +22,7 @@ int	valid_num_of_quotes(char *cmd, t_info *info)
 	while (cmd[++i])
 		if (ft_isquote(cmd[i]))
 			if (!skip_until_quote(cmd, &i))
-				return (printf(SYNERR), info->exit_code = 258, FALSE);
+				return (ft_printf(SYNERR), info->exit_code = 258, FALSE);
 	return (TRUE);
 }
 
@@ -44,10 +44,10 @@ int	valid_num_of_specials(char **lxd, t_info *info)
 		{
 			if (lxd[s + 1] && ft_isredirect(lxd[s][i])
 				&& ft_isredirect(lxd[s + 1][i]))
-				return (printf(SYNERR), info->exit_code = 258, FALSE);
+				return (ft_printf(SYNERR), info->exit_code = 258, FALSE);
 			if (ft_isredirect(lxd[s][i]) || lxd[s][i] == '|')
 				if (count_specials(lxd[s], &i, lxd[s][i]) > 2)
-					return (printf(SYNERR), info->exit_code = 258, FALSE);
+					return (ft_printf(SYNERR), info->exit_code = 258, FALSE);
 		}
 	}
 	return (TRUE);

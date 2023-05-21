@@ -20,33 +20,33 @@ void	print_parsed(t_list *parsed)
 	i = 0;
 
 	if (parsed == NULL)
-		printf("parsed does not exist\n");
+		ft_printf("parsed does not exist\n");
 	while (parsed)
 	{
 		content = lst_get_parsed(parsed);
-		printf(YELLOW"Node %d:\n"ESCAPE, i);
-		printf(GREEN"cmd:\t%s\n"ESCAPE, content->cmd);
+		ft_printf(YELLOW"Node %d:\n"ESCAPE, i);
+		ft_printf(GREEN"cmd:\t%s\n"ESCAPE, content->cmd);
 		j = 0;
 		if (content->args)
 		{
-			printf(GREEN"args:"ESCAPE);
+			ft_printf(GREEN"args:"ESCAPE);
 			while (content->args[j])
 			{
-				printf(GREEN"\t%s, "ESCAPE, content->args[j]);
+				ft_printf(GREEN"\t%s, "ESCAPE, content->args[j]);
 				j ++;
 			}
 		}
-		printf("\n");
+		ft_printf("\n");
 		if (ft_lstlast(content->redirect_input) != NULL)
-			printf(GREEN"last redirect input:\t%s\n"ESCAPE,
+			ft_printf(GREEN"last redirect input:\t%s\n"ESCAPE,
 				lst_get_var(ft_lstlast(content->redirect_input))->value);
 		else
-		printf(GREEN"no input redirection\n"ESCAPE);
+		ft_printf(GREEN"no input redirection\n"ESCAPE);
 		if (ft_lstlast(content->redirect_output) != NULL)
-			printf(GREEN"last redirect output:\t%s\n"ESCAPE,
+			ft_printf(GREEN"last redirect output:\t%s\n"ESCAPE,
 				lst_get_var(ft_lstlast(content->redirect_output))->value);
 		else
-		printf(GREEN"no output redirection\n"ESCAPE);
+		ft_printf(GREEN"no output redirection\n"ESCAPE);
 		parsed = parsed->next;
 		i ++;
 	}
@@ -56,7 +56,7 @@ void	print_linked_lst(t_list *lst)
 {
 	while (lst)
 	{
-		printf("%s\n", (char*)lst->content);
+		ft_printf("%s\n", (char*)lst->content);
 		lst = lst->next;
 	}
 }

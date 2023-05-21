@@ -25,7 +25,7 @@ int	execute_export(t_info *info, char **arg)
 	while (arg[i])
 	{
 		if (check_if_varname_is_valid(arg[i]) == FALSE)
-			printf("export: not an identifier: %s\n", arg[i]);
+			ft_printf("export: not an identifier: %s\n", arg[i]);
 		if (ft_strchr(arg[i], '=') == NULL
 			|| *(ft_strchr(arg[i], '=') + 1) == '\0')
 		{

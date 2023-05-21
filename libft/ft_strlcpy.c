@@ -15,7 +15,7 @@
 // size_t strlcpy(char *restrict dst, const char *restrict src, size_t dstsize)
 //     -> #include <string.h>
 //     -> copies strings with the same input parameters
-//        and output result as snprintf(3)
+//        and output result as snft_printf(3)
 //     -> safer, more consistent, and less error prone replacements
 //        for the easily misused functions strncpy(3) and strncat(3)
 //     -> takes the full size of the destination buffer and guarantee

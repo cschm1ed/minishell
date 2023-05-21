@@ -11,7 +11,7 @@ int	execute_cd(t_info *info, char *dir)
 		dir = ft_strjoin("/Users/", variable->value);
 	if (!chdir(dir))
 		return (update_env(info));
-	return (printf("minishell: cd: %s: %s\n", dir, strerror(errno)), 1);
+	return (ft_printf("minishell: cd: %s: %s\n", dir, strerror(errno)), 1);
 }
 
 static int	update_env(t_info *info)

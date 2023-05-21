@@ -115,7 +115,7 @@ static int set_mode(t_list *tokens, t_list **head, t_list **add, int flag)
 	char	*name;
 
 	if (tokens->next == NULL)
-		return (printf
+		return (ft_printf
 				("minishell: syntax error near unexpected token `newline'\n"),
 				FAILURE);
 	name = ft_strdup(tokens->next->content);

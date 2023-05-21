@@ -24,7 +24,7 @@ int main(int argc, char **argv, char **envp)
 		return (perror("info"), 1);
 	info->commands = &commands;
 	if (info == NULL)
-		return (printf("info error\n"), 1);
+		return (ft_printf("info error\n"), 1);
 	if (argc >= 3)
 	{
 		if (ft_strcmp(argv[2], "-n") == 0)
