@@ -62,7 +62,7 @@ int heredoc_redirect(t_list *parsed)
 			free(buffer);
 			return (hpipe[0]);
 		}
-		write(hpipe[0], buffer, ft_strlen(buffer));
+		write(hpipe[1], buffer, ft_strlen(buffer));
 		free(buffer);
 	}
 	return (SUCCESS);
@@ -119,7 +119,6 @@ int check_infiles(t_list *parsed)
 	}
 	if (lst_get_parsed(parsed)->here_docs != NULL)
 		fd = heredoc_redirect(parsed);
-	printf("returned fd: %d\n", fd);
 	return (fd);
 }
 
