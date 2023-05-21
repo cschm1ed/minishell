@@ -20,13 +20,13 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	content = lst_get_parsed(parsed);
 	pipex->file_fd[1] = create_outfiles(parsed);
 	if (pipex->file_fd[1] == -1)
-		exit (1);
+		execute_exit(info, NULL, 1);
 	pipex->file_fd[0] = check_infiles(parsed);
 	if (pipex->file_fd[0] == -1)
-		exit (1);
+		execute_exit(info, NULL, 1);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 	if (!pipex->cmd_path)
-		exit (info->exit_code);
+		execute_exit(info, NULL, info->exit_code);
 	if (parsed->next)
 	{
 		close(pipex->pipe_fd[cnt][0]);

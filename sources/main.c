@@ -50,6 +50,8 @@ int main(int argc, char **argv, char **envp)
 		if (commands.lexed)
         {
 			commands.parsed = parser(&commands.parsed, commands.lexed);
+			if (commands.parsed == NULL)
+				execute_exit(info, NULL, 1);
 			execute(info, commands.parsed);
 		}
 		free_cmds(&commands);

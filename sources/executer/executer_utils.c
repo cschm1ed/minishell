@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+int heredoc_redirect()
+
 char *get_path(char *cmd, t_info *info)
 {
 	char *joined;
@@ -61,6 +63,8 @@ int check_infiles(t_list *parsed)
 			close(fd);
 		redirects = redirects->next;
 	}
+	if (lst_get_parsed(parsed)->here_docs != NULL)
+		fd = heredoc_redirect(fd, parsed);
 	return (fd);
 }
 
@@ -127,5 +131,6 @@ void    close_pipes(int **pipes)
 			close(pipes[i][0]);
 		pipes[i][0] = -1;
 		pipes[i][1] = -1;
+		i ++;
 	}
 }

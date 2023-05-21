@@ -20,9 +20,10 @@ void	free_info(t_info **info)
 		ft_lstclear(&((*info)->user_vars), delete_variable);
 	if ((*info)->export_lst)
 		ft_lstclear(&((*info)->export_lst), delete_variable);
-	if ((*info)->pipex)
+/*	if ((*info)->pipex)
 		free_pipex(&(*info)->pipex);
 	free(*info);
+*/
 	*info = NULL;
 }
 
@@ -46,8 +47,8 @@ void	free_cmds(t_commands *commands)
 {
 	if (commands->raw)
 		free(commands->raw);
-	if (commands->lexed)
-		ft_free_dbl_ptr(commands->lexed);
+/*	if (commands->lexed)
+		ft_free_dbl_ptr(commands->lexed);*/
 	if (commands->parsed)
 		ft_lstclear(&(commands->parsed), delete_parsed);
 	commands->raw = NULL;
