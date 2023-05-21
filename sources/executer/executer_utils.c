@@ -35,11 +35,11 @@ int heredoc_redirect(t_list *parsed)
 	{
 		while (1)
 		{
-			ft_putendl_fd(">", STDIN_FILENO);
+			ft_putstr_fd("> ", STDIN_FILENO);
 			buffer = get_next_line(STDIN_FILENO);
 			if (buffer == NULL)
 				return (perror("get next line"), -1);
-			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 1)
+			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
 			{
 				free(buffer);
 				break ;
@@ -52,7 +52,7 @@ int heredoc_redirect(t_list *parsed)
 		return (-1);
 	while (1)
 	{
-		ft_putchar_fd('>', STDIN_FILENO);
+		ft_putstr_fd("> ", STDIN_FILENO);
 		buffer = get_next_line(STDIN_FILENO);
 		if (buffer == NULL)
 			return (-1);
