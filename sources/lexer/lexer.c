@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/12 16:30:32 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 15:05:34 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**lexer(char *cmd, t_info *info)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
 	// ft_printf(GREEN"Count: %d\n"ESC, amt_substrs);
-	lexed = ft_calloc((amt_substrs + 1), sizeof(char *));
+	lexed = malloc ((amt_substrs + 1) * sizeof(char *));
 	if (!lexed)
 		return (perror(""), NULL);
 	lexed = split_if_isspace(lexed, cmd, amt_substrs);
