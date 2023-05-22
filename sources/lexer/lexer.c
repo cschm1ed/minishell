@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/22 15:05:34 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:01:52 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ char	**lexer(char *cmd, t_info *info)
 	char	**lexed;
 	int		amt_substrs;
 
-	if (cmd == NULL || *cmd == 0 || !valid_num_of_quotes(cmd, info))
+	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd, info) == FALSE)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
-	// ft_printf(GREEN"Count: %d\n"ESC, amt_substrs);
-	lexed = malloc ((amt_substrs + 1) * sizeof(char *));
+	lexed = ft_calloc((amt_substrs + 1), sizeof(char *));
 	if (!lexed)
 		return (perror(""), NULL);
-	lexed = split_if_isspace(lexed, cmd, amt_substrs);
+	lexed = split_if_isspace_or_isspecial(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
-	if (!replace_variables(info, lexed))
-	 	return (NULL);
+	if (replace_variables(info, lexed) == FAILURE)
+		return (NULL);
 	lexed = iterate_through_cmd(lexed);
-	if (!valid_num_of_specials(lexed, info))
+	if (valid_num_of_specials(lexed, info) == FALSE)
 		return (ft_free_dbl_ptr(lexed));
 	return (lexed);
 }

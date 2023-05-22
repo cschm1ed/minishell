@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_trim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/18 11:23:56 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:00:11 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*trim_quotes(char *str)
 	start = 0;
 	while (str[++i])
 	{
-		if (ft_isquote(str[i]))
+		if (ft_isquote(str[i]) == TRUE)
 		{
 			start = i + 1;
 			skip_until_quote(str, &i);

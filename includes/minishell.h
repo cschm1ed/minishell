@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 15:28:26 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:02:48 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define MINISHELL_H
 
 #define SYNERR "minishell: syntax error\n"
-# define SUCCESS 1
-# define FAILURE 0
+# define SUCCESS 0
+# define FAILURE 1
 # define TRUE 1
 # define FALSE 0
 # define APPEND 1

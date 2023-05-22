@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_replace_var.c                                :+:      :+:    :+:   */
+/*   lexer_replace_vars.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/08 13:34:18 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:46:34 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*process_string(size_t *j, char **lexed, int i, t_info *info);
  */
 int	replace_variables(t_info *info, char **lexed)
 {
-	int		 i;
+	int		i;
 	size_t	j;
 
 	i = 0;
@@ -62,7 +62,7 @@ static char	*process_string(size_t *j, char **lexed, int i, t_info *info)
 	if (str[*j] == '$')
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
-		skip_until_quote(str, (unsigned long*)j);
+		skip_until_quote(str, (unsigned long *)j);
 	else if (str[*j] == '"')
 	{
 		(*j)++;
@@ -87,7 +87,7 @@ static char	*process_string(size_t *j, char **lexed, int i, t_info *info)
 static char	*replace_var(char *str, size_t *j, t_info *info)
 {
 	char	*name;
-	char 	*value;
+	char	*value;
 	char	*ret;
 
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));

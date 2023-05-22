@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:15:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/18 12:15:23 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:55:36 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int		replace_variables(t_info *info, char **lexed);
 
 // split
 int		count_substrs(char *s);
-char	**split_if_isspace(char **split, char *s, int amt_substrs);
+char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs);
 
 // trim
 char	*trim_quotes(char *str);
 
 // utils
-int 	skip_until_quote(const char *s, size_t *i);
+int		skip_until_quote(const char *s, size_t *i);
 int		skip_specials(char *s, size_t *i);
 
 #endif
