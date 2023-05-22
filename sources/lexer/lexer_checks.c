@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/19 16:31:15 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 16:56:35 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,20 @@ static int	count_specials(char *lxd, int *i, char c)
 	int	cnt;
 
 	cnt = 0;
-	while (lxd[(*i)] && lxd[(*i) + 1] && lxd[(*i)++] == c)
+	// while (lxd[(*i)] && lxd[(*i) + 1] && lxd[(*i)++] == c)
+	// {
+	// 	if ((c == '>' && lxd[(*i)] == '<')
+	// 		|| (c == '<' && lxd[(*i)] == '>'))
+	// 		return (3);
+	// 	cnt++;
+	// }
+	while (lxd[(*i)] && lxd[(*i)] == c)
 	{
 		if ((c == '>' && lxd[(*i)] == '<')
 			|| (c == '<' && lxd[(*i)] == '>'))
 			return (3);
 		cnt++;
+		(*i)++;
 	}
 	return (cnt);
 }
