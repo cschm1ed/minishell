@@ -18,8 +18,7 @@ static void handle_duplications(t_data *pipex, t_list *parsed, t_info *info, int
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed  *content;
-	int		  is_builtin;
-	
+
 	content = lst_get_parsed(parsed);
 	handle_duplications(pipex, parsed, info, cnt);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
