@@ -30,6 +30,7 @@ int 		lst_replace_var_val(t_list *list, char *name, char *new);
 int			str_in_arr(char **arr, char *find);
 t_list		*str_arr_to_lst(char **arr);
 char		**str_arr_add(char ***array, char *toadd);
+void        bubble_sort_str_array(char **array, int len);
 
 // frees and deletes
 void		delete_variable(void *content);
@@ -37,6 +38,7 @@ void		delete_parsed(void *content);
 void		free_pipex(t_data **pipex);
 void		free_info(t_info **info);
 void		free_cmds(t_commands *commands);
+void        exit_error(t_info *info, char *file, int line, char *msg);
 
 // etc
 t_info		*info_init(char **env);

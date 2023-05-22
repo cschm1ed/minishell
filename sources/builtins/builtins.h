@@ -19,24 +19,23 @@
 int			execute_cd(t_info *info, char *directory);
 
 // echo
-int			execute_echo(t_parsed *parsed);
+int execute_echo(t_parsed *parsed, int fd_out);
 
 // env
-int execute_env(t_info *info);
+int execute_env(t_info *info, int fd_out);
 
 // exit
 int execute_exit(t_info *info, char **arg, int exit_code);
 
 // export
-int		execute_export(t_info *info, char **arg);
-int		print_sorted_lst(t_info *info);
+int execute_export(t_info *info, char **arg, int fd_out);
+int print_sorted_lst(t_info *info, int fd_out);
 char	**cpy_lst_to_array(t_list *lst);
-void	bubble_sort_str_array(char **array, int len);
 int		check_if_varname_is_valid(char *str);
 int		var_lst_add(t_list **list, char **arg);
 
 // pwd
-int		execute_pwd(t_info *info);
+int execute_pwd(t_info *info, int fd_out);
 
 // unset
 int		execute_unset(t_info *info, char **arg);

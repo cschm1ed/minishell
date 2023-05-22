@@ -32,31 +32,7 @@ char	**cpy_lst_to_array(t_list *lst)
 	return (arr);
 }
 
-void	bubble_sort_str_array(char **array, int len)
-{
-	int 	i;
-	int		j;
-	char 	*tmp;
-
-	i = 0;
-	while (i < len)
-	{
-		j = 0;
-		while (j < len - 1)
-		{
-			if (ft_strncmp(array[j], array[j + 1], ft_strlen(array[j])) > 0)
-			{
-				tmp = array[j];
-				array[j] = array[j + 1];
-				array[j + 1] = tmp;
-			}
-			j ++;
-		}
-		i ++;
-	}
-}
-
-int	print_sorted_lst(t_info *info)
+int print_sorted_lst(t_info *info, int fd_out)
 {
 	int 	i;
 	char 	**array;
@@ -76,10 +52,14 @@ int	print_sorted_lst(t_info *info)
 		ptr = info->env_lst;
 		while (ft_strncmp(lst_get_var(ptr)->name, array[i], ft_strlen(array[i])) != 0)
 			ptr = ptr->next;
+		ft_putstr_fd("declare -x ", fd_out);
+		ft_putstr_fd(lst_get_var(ptr)->name, fd_out);
 		if (lst_get_var(ptr)->value[0])
-			ft_printf("declare -x %s=%s\n", lst_get_var(ptr)->name, lst_get_var(ptr)->value);
-		else
-			ft_printf("declare -x %s\n", lst_get_var(ptr)->name);
+		{
+			ft_putstr_fd("=", fd_out);
+			ft_putstr_fd(lst_get_var(ptr)->value, fd_out);
+		}
+		ft_putchar_fd('\n', fd_out);
 		i ++;
 	}
 	free(array);

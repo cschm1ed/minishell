@@ -12,26 +12,33 @@
 
 #include <minishell.h>
 
-int	execute_builtin_if(t_info *info, t_list *parsed)
+int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 {
 	char	*cmd;
+	int     fd_out;
 
+	if (parsed->next)
+		fd_out = pipex->pipe_fd[cnt][1];
+	else
+		fd_out = pipex->file_fd[1];
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (ft_strcmp(cmd, "echo") == 0)
-		info->exit_code = execute_echo(lst_get_parsed(parsed));
+		info->exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
 	else if (ft_strcmp(cmd, "env") == 0)
-		info->exit_code = execute_env(info);
+		info->exit_code = execute_env(info, fd_out);
 	else if (ft_strcmp(cmd, "exit") == 0)
 		info->exit_code = execute_exit(info, &lst_get_parsed(parsed)->args[1], 0);
 	else if (ft_strcmp(cmd, "export") == 0)
-		info->exit_code = execute_export(info, &lst_get_parsed(parsed)->args[1]);
+		info->exit_code = execute_export(info, lst_get_parsed(parsed)->args, fd_out);
 	else if (ft_strcmp(cmd, "pwd") == 0)
-		info->exit_code = execute_pwd(info);
+		info->exit_code = execute_pwd(info, fd_out);
 	else if (ft_strcmp(cmd, "unset") == 0)
 		info->exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1]);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		info->exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else
 		return (129);
+	if (parsed->next)
+		close(pipex->pipe_fd[cnt][1]);
 	return (info->exit_code);
 }

@@ -19,7 +19,7 @@
 int 	execute(t_info *info, t_list *parsed);
 
 // builtins
-int		execute_builtin_if(t_info *info, t_list *parsed);
+int     execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt);
 
 // execute
 int		ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt);

@@ -12,7 +12,9 @@
 
 #include <minishell.h>
 
-int execute_pwd(t_info *info)
+int execute_pwd(t_info *info, int fd_out)
 {
-	return (ft_printf("%s\n", info->pwd), 0);
+	ft_putstr_fd(info->pwd, fd_out);
+	ft_putchar_fd('\n', fd_out);
+	return (0);
 }

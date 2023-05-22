@@ -27,19 +27,18 @@ int main(int argc, char **argv, char **envp)
 		return (ft_printf("info error\n"), 1);
 	if (argc >= 3)
 	{
-		if (ft_strcmp(argv[2], "-n") == 0)
+		if (ft_strcmp(argv[1], "-n") == 0)
 		{
-			commands.raw = argv[3];
+			commands.raw = argv[2];
 			commands.lexed = lexer(commands.raw, info);
-			if (commands.lexed == NULL)
-				return (1);
-			if  (parser(&(commands.parsed), commands.lexed) == NULL)
-				return (1);
-			if (execute(info, commands.parsed) == FAILURE)
-				return (1);
-			ft_free_dbl_ptr(commands.lexed);
-			free(commands.raw);
-			ft_lstclear(&(commands.parsed), delete_parsed);
+			if (commands.lexed)
+			{
+				commands.parsed = parser(&commands.parsed, commands.lexed);
+				if (commands.parsed == NULL)
+					execute_exit(info, NULL, 1);
+				execute(info, commands.parsed);
+			}
+			//free_cmds(&commands);
 			return (0);
 		}
 	}
@@ -55,7 +54,7 @@ int main(int argc, char **argv, char **envp)
 				execute_exit(info, NULL, 1);
 			execute(info, commands.parsed);
 		}
-		free_cmds(&commands);
+	    free_cmds(&commands);
     }
 	(void)argc;
 	(void)argv;

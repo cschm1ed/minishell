@@ -95,8 +95,9 @@ static int	add_args(t_list **t_start, t_list *node)
 		lst_get_parsed(node)->cmd = args->content;
 	while (args && ft_strcmp(args->content, "|") != 0)
 	{
-		if (str_arr_add(&(lst_get_parsed(node)->args), args->content) == NULL)
-			return (FAILURE);
+		if (*(args->content) != 0)
+			if (str_arr_add(&(lst_get_parsed(node)->args), args->content) == NULL)
+				return (FAILURE);
 		args = args->next;
 	}
 	return (SUCCESS);
