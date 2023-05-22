@@ -73,6 +73,8 @@ static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
 	char *cmd;
 
 	cmd = lst_get_parsed(parsed)->cmd;
+	if (cmd == NULL)
+		return (FAILURE);
 	if (ft_lstsize(parsed) != 1
 		|| (ft_strcmp(cmd, "exit") != 0
 		&& ft_strcmp(cmd, "cd") != 0))
