@@ -1,0 +1,13 @@
+- pipes für builtins
+	--> echo sth | cat
+- dollar sign (segfault)
+	--> echo $=
+- file doesn't exist (Abbruch)
+	--> < in cat
+- HEREDOC multiple
+	--> cat << a > out1 | cat << b > out2 | cat << c
+
+- memory leaks
+- open fds
+- norminette
+- edge cases
