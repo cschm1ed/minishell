@@ -84,10 +84,16 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 	if (cmd == NULL)
 		return (FAILURE);
 	if (ft_lstsize(parsed) != 1
-		|| (ft_strcmp(cmd, "exit") != 0
-		&& ft_strcmp(cmd, "cd") != 0))
+		|| ft_strcmp(cmd, "exit") != 0
+		|| ft_strcmp(cmd, "echo") != 0
+		|| ft_strcmp(cmd, "env") != 0
+		|| ft_strcmp(cmd, "cd") != 0
+		|| ft_strcmp(cmd, "export") != 0
+		|| ft_strcmp(cmd, "pwd") != 0
+		|| ft_strcmp(cmd, "unset") != 0)
 		return (FAILURE);
-	if (check_infiles(parsed) >= 0 && pipex->file_fd[1] >= 0)
+	handle_files(pipex, parsed, info);
+	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
 		info->exit_code = execute_builtin_if(info, parsed, pipex, 0);
 	else
 		info->exit_code = 127;
