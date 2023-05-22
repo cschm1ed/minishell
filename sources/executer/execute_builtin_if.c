@@ -21,7 +21,6 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 		fd_out = pipex->pipe_fd[cnt][1];
 	else
 		fd_out = pipex->file_fd[1];
-
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (ft_strcmp(cmd, "echo") == 0)
 		info->exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
@@ -39,5 +38,7 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 		info->exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else
 		return (129);
+	if (parsed->next)
+		close(pipex->pipe_fd[cnt][1]);
 	return (info->exit_code);
 }
