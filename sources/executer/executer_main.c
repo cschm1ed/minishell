@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/22 15:14:17 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:58:52 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,11 @@ int execute(t_info *info, t_list *parsed)
 		parsed = parsed->next;
 	}
 	j = 0;
-	while (j++ <= i)
+	while (++j <= i)
 	{
 		waitpid(pipex->pid[j], &status, 0);
-		info->exit_code = status >> 8;
+		if ((((*(int *)&(status)) & 0177) == 0))
+			info->exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
 	}
 	return (SUCCESS);
 }

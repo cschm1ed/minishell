@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/13 17:09:41 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 18:31:10 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 		return (129);
 	if (parsed->next)
 		close(pipex->pipe_fd[cnt][1]);
+	// printf("Exit_code: %d\n", info->exit_code);
 	return (info->exit_code);
 }
