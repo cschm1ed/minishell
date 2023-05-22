@@ -23,9 +23,9 @@ char	**lexer(char *cmd, t_info *info)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
 	// ft_printf(GREEN"Count: %d\n"ESC, amt_substrs);
-	lexed = malloc ((amt_substrs + 1) * sizeof(char *));
+	lexed = ft_calloc((amt_substrs + 1), sizeof(char *));
 	if (!lexed)
-		return (perror("malloc"), NULL);
+		return (perror(""), NULL);
 	lexed = split_if_isspace(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
