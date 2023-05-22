@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/19 16:16:02 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 10:48:50 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int main(int argc, char **argv, char **envp)
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed)
         {
+			print_lexed(commands.lexed);
 			commands.parsed = parser(&commands.parsed, commands.lexed);
 			if (commands.parsed == NULL)
 				execute_exit(info, NULL, 1);
