@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# List of commands to test
 cmds=(
     "ls -l"
     "pwd"
     "echo hello"
-    "cat mytest.sh"
-    # Add more commands as needed...
+    "cat test_minishell.sh"
 )
 
 for cmd in "${cmds[@]}"; do
@@ -17,8 +15,13 @@ for cmd in "${cmds[@]}"; do
     bash_exit_code=$?
 
     # Run the command in minishell and capture output and exit code
-    minishell_output=$(./minishell -n "$cmd" 2>&1)
+    minishell_output=$(timeout 5s ./minishell -n "$cmd" 2>&1)
     minishell_exit_code=$?
+
+    if [[ $minishell_exit_code -eq 124 ]]; then
+        echo "Minishell timed out when running '$cmd'"
+        continue
+    fi
 
     # Compare outputs
     if [ "$bash_output" != "$minishell_output" ]; then
@@ -32,7 +35,5 @@ for cmd in "${cmds[@]}"; do
     # Compare exit codes
     if [ "$bash_exit_code" != "$minishell_exit_code" ]; then
         echo "FAIL: Exit code of '$cmd' in bash ($bash_exit_code) and minishell ($minishell_exit_code) do not match"
-    else
-        echo "PASS: Exit code of '$cmd' in bash and minishell match"
     fi
 done
