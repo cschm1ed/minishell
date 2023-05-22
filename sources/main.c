@@ -53,7 +53,7 @@ int main(int argc, char **argv, char **envp)
 				execute_exit(info, NULL, 1);
 			execute(info, commands.parsed);
 		}
-		free_cmds(&commands);
+	    free_cmds(&commands);
     }
 	(void)argc;
 	(void)argv;

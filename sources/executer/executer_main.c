@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-static int execute_single(t_info *info, t_list *parsed, const t_data *pipex);
+static int execute_single(t_info *info, t_list *parsed, t_data *pipex);
 static void handle_files(t_data *pipex, t_list *parsed, t_info *info);
 
 static int	create_pipes(t_data *pipex, t_list *parsed)
@@ -52,7 +52,7 @@ int execute(t_info *info, t_list *parsed)
 	while (parsed)
 	{
 		handle_files(pipex, parsed, info);
-		builtin_return = execute_builtin_if(info, parsed, pipex);
+		builtin_return = execute_builtin_if(info, parsed, pipex, 0);
 		if (builtin_return != 129)
 			info->exit_code = builtin_return;
 		else
@@ -76,7 +76,7 @@ int execute(t_info *info, t_list *parsed)
 	return (SUCCESS);
 }
 
-static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
+static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 {
 	char *cmd;
 
@@ -88,7 +88,7 @@ static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
 		&& ft_strcmp(cmd, "cd") != 0))
 		return (FAILURE);
 	if (check_infiles(parsed) >= 0 && pipex->file_fd[1] >= 0)
-		info->exit_code = execute_builtin_if(info, parsed, pipex);
+		info->exit_code = execute_builtin_if(info, parsed, pipex, 0);
 	else
 		info->exit_code = 127;
 	return (SUCCESS);

@@ -109,3 +109,27 @@ int	str_in_arr(char **arr, char *find)
 	}
 	return (FALSE);
 }
+
+void	bubble_sort_str_array(char **array, int len)
+{
+	int 	i;
+	int		j;
+	char 	*tmp;
+
+	i = 0;
+	while (i < len)
+	{
+		j = 0;
+		while (j < len - 1)
+		{
+			if (ft_strncmp(array[j], array[j + 1], ft_strlen(array[j])) > 0)
+			{
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;
+			}
+			j ++;
+		}
+		i ++;
+	}
+}

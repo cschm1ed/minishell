@@ -12,19 +12,23 @@
 
 #include <minishell.h>
 
-static void	print_var(void *content);
+static void	print_var_lst(t_list *lst, int fd_out);
 
-int execute_env(t_info *info)
+int execute_env(t_info *info, int fd_out)
 {
-	ft_lstiter(info->env_lst, print_var);
-	ft_printf("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n");
+	print_var_lst(info->env_lst, fd_out);
+	ft_putstr_fd("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n", fd_out);
 	return (0);
 }
 
-static void	print_var(void *content)
+static void	print_var_lst(t_list *lst, int fd_out)
 {
-	t_variable *variable;
-
-	variable = (t_variable*)content;
-	ft_printf("%s=%s\n", variable->name, variable->value);
+	while (lst)
+	{
+		ft_putstr_fd(lst_get_var(lst)->name, fd_out);
+		ft_putchar_fd('=', fd_out);
+		ft_putstr_fd(lst_get_var(lst)->value, fd_out);
+		ft_putchar_fd('\n', fd_out);
+		lst = lst->next;
+	}
 }

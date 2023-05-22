@@ -14,14 +14,15 @@
 
 static int no_value(t_info *info, char *arg);
 static int with_value(t_info *info, char *arg);
+static void invalid_identifier(char *const *arg, int fd_out, int i);
 
-int	execute_export(t_info *info, char **arg)
+int execute_export(t_info *info, char **arg, int fd_out)
 {
 	int i;
 
 	i = 1;
 	if (arg == NULL || arg[1] == NULL)
-		return (print_sorted_lst(info));
+		return (print_sorted_lst(info, fd_out));
 	while (arg[i])
 	{
 		if (ft_strchr(arg[i], '=') == NULL
@@ -31,7 +32,7 @@ int	execute_export(t_info *info, char **arg)
 				return (printf("export failed"), FAILURE);
 		}
 		else if (check_if_varname_is_valid(arg[i]) == FALSE)
-			ft_printf("export: not an identifier: %s\n", arg[i]);
+			invalid_identifier(arg, fd_out, i);
 		else
 		{
 			if (with_value(info,arg[i]) == FAILURE)
@@ -80,4 +81,11 @@ static int with_value(t_info *info, char *arg)
 		return (free(name), free(value), FAILURE);
 	ft_lstadd_back(&(info->env_lst), node);
 	return (SUCCESS);
+}
+
+static void invalid_identifier(char *const *arg, int fd_out, int i)
+{
+	ft_putstr_fd("export: `", fd_out);
+	ft_putstr_fd(arg[i], fd_out);
+	ft_putstr_fd("': not a valid identifier\n", fd_out);
 }
