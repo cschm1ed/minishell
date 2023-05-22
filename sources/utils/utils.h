@@ -38,6 +38,7 @@ void		delete_parsed(void *content);
 void		free_pipex(t_data **pipex);
 void		free_info(t_info **info);
 void		free_cmds(t_commands *commands);
+void        exit_error(t_info *info, char *file, int line, char *msg);
 
 // etc
 t_info		*info_init(char **env);

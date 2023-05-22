@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_export.c                                           :+:      :+:    :+:   */
+/*   execute_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 
 static int no_value(t_info *info, char *arg);
 static int with_value(t_info *info, char *arg);
-static void invalid_identifier(char *const *arg, int fd_out, int i);
+static void invalid_identifier(char *arg, int fd_out);
 
 int execute_export(t_info *info, char **arg, int fd_out)
 {
@@ -25,18 +25,21 @@ int execute_export(t_info *info, char **arg, int fd_out)
 		return (print_sorted_lst(info, fd_out));
 	while (arg[i])
 	{
-		if (ft_strchr(arg[i], '=') == NULL
+		if (ft_strchr(arg[i], '=') != NULL &&
+			*(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
+			invalid_identifier(arg[i + 1], fd_out);
+		else if (ft_strchr(arg[i], '=') == NULL
 			|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		{
 			if (no_value(info,arg[i]) == FAILURE)
-				return (printf("export failed"), FAILURE);
+				exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		else if (check_if_varname_is_valid(arg[i]) == FALSE)
-			invalid_identifier(arg, fd_out, i);
+			invalid_identifier(ft_strchr(arg[i], '=') + 1, fd_out);
 		else
 		{
 			if (with_value(info,arg[i]) == FAILURE)
-				return (printf("export failed"), FAILURE);
+				exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		i ++;
 	}
@@ -83,9 +86,9 @@ static int with_value(t_info *info, char *arg)
 	return (SUCCESS);
 }
 
-static void invalid_identifier(char *const *arg, int fd_out, int i)
+static void invalid_identifier(char *arg, int fd_out)
 {
 	ft_putstr_fd("export: `", fd_out);
-	ft_putstr_fd(arg[i], fd_out);
+	ft_putstr_fd(arg, fd_out);
 	ft_putstr_fd("': not a valid identifier\n", fd_out);
 }
