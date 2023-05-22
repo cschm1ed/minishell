@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_main.c                                       :+:      :+:    :+:   */
+/*   executer_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/13 17:53:07 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 15:14:17 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int execute(t_info *info, t_list *parsed)
 			if (pipex->pid[i] == 0)
 				ft_child_process(pipex, parsed, info, i);
 			close(pipex->pipe_fd[i][1]);
+			i ++;
 		}
 		parsed = parsed->next;
-		i ++;
 	}
 	j = 0;
 	while (j++ <= i)

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/13 17:06:39 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/22 15:28:26 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@
 # include "../sources/parser/parser.h"
 # include "../sources/utils/utils.h"
 # include "../sources/debug/debug.h"
+
+// void	rl_replace_line(char *c, int i);
 
 #endif
