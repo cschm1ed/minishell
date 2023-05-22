@@ -12,13 +12,13 @@
 
 #include <minishell.h>
 
-int	execute_builtin_if(t_info *info, t_list *parsed)
+int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex)
 {
 	char	*cmd;
 
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (ft_strcmp(cmd, "echo") == 0)
-		info->exit_code = execute_echo(lst_get_parsed(parsed));
+		info->exit_code = execute_echo(lst_get_parsed(parsed), pipex);
 	else if (ft_strcmp(cmd, "env") == 0)
 		info->exit_code = execute_env(info);
 	else if (ft_strcmp(cmd, "exit") == 0)

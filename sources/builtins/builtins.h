@@ -19,7 +19,7 @@
 int			execute_cd(t_info *info, char *directory);
 
 // echo
-int			execute_echo(t_parsed *parsed);
+int execute_echo(t_parsed *parsed, t_data *pipex);
 
 // env
 int execute_env(t_info *info);

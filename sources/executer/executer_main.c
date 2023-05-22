@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <tclDecls.h>
 
 static int execute_single(t_info *info, t_list *parsed, const t_data *pipex);
+static void handle_files(t_data *pipex, t_list *parsed, t_info *info);
 
 static int	create_pipes(t_data *pipex, t_list *parsed)
 {
@@ -36,6 +38,7 @@ int execute(t_info *info, t_list *parsed)
 	t_data		*pipex;
 	int			i;
 	int 		j;
+	int         builtin_return;
 	int			status;
 
 	pipex = info->pipex;
@@ -49,12 +52,19 @@ int execute(t_info *info, t_list *parsed)
 		return (SUCCESS);
 	while (parsed)
 	{
-		pipex->pid[i] = fork();
-		if (pipex->pid[i] == -1)
-			return (info->exit_code = 1, FAILURE);
-		if (pipex->pid[i] == 0)
-			ft_child_process(pipex, parsed, info, i);
-		close(pipex->pipe_fd[i][1]);
+		handle_files(pipex, parsed, info);
+		builtin_return = execute_builtin_if(info, parsed, pipex);
+		if (builtin_return != 129)
+			info->exit_code = builtin_return;
+		else
+		{
+			pipex->pid[i] = fork();
+			if (pipex->pid[i] == -1)
+				return (info->exit_code = 1, FAILURE);
+			if (pipex->pid[i] == 0)
+				ft_child_process(pipex, parsed, info, i);
+			close(pipex->pipe_fd[i][1]);
+		}
 		parsed = parsed->next;
 		i ++;
 	}
@@ -64,7 +74,6 @@ int execute(t_info *info, t_list *parsed)
 		waitpid(pipex->pid[j], &status, 0);
 		info->exit_code = status >> 8;
 	}
-	// free pipex
 	return (SUCCESS);
 }
 
@@ -80,8 +89,18 @@ static int execute_single(t_info *info, t_list *parsed, const t_data *pipex)
 		&& ft_strcmp(cmd, "cd") != 0))
 		return (FAILURE);
 	if (check_infiles(parsed) >= 0 && pipex->file_fd[1] >= 0)
-		info->exit_code = execute_builtin_if(info, parsed);
+		info->exit_code = execute_builtin_if(info, parsed, result);
 	else
 		info->exit_code = 127;
 	return (SUCCESS);
+}
+
+static void handle_files(t_data *pipex, t_list *parsed, t_info *info)
+{
+	pipex->file_fd[1] = create_outfiles(parsed);
+	if (pipex->file_fd[1] == -1)
+		execute_exit(info, NULL, 1);
+	pipex->file_fd[0] = check_infiles(parsed);
+	if (pipex->file_fd[0] == -1)
+		execute_exit(info, NULL, 1);
 }
