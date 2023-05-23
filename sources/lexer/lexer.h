@@ -19,8 +19,8 @@
 char	**lexer(char *cmd, t_info *info);
 
 // checks
-int		valid_num_of_quotes(char *cmd, t_info *info);
-int		valid_num_of_specials(char **lxd, t_info *info);
+int     valid_num_of_quotes(char *cmd);
+int     valid_num_of_specials(char **lxd);
 
 // replace vars
 int		replace_variables(t_info *info, char **lexed);

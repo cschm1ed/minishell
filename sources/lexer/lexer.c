@@ -19,7 +19,7 @@ char	**lexer(char *cmd, t_info *info)
 	char	**lexed;
 	int		amt_substrs;
 
-	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd, info) == FALSE)
+	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd) == FALSE)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
 	lexed = ft_calloc((amt_substrs + 1), sizeof(char *));
@@ -31,7 +31,7 @@ char	**lexer(char *cmd, t_info *info)
 	if (replace_variables(info, lexed) == FAILURE)
 		return (NULL);
 	lexed = iterate_through_cmd(lexed);
-	if (valid_num_of_specials(lexed, info) == FALSE)
+	if (valid_num_of_specials(lexed) == FALSE)
 		return (ft_free_dbl_ptr(lexed));
 	return (lexed);
 }

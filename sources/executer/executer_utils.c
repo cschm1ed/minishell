@@ -70,8 +70,9 @@ int heredoc_redirect(t_list *parsed)
 
 char *get_path(char *cmd, t_info *info)
 {
-	char *joined;
-	char **paths;
+	char    *joined;
+	char    **paths;
+	char    *path_var;
 	int  i;
 
 	i = 0;
@@ -81,9 +82,12 @@ char *get_path(char *cmd, t_info *info)
 			return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 		return (ft_strdup(cmd));
 	}
-	paths = ft_split(lst_find_var_val(info->env_lst, "PATH"), ':');
+	path_var = lst_find_var_val(info->env_lst, "PATH");
+	if (path_var == NULL)
+		return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
+	paths = ft_split(path_var, ':');
 	if (paths == NULL)
-		return (perror("malloc"), NULL);
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	while (paths[i])
 	{
 		joined = ft_strsjoin(paths[i], "/", cmd);

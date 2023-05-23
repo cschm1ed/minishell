@@ -53,13 +53,17 @@ ESCAPE      := \033[0m
 # Build rules
 
 ${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
+	@echo "$(GREEN)linkgin...$(ESCAPE)"
 	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
+	@clear
 	@echo "$(BLUE)$$HEADER $(ESCAPE)"
 
 
 
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
 	@${CC} $(CFLAGS) -c $< -o $@
+	@clear
+	@echo "$(YELLOW)compiling > $< $(ESCAPE)"
 
 $(BUILDDIR):
 	@mkdir $(BUILDDIR)

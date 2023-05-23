@@ -15,7 +15,7 @@
 static int	count_specials(char *lxd, int *i, char c);
 static void	print_invalid_num_of_specials(char c, int cnt);
 
-int	valid_num_of_quotes(char *cmd, t_info *info)
+int valid_num_of_quotes(char *cmd)
 {
 	size_t	i;
 	char	quote;
@@ -38,7 +38,7 @@ int	valid_num_of_quotes(char *cmd, t_info *info)
  * @param lxd the lexed array of the user's cmd
  * @return true or false
  */
-int	valid_num_of_specials(char **lxd, t_info *info)
+int valid_num_of_specials(char **lxd)
 {
 	int	s;
 	int	i;
