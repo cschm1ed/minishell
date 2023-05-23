@@ -18,7 +18,10 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	int     fd_out;
 
 	if (parsed->next)
+	{
 		fd_out = pipex->pipe_fd[cnt][1];
+		printf("next is %d\n", fd_out);
+	}
 	else
 		fd_out = pipex->file_fd[1];
 	cmd = lst_get_parsed(parsed)->cmd;

@@ -13,7 +13,6 @@
 #include <minishell.h>
 
 static int execute_single(t_info *info, t_list *parsed, t_data *pipex);
-static void handle_files(t_data *pipex, t_list *parsed, t_info *info);
 
 static int	create_pipes(t_data *pipex, t_list *parsed)
 {
@@ -37,7 +36,6 @@ int execute(t_info *info, t_list *parsed)
 	t_data		*pipex;
 	int			i;
 	int 		j;
-	int         builtin_return;
 	int			status;
 
 	pipex = info->pipex;
@@ -51,20 +49,13 @@ int execute(t_info *info, t_list *parsed)
 		return (SUCCESS);
 	while (parsed)
 	{
-		handle_files(pipex, parsed, info);
-		builtin_return = execute_builtin_if(info, parsed, pipex, 0);
-		if (builtin_return != 129)
-			info->exit_code = builtin_return;
-		else
-		{
-			pipex->pid[i] = fork();
-			if (pipex->pid[i] == -1)
-				return (info->exit_code = 1, FAILURE);
-			if (pipex->pid[i] == 0)
-				ft_child_process(pipex, parsed, info, i);
-			close(pipex->pipe_fd[i][1]);
-			i ++;
-		}
+		pipex->pid[i] = fork();
+		if (pipex->pid[i] == -1)
+			return (info->exit_code = 1, FAILURE);
+		if (pipex->pid[i] == 0)
+			ft_child_process(pipex, parsed, info, i);
+		close(pipex->pipe_fd[i][1]);
+		i ++;
 		parsed = parsed->next;
 	}
 	j = 0;
@@ -101,7 +92,7 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 	return (SUCCESS);
 }
 
-static void handle_files(t_data *pipex, t_list *parsed, t_info *info)
+void handle_files(t_data *pipex, t_list *parsed, t_info *info)
 {
 	pipex->file_fd[1] = create_outfiles(parsed);
 	if (pipex->file_fd[1] == -1)

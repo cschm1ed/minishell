@@ -17,13 +17,18 @@ static void handle_duplications(t_data *pipex, t_list *parsed, t_info *info, int
 
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
-	t_parsed  *content;
+	t_parsed    *content;
+	int         exit_builtin;
 
 	content = lst_get_parsed(parsed);
+	handle_files(pipex, parsed, info);
 	handle_duplications(pipex, parsed, info, cnt);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 	if (!pipex->cmd_path)
 		execute_exit(info, NULL, info->exit_code);
+	exit_builtin = execute_builtin_if(info, parsed, pipex, -1);
+	if (exit_builtin != 129)
+		return (info->exit_code = exit_builtin, exit_builtin);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
 	return (SUCCESS);
