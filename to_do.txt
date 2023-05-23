@@ -1,19 +1,17 @@
+
+
 - HEREDOC multiple
 	--> cat << a > out1 | cat << b > out2 | cat << c
 
 ctrl-\ when cat is running
 
 - void	rl_replace_line(char *c, int i); / ctr-c
-- execute_exit
-    --> exit "numeric
 
 - lexer handle ||
     --> syntax error + exit code
 
-unset not working with env
-export export invalid identifier-> return correct identifier in message + exit code
-
 - memory leaks
+    -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes -s ./minishell "-n" "echo sth"
 - open fds
 - norminette und comments --> norminette | grep -v libft | grep -v "OK !"
 - edge cases

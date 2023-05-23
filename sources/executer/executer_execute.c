@@ -14,7 +14,6 @@
 
 static void handle_duplications(t_data *pipex, t_list *parsed, t_info *info, int cnt);
 
-
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed    *content;

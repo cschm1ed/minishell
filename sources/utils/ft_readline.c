@@ -51,7 +51,7 @@ void	handle_keybindings(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		ft_printf("\n");
 		rl_on_new_line();
 		rl_redisplay();

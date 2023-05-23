@@ -14,13 +14,18 @@
 
 int execute_exit(t_info *info, char **arg, int exit_code)
 {
-    // free
 	if (info)
 		free_info(&info);
-	if (exit_code != 0)
-		exit(exit_code);
 	if (arg && *arg)
-    	exit(ft_atoi(*arg));
-	exit(0);
-	return (SUCCESS);
+	{
+		if (ft_strisnum(*arg) != 0)
+		{
+			ft_printf("minishell: exit: %s: numeric argument required\n", *arg);
+			exit_code = 255;
+		}
+		else
+			exit_code = ft_atoi(*arg);
+	}
+	exit(exit_code);
+	return (exit_code);
 }

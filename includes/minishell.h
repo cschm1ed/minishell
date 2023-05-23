@@ -32,8 +32,8 @@ int	g_exit_code;
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
 # include "../libft/libft.h"
-
 # include "colors.h"
 # include "structs.h"
 

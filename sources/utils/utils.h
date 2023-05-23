@@ -45,5 +45,5 @@ t_info		*info_init(char **env);
 int			unexpected_token(char *token);
 char		*ft_readline(const char *str, t_info *info);
 void		handle_keybindings(int signum);
-
+void        rl_replace_line(char *c, int i);
 #endif

@@ -19,15 +19,20 @@ static void invalid_identifier(char *arg, int fd_out);
 int execute_export(t_info *info, char **arg, int fd_out)
 {
 	int i;
+	int exit_code;
 
 	i = 1;
+	exit_code = 0;
 	if (arg == NULL || arg[1] == NULL)
 		return (print_sorted_lst(info, fd_out));
 	while (arg[i])
 	{
 		if (ft_strchr(arg[i], '=') != NULL &&
 			*(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
+		{
 			invalid_identifier(arg[i], fd_out);
+			exit_code = 1;
+		}
 		else if (ft_strchr(arg[i], '=') == NULL
 			|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		{
@@ -35,7 +40,10 @@ int execute_export(t_info *info, char **arg, int fd_out)
 				exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		else if (check_if_varname_is_valid(arg[i]) == FALSE)
-			invalid_identifier(ft_strchr(arg[i], '=') + 1, fd_out);
+		{
+			invalid_identifier(arg[i], fd_out);
+			exit_code = 1;
+		}
 		else
 		{
 			if (with_value(info,arg[i]) == FAILURE)
@@ -43,7 +51,7 @@ int execute_export(t_info *info, char **arg, int fd_out)
 		}
 		i ++;
 	}
-	return (0);
+	return (exit_code);
 }
 
 static int no_value(t_info *info, char *arg)
