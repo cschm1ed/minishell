@@ -108,14 +108,14 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 	return (SUCCESS);
 }
 
-static int set_mode(t_list *tokens, t_list **head, t_list **add, int flag)
+static int set_mode(t_list *tokens, t_list **head, t_list **add,    int flag)
 {
 	t_list	*tmp;
 	t_list	*node;
 	char	*name;
 
 	if (tokens->next == NULL)
-		return (ft_printf
+		return (printf
 				("minishell: syntax error near unexpected token `newline'\n"),
 				FAILURE);
 	name = ft_strdup(tokens->next->content);

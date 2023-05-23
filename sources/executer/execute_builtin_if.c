@@ -20,7 +20,7 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	if (parsed->next)
 	{
 		fd_out = pipex->pipe_fd[cnt][1];
-		printf("next is %d\n", fd_out);
+		ft_printf("next is %d\n", fd_out);
 	}
 	else
 		fd_out = pipex->file_fd[1];
@@ -43,6 +43,6 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 		return (129);
 	if (parsed->next)
 		close(pipex->pipe_fd[cnt][1]);
-	// printf("Exit_code: %d\n", info->exit_code);
+	// ft_printf("Exit_code: %d\n", info->exit_code);
 	return (info->exit_code);
 }

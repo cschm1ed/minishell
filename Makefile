@@ -65,7 +65,6 @@ $(BUILDDIR):
 	@mkdir $(BUILDDIR)
 
 ${LIBFTDIR}/$(LIBFT):
-	@echo "$(YELLOW)******************  COMPILING  ******************$(ESCAPE)"
 	@$(MAKE) bonus -C $(LIBFTDIR)
 
 # Standard rules
@@ -74,7 +73,6 @@ all: $(NAME)
 clean:
 	@$(RM) -rf $(BUILDDIR)
 	@$(MAKE) clean -C $(LIBFTDIR)
-	@echo "$(GREEN)*******************  CLEANED  *******************$(ESCAPE)"
 
 fclean: clean
 	@$(RM) $(NAME)

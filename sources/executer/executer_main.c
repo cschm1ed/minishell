@@ -59,11 +59,12 @@ int execute(t_info *info, t_list *parsed)
 		parsed = parsed->next;
 	}
 	j = 0;
-	while (++j <= i)
+	while (j <= i)
 	{
 		waitpid(pipex->pid[j], &status, 0);
 		if ((((*(int *)&(status)) & 0177) == 0))
 			info->exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
+		j ++;
 	}
 	return (SUCCESS);
 }
@@ -76,13 +77,13 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 	if (cmd == NULL)
 		return (FAILURE);
 	if (ft_lstsize(parsed) != 1
-		|| ft_strcmp(cmd, "exit") != 0
-		|| ft_strcmp(cmd, "echo") != 0
-		|| ft_strcmp(cmd, "env") != 0
-		|| ft_strcmp(cmd, "cd") != 0
-		|| ft_strcmp(cmd, "export") != 0
-		|| ft_strcmp(cmd, "pwd") != 0
-		|| ft_strcmp(cmd, "unset") != 0)
+		|| (ft_strcmp(cmd, "exit") != 0
+		&& ft_strcmp(cmd, "echo") != 0
+		&& ft_strcmp(cmd, "env") != 0
+		&& ft_strcmp(cmd, "cd") != 0
+		&& ft_strcmp(cmd, "export") != 0
+		&& ft_strcmp(cmd, "pwd") != 0
+		&& ft_strcmp(cmd, "unset") != 0))
 		return (FAILURE);
 	handle_files(pipex, parsed, info);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
@@ -94,10 +95,10 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 
 void handle_files(t_data *pipex, t_list *parsed, t_info *info)
 {
+	pipex->file_fd[0] = check_infiles(parsed);
+	if (pipex->file_fd[0] == -1 && parsed->next == NULL)
+		execute_exit(info, NULL, 1);
 	pipex->file_fd[1] = create_outfiles(parsed);
 	if (pipex->file_fd[1] == -1)
-		execute_exit(info, NULL, 1);
-	pipex->file_fd[0] = check_infiles(parsed);
-	if (pipex->file_fd[0] == -1)
 		execute_exit(info, NULL, 1);
 }
