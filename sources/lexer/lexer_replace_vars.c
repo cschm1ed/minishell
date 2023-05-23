@@ -90,6 +90,8 @@ static char	*replace_var(char *str, size_t *j, t_info *info)
 	char	*value;
 	char	*ret;
 
+	if (get_name_len(str + (*j)) == 0)
+		return (ft_strdup(""));
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	if (ft_strcmp(name, "?") == 0)
 	{
@@ -157,7 +159,7 @@ static int	get_name_len(const char *str)
 		str++;
 	if (ft_strcmp(str, "?") == 0)
 		return (1);
-	while (str && str[i] && ft_isspace(str[i]) == FALSE)
+	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))
 		i++;
 	return (i);
 }

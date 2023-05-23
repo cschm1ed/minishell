@@ -27,7 +27,7 @@ int execute_export(t_info *info, char **arg, int fd_out)
 	{
 		if (ft_strchr(arg[i], '=') != NULL &&
 			*(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
-			invalid_identifier(arg[i + 1], fd_out);
+			invalid_identifier(arg[i], fd_out);
 		else if (ft_strchr(arg[i], '=') == NULL
 			|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		{
