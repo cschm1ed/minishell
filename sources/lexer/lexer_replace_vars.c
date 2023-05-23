@@ -157,7 +157,7 @@ static int	get_name_len(const char *str)
 		str++;
 	if (ft_strcmp(str, "?") == 0)
 		return (1);
-	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))
+	while (str && str[i] && ft_isspace(str[i]) == FALSE)
 		i++;
 	return (i);
 }
