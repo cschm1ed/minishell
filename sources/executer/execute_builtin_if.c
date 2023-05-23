@@ -6,18 +6,20 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 19:07:10 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 15:52:35 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
+int  execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 {
 	char	*cmd;
 	int     fd_out;
 
-	if (parsed->next)
+	if (cnt == -1)
+		fd_out = STDOUT_FILENO;
+	else if (parsed->next)
 	{
 		fd_out = pipex->pipe_fd[cnt][1];
 		ft_printf("next is %d\n", fd_out);
@@ -40,9 +42,8 @@ int execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	else if (ft_strcmp(cmd, "cd") == 0)
 		info->exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else
-		return (129);
+		return (1000);
 	if (parsed->next)
 		close(pipex->pipe_fd[cnt][1]);
-	// ft_printf("Exit_code: %d\n", info->exit_code);
 	return (info->exit_code);
 }

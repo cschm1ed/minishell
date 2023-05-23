@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/21 22:48:36 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:54:05 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,21 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	if (!pipex->cmd_path)
 		execute_exit(info, NULL, info->exit_code);
 	exit_builtin = execute_builtin_if(info, parsed, pipex, -1);
-	if (exit_builtin != 129)
+	printf("exit: %d\n", exit_builtin);
+	if (exit_builtin != 1000)
 		return (info->exit_code = exit_builtin, exit_builtin);
+	printf("CNT: %d\n", cnt);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
 		return (info->exit_code = 127, FAILURE);
 	return (SUCCESS);
 }
 
-static void handle_duplications(t_data *pipex, t_list *parsed, t_info *info, int cnt)
+static void   handle_duplications(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed    *content;
 
 	content = lst_get_parsed(parsed);
-	if (parsed->next)
+	if (parsed->next && content->redirect_output == NULL)
 	{
 		close(pipex->pipe_fd[cnt][0]);
 		if (dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO) == -1)
