@@ -54,8 +54,9 @@ ESCAPE      := \033[0m
 
 ${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
 	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
-	@echo "$(GREEN)******************  COMPILED  *******************$(ESCAPE)"
-	@echo "$(BLUE)********* WE GOT THIS! TEAM COMPETENCE! *********$(ESCAPE)"
+	@echo "$(BLUE)$$HEADER $(ESCAPE)"
+
+
 
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
 	@${CC} $(CFLAGS) -c $< -o $@
@@ -82,3 +83,15 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+info: header
+
+define HEADER
+    __  ____       _      __         ____
+   /  |/  (_____  (______/ /_  ___  / / /
+  / /|_/ / / __ \/ / ___/ __ \/ _ \/ / /
+ / /  / / / / / / (__  / / / /  __/ / /
+/_/  /_/_/_/ /_/_/____/_/ /_/\___/_/_/
+
+endef
+export HEADER
