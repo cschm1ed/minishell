@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:48:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 15:58:50 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:10:23 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char *get_path(char *cmd, t_info *info)
 	if (ft_strchr(cmd, '/') != NULL)
 	{
 		if (access(cmd, F_OK) == -1)
-			return (info->exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
+			return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 		return (ft_strdup(cmd));
 	}
 	paths = ft_split(lst_find_var_val(info->env_lst, "PATH"), ':');
@@ -93,7 +93,7 @@ char *get_path(char *cmd, t_info *info)
 			return (ft_free_dbl_ptr(paths), joined);
 		i ++;
 	}
-	return (info->exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
+	return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 }
 
 int check_infiles(t_list *parsed)

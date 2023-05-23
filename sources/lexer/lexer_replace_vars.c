@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 17:46:34 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:15:24 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	*replace_var(char *str, size_t *j, t_info *info)
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	if (ft_strcmp(name, "?") == 0)
 	{
-		value = ft_itoa(info->exit_code);
+		value = ft_itoa(g_exit_code);
 		return (value);
 	}
 	else

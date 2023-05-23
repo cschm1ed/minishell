@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/22 17:57:46 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:17:14 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	valid_num_of_quotes(char *cmd, t_info *info)
 		{
 			quote = cmd[i];
 			if (skip_until_quote(cmd, &i) == FALSE)
-				return (unexpected_token(&quote), info->exit_code = 258, FALSE);
+				return (unexpected_token(&quote), g_exit_code = 258, FALSE);
 		}
 	}
 	return (TRUE);
@@ -51,11 +51,10 @@ int	valid_num_of_specials(char **lxd, t_info *info)
 		{
 			if (ft_isredirect(lxd[s][i]) == TRUE || lxd[s][i] == '|')
 				if (count_specials(lxd[s], &i, lxd[s][i]) == FAILURE)
-					return (info->exit_code = 258, FALSE);
+					return (FALSE);
 			if (lxd[s + 1] && ft_isredirect(lxd[s][i] == TRUE)
 				&& ft_isredirect(lxd[s + 1][i]) == TRUE)
-				return (unexpected_token(&lxd[s + 1][i]),
-					info->exit_code = 258, FALSE);
+				return (unexpected_token(&lxd[s + 1][i]), FALSE);
 		}
 	}
 	return (TRUE);

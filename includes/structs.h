@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 16:07:25 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:14:34 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_info
 	t_list		*export_lst;
 	t_commands	*commands;
 	t_data		*pipex;
-	int			exit_code;
+	// int			exit_code;
 	char 		*pwd;
 }   t_info;
 

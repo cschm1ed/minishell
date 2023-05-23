@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/23 15:36:32 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:03:39 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ int execute(t_info *info, t_list *parsed)
 
 	pipex = info->pipex;
 	if (create_pipes(pipex, parsed) == FAILURE)
-		return (info->exit_code = 1, FAILURE);
+		exit_error(info, __FILE__, __LINE__, "pipe");
 	i = 0;
 	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
 	if (pipex->pid == NULL)
-		return (perror("malloc"), FAILURE);
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	if (execute_single(info, parsed, pipex) == SUCCESS)
 		return (SUCCESS);
 	while (parsed)
 	{
 		pipex->pid[i] = fork();
 		if (pipex->pid[i] == -1)
-			return (info->exit_code = 1, FAILURE);
+			return (g_exit_code = 1, FAILURE);
 		if (pipex->pid[i] == 0)
 			ft_child_process(pipex, parsed, info, i);
 		close(pipex->pipe_fd[i][1]);
@@ -63,7 +63,7 @@ int execute(t_info *info, t_list *parsed)
 	{
 		waitpid(pipex->pid[j], &status, 0);
 		if ((((*(int *)&(status)) & 0177) == 0))
-			info->exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
+			g_exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
 		j ++;
 	}
 	return (SUCCESS);
@@ -87,9 +87,9 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 		return (FAILURE);
 	handle_files(pipex, parsed, info);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
-		info->exit_code = execute_builtin_if(info, parsed, pipex, 0);
+		g_exit_code = execute_builtin_if(info, parsed, pipex, 0);
 	else
-		info->exit_code = 127;
+		g_exit_code = 127;
 	return (SUCCESS);
 }
 

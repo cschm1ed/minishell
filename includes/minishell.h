@@ -6,14 +6,16 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 18:02:48 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:23:05 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#define SYNERR "minishell: syntax error\n"
+int	g_exit_code;
+
+# define SYNERR "minishell: syntax error\n"
 # define SUCCESS 0
 # define FAILURE 1
 # define TRUE 1

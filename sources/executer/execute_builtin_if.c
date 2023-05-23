@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/23 15:52:35 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:06:44 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int  execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 {
 	char	*cmd;
 	int     fd_out;
+	int		exit_code;
 
 	if (cnt == -1)
 		fd_out = STDOUT_FILENO;
@@ -28,22 +29,22 @@ int  execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 		fd_out = pipex->file_fd[1];
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (ft_strcmp(cmd, "echo") == 0)
-		info->exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
+		exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
 	else if (ft_strcmp(cmd, "env") == 0)
-		info->exit_code = execute_env(info, fd_out);
+		exit_code = execute_env(info, fd_out);
 	else if (ft_strcmp(cmd, "exit") == 0)
-		info->exit_code = execute_exit(info, &lst_get_parsed(parsed)->args[1], 0);
+		exit_code = execute_exit(info, &lst_get_parsed(parsed)->args[1], 0);
 	else if (ft_strcmp(cmd, "export") == 0)
-		info->exit_code = execute_export(info, lst_get_parsed(parsed)->args, fd_out);
+		exit_code = execute_export(info, lst_get_parsed(parsed)->args, fd_out);
 	else if (ft_strcmp(cmd, "pwd") == 0)
-		info->exit_code = execute_pwd(info, fd_out);
+		exit_code = execute_pwd(info, fd_out);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		info->exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1]);
+		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1]);
 	else if (ft_strcmp(cmd, "cd") == 0)
-		info->exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
+		exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else
 		return (1000);
 	if (parsed->next)
 		close(pipex->pipe_fd[cnt][1]);
-	return (info->exit_code);
+	return (exit_code);
 }

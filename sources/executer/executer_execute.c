@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/23 15:54:05 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/23 16:09:41 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	handle_duplications(pipex, parsed, info, cnt);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 	if (!pipex->cmd_path)
-		execute_exit(info, NULL, info->exit_code);
+		execute_exit(info, NULL, 1);
 	exit_builtin = execute_builtin_if(info, parsed, pipex, -1);
-	printf("exit: %d\n", exit_builtin);
 	if (exit_builtin != 1000)
-		return (info->exit_code = exit_builtin, exit_builtin);
-	printf("CNT: %d\n", cnt);
+		return (exit_builtin);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1) 
-		return (info->exit_code = 127, FAILURE);
+		return (127);
 	return (SUCCESS);
 }
 
