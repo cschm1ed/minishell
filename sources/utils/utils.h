@@ -44,6 +44,11 @@ void        exit_error(t_info *info, char *file, int line, char *msg);
 t_info		*info_init(char **env);
 int			unexpected_token(char *token);
 char		*ft_readline(const char *str, t_info *info);
-void		handle_keybindings(int signum);
+void		keybindings_parent(int signum);
+void	    keybindings_child(int signum);
 void        rl_replace_line(char *c, int i);
+void        setup_signals_parent(void);
+void        setup_signals_child(void);
+
+
 #endif

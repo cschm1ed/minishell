@@ -17,8 +17,6 @@ int main(int argc, char **argv, char **envp)
 	t_commands  commands;
 	t_info		*info;
 
-	signal(SIGINT, handle_keybindings);
-	signal(SIGQUIT, handle_keybindings);
 	info = info_init(envp);
 	if (info == NULL)
 		return (perror("info"), 1);

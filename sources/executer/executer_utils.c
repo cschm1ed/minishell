@@ -24,13 +24,18 @@ static int compare_delimiter(const char *str, const char *delimiter)
 	return (1);
 }
 
-int heredoc_redirect(t_list *parsed)
+int heredoc_redirect(t_list *parsed, int cnt, t_data *pipex)
 {
 	char 	*buffer;
 	t_list	*heredocs;
 	int 	hpipe[2];
 
 	heredocs = lst_get_parsed(parsed)->here_docs;
+	if (cnt > 0)
+	{
+		read(pipex->pipe_fd[cnt - 1][0], NULL, 1);
+		close(pipex->pipe_fd[cnt - 1][0]);
+	}
 	while (heredocs->next)
 	{
 		while (1)
@@ -100,7 +105,7 @@ char *get_path(char *cmd, t_info *info)
 	return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
 }
 
-int check_infiles(t_list *parsed)
+int check_infiles(t_list *parsed, int cnt, t_data *pipex)
 {
 	t_list  *redirects;
 	char    *filename;
@@ -122,7 +127,7 @@ int check_infiles(t_list *parsed)
 		redirects = redirects->next;
 	}
 	if (lst_get_parsed(parsed)->here_docs != NULL)
-		fd = heredoc_redirect(parsed);
+		fd = heredoc_redirect(parsed, cnt, pipex);
 	return (fd);
 }
 

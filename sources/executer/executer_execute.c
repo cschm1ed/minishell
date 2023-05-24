@@ -19,8 +19,9 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	t_parsed    *content;
 	int         exit_builtin;
 
+	setup_signals_parent();
 	content = lst_get_parsed(parsed);
-	handle_files(pipex, parsed, info);
+	handle_files(pipex, parsed, info, cnt);
 	handle_duplications(pipex, parsed, info, cnt);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 	if (!pipex->cmd_path)

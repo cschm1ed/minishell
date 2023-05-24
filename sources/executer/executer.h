@@ -26,9 +26,9 @@ int		ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt);
 
 // utils
 char 	*get_path(char *cmd, t_info *info);
-int 	check_infiles(t_list *parsed);
+int check_infiles(t_list *parsed, int cnt, t_data *pipex);
 int 	create_outfiles(t_list *parsed);
 void    close_pipes(int **pipes);
-void handle_files(t_data *pipex, t_list *parsed, t_info *info);
+void handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt);
 
 #endif

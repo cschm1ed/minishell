@@ -49,11 +49,13 @@ int execute(t_info *info, t_list *parsed)
 		return (SUCCESS);
 	while (parsed)
 	{
+		setup_signals_child();
 		pipex->pid[i] = fork();
 		if (pipex->pid[i] == -1)
 			return (g_exit_code = 1, FAILURE);
 		if (pipex->pid[i] == 0)
 			ft_child_process(pipex, parsed, info, i);
+		setup_signals_parent();
 		close(pipex->pipe_fd[i][1]);
 		i ++;
 		parsed = parsed->next;
@@ -85,7 +87,7 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 		&& ft_strcmp(cmd, "pwd") != 0
 		&& ft_strcmp(cmd, "unset") != 0))
 		return (FAILURE);
-	handle_files(pipex, parsed, info);
+	handle_files(pipex, parsed, info, 0);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
 		g_exit_code = execute_builtin_if(info, parsed, pipex, 0);
 	else
@@ -93,9 +95,9 @@ static int execute_single(t_info *info, t_list *parsed, t_data *pipex)
 	return (SUCCESS);
 }
 
-void handle_files(t_data *pipex, t_list *parsed, t_info *info)
+void handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
-	pipex->file_fd[0] = check_infiles(parsed);
+	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex);
 	if (pipex->file_fd[0] == -1 && parsed->next == NULL)
 		execute_exit(info, NULL, 1);
 	pipex->file_fd[1] = create_outfiles(parsed);

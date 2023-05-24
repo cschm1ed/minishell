@@ -46,17 +46,3 @@ static int	str_isspace(char *str)
 			return (FALSE);
 	return (TRUE);
 }
-
-void	handle_keybindings(int signum)
-{
-	if (signum == SIGINT)
-	{
-		rl_replace_line("", 0);
-		ft_printf("\n");
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_code = 1;
-	}
-	else if (signum == SIGQUIT)
-		(void)signum;
-}

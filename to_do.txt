@@ -1,5 +1,3 @@
-
-
 - HEREDOC multiple
 	--> cat << a > out1 | cat << b > out2 | cat << c
 
