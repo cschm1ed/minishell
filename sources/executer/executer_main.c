@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/24 15:55:09 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 18:39:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i)
 static void	wait_for_children(t_data *pipex, int cnt)
 {
 	int	j;
-	int status;
+	int	status;
 
 	status = 0;
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 16:26:13 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 18:38:29 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,21 @@ static int	execute_builtin(t_info *info,
 	return (exit_code);
 }
 
-int execute_single(t_info *info, t_list *parsed, t_data *pipex)
+int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 {
-	char *cmd;
+	char	*cmd;
 
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (cmd == NULL)
 		return (FAILURE);
 	if (ft_lstsize(parsed) != 1
 		|| (ft_strcmp(cmd, "exit") != 0
-		&& ft_strcmp(cmd, "echo") != 0
-		&& ft_strcmp(cmd, "env") != 0
-		&& ft_strcmp(cmd, "cd") != 0
-		&& ft_strcmp(cmd, "export") != 0
-		&& ft_strcmp(cmd, "pwd") != 0
-		&& ft_strcmp(cmd, "unset") != 0))
+			&& ft_strcmp(cmd, "echo") != 0
+			&& ft_strcmp(cmd, "env") != 0
+			&& ft_strcmp(cmd, "cd") != 0
+			&& ft_strcmp(cmd, "export") != 0
+			&& ft_strcmp(cmd, "pwd") != 0
+			&& ft_strcmp(cmd, "unset") != 0))
 		return (FAILURE);
 	handle_files(pipex, parsed, info, 0);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)

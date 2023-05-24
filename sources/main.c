@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 18:05:33 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 18:39:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ int	main(int argc, char **argv, char **envp)
 			command_line_mode(argv, &commands, info);
 	}
 	while (1)
-    {
-        commands.raw = ft_readline("minishell: ", info);
+	{
+		commands.raw = ft_readline("minishell: ", info);
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed)
-        {
+		{
 			commands.parsed = parser(&commands.parsed, commands.lexed);
 			if (commands.parsed == NULL)
 				execute_exit(info, NULL, 1);
 			execute(info, commands.parsed);
 		}
-	    free_cmds(&commands);
-    }
+		free_cmds(&commands);
+	}
 	(void)argc;
 	(void)argv;
 }

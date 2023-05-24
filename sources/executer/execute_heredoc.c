@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 16:59:19 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:38:01 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int compare_delimiter(const char *str, const char *delimiter);
-static t_list *ignore_multiple_heredocs(t_info *info, t_list *heredocs);
+static int		compare_delimiter(const char *str, const char *delimiter);
+static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
 
-int heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
+int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
-	char 	*buffer;
+	char	*buffer;
 	t_list	*heredocs;
-	int 	hpipe[2];
+	int		hpipe[2];
 
 	heredocs = lst_get_parsed(parsed)->here_docs;
 	if (cnt > 0)
@@ -48,9 +48,9 @@ int heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	return (SUCCESS);
 }
 
-static int compare_delimiter(const char *str, const char *delimiter)
+static int	compare_delimiter(const char *str, const char *delimiter)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] == delimiter[i])
@@ -60,9 +60,9 @@ static int compare_delimiter(const char *str, const char *delimiter)
 	return (1);
 }
 
-static t_list *ignore_multiple_heredocs(t_info *info, t_list *heredocs)
+static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 {
-	char *buffer;
+	char	*buffer;
 
 	while (heredocs->next)
 	{
@@ -81,5 +81,5 @@ static t_list *ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 		}
 		heredocs = heredocs->next;
 	}
-	return heredocs;
+	return (heredocs);
 }
