@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:48:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/23 16:10:23 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:53:24 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,4 +196,14 @@ void    close_pipes(int **pipes)
 		pipes[i][1] = -1;
 		i ++;
 	}
+}
+
+void handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
+{
+	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex);
+	if (pipex->file_fd[0] == -1 && parsed->next == NULL)
+		execute_exit(info, NULL, 1);
+	pipex->file_fd[1] = create_outfiles(parsed);
+	if (pipex->file_fd[1] == -1)
+		execute_exit(info, NULL, 1);
 }
