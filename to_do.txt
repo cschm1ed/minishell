@@ -1,10 +1,3 @@
-- HEREDOC multiple
-	--> cat << a > out1 | cat << b > out2 | cat << c
-
-ctrl-\ when cat is running
-
-- void	rl_replace_line(char *c, int i); / ctr-c
-
 - lexer handle ||
     --> syntax error + exit code
 

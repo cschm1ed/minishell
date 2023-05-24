@@ -55,7 +55,6 @@ int execute(t_info *info, t_list *parsed)
 			return (g_exit_code = 1, FAILURE);
 		if (pipex->pid[i] == 0)
 			ft_child_process(pipex, parsed, info, i);
-		setup_signals_parent();
 		close(pipex->pipe_fd[i][1]);
 		i ++;
 		parsed = parsed->next;
@@ -68,6 +67,7 @@ int execute(t_info *info, t_list *parsed)
 			g_exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
 		j ++;
 	}
+	setup_signals_parent();
 	return (SUCCESS);
 }
 

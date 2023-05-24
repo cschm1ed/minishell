@@ -29,7 +29,11 @@ void	keybindings_parent(int signum)
 void	keybindings_child(int signum)
 {
 	if (signum == SIGINT)
-		ft_putstr_fd("\n", STDERR_FILENO);
+	{
+		rl_replace_line("", 0);
+		ft_putchar_fd('\n', 1);
+		rl_on_new_line();
+	}
 	else if (signum == SIGQUIT)
 	{
 		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
