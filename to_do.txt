@@ -1,6 +1,3 @@
-- lexer handle ||
-    --> syntax error + exit code
-
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes -s ./minishell "-n" "echo sth"
 - open fds

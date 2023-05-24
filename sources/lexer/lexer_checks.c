@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/24 15:09:57 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:12:49 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	count_specials(char *lxd, int *i, char c);
 static int	print_invalid_num_of_specials(char c, int cnt);
 
-int valid_num_of_quotes(char *cmd)
+int	valid_num_of_quotes(char *cmd)
 {
 	size_t	i;
 	char	quote;
@@ -38,7 +38,7 @@ int valid_num_of_quotes(char *cmd)
  * @param lxd the lexed array of the user's cmd
  * @return true or false
  */
-int valid_num_of_specials(char **lxd)
+int	valid_num_of_specials(char **lxd)
 {
 	int	s;
 	int	i;

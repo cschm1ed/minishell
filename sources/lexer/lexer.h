@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:15:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 17:55:36 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:13:12 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 char	**lexer(char *cmd, t_info *info);
 
 // checks
-int     valid_num_of_quotes(char *cmd);
-int     valid_num_of_specials(char **lxd);
+int		valid_num_of_quotes(char *cmd);
+int		valid_num_of_specials(char **lxd);
 
 // replace vars
 int		replace_variables(t_info *info, char **lexed);
