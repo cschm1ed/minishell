@@ -12,100 +12,7 @@
 
 #include <minishell.h>
 
-static int compare_delimiter(const char *str, const char *delimiter)
-{
-	int i;
-
-	i = 0;
-	while (str[i] == delimiter[i])
-		i ++;
-	if (str[i] == '\n' && str[i + 1] == 0)
-		return (0);
-	return (1);
-}
-
-int heredoc_redirect(t_list *parsed, int cnt, t_data *pipex)
-{
-	char 	*buffer;
-	t_list	*heredocs;
-	int 	hpipe[2];
-
-	heredocs = lst_get_parsed(parsed)->here_docs;
-	if (cnt > 0)
-	{
-		read(pipex->pipe_fd[cnt - 1][0], NULL, 1);
-		close(pipex->pipe_fd[cnt - 1][0]);
-	}
-	while (heredocs->next)
-	{
-		while (1)
-		{
-			ft_putstr_fd("> ", STDIN_FILENO);
-			buffer = get_next_line(STDIN_FILENO);
-			if (buffer == NULL)
-				return (perror("get next line"), -1);
-			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
-			{
-				free(buffer);
-				break ;
-			}
-			free(buffer);
-		}
-		heredocs = heredocs->next;
-	}
-	if (pipe(hpipe) == -1)
-		return (-1);
-	while (1)
-	{
-		ft_putstr_fd("> ", STDIN_FILENO);
-		buffer = get_next_line(STDIN_FILENO);
-		if (buffer == NULL)
-			return (-1);
-		if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
-		{
-			close(hpipe[1]);
-			free(buffer);
-			return (hpipe[0]);
-		}
-		write(hpipe[1], buffer, ft_strlen(buffer));
-		free(buffer);
-	}
-	return (SUCCESS);
-}
-
-char *get_path(char *cmd, t_info *info)
-{
-	char    *joined;
-	char    **paths;
-	char    *path_var;
-	int  i;
-
-	i = 0;
-	if (ft_strchr(cmd, '/') != NULL)
-	{
-		if (access(cmd, F_OK) == -1)
-			return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
-		return (ft_strdup(cmd));
-	}
-	path_var = lst_find_var_val(info->env_lst, "PATH");
-	if (path_var == NULL)
-		return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
-	paths = ft_split(path_var, ':');
-	if (paths == NULL)
-		exit_error(info, __FILE__, __LINE__, "malloc");
-	while (paths[i])
-	{
-		joined = ft_strsjoin(paths[i], "/", cmd);
-		if (joined == NULL)
-			return (ft_free_dbl_ptr(paths), perror("malloc"), NULL);
-		if (access(joined, F_OK) != -1)
-			return (ft_free_dbl_ptr(paths), joined);
-		i ++;
-	}
-	return (g_exit_code = 127, ft_printf("minishell: %s: command not found\n", cmd), NULL);
-}
-
-int check_infiles(t_list *parsed, int cnt, t_data *pipex)
+int check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
 	t_list  *redirects;
 	char    *filename;
@@ -127,7 +34,7 @@ int check_infiles(t_list *parsed, int cnt, t_data *pipex)
 		redirects = redirects->next;
 	}
 	if (lst_get_parsed(parsed)->here_docs != NULL)
-		fd = heredoc_redirect(parsed, cnt, pipex);
+		fd = heredoc_redirect(parsed, cnt, pipex, info);
 	return (fd);
 }
 
@@ -200,7 +107,7 @@ void    close_pipes(int **pipes)
 
 void handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
-	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex);
+	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex, info);
 	if (pipex->file_fd[0] == -1 && parsed->next == NULL)
 		execute_exit(info, NULL, 1);
 	pipex->file_fd[1] = create_outfiles(parsed);
