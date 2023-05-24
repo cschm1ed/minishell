@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_newparsed_node.c                               :+:      :+:    :+:   */
+/*   lst_new_node.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 13:46:28 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/06 13:46:28 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:22:02 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list	*lst_newparsed_node(void)
  * @param value - value assigned to new var
  * @return - pointer to new node
  */
-t_list *lst_newvar_node(char *name, char *value, int key)
+t_list	*lst_newvar_node(char *name, char *value, int key)
 {
 	t_list		*node;
 	t_variable	*var;
@@ -52,7 +52,7 @@ t_list *lst_newvar_node(char *name, char *value, int key)
 	var->name = name;
 	var->value = value;
 	var->key = key;
-	node = ft_lstnew((void*)var);
+	node = ft_lstnew((void *)var);
 	if (node == NULL)
 		return (free(var), perror("malloc"), NULL);
 	return (node);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 13:13:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 13:13:51 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:23:54 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	keybindings_child(int signum)
 	}
 }
 
-void    setup_signals_parent(void)
+void	setup_signals_parent(void)
 {
-	signal(SIGINT, keybindings_parent);
-	signal(SIGQUIT, keybindings_parent);
+	signal (SIGINT, keybindings_parent);
+	signal (SIGQUIT, keybindings_parent);
 }
 
-void    setup_signals_child(void)
+void	setup_signals_child(void)
 {
-	signal(SIGQUIT, keybindings_child);
-	signal(SIGINT, keybindings_child);
+	signal (SIGQUIT, keybindings_child);
+	signal (SIGINT, keybindings_child);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_arr_add.c                                      :+:      :+:    :+:   */
+/*   str_arr_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:04:29 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/25 13:17:20 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:24:48 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ int	str_in_arr(char **arr, char *find)
 
 void	bubble_sort_str_array(char **array, int len)
 {
-	int 	i;
+	int		i;
 	int		j;
-	char 	*tmp;
+	char	*tmp;
 
 	i = 0;
 	while (i < len)
