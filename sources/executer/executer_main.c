@@ -12,14 +12,14 @@
 
 #include <minishell.h>
 
-static void	wait_for_children(t_data *pipex, int cnt, int status);
+static void	wait_for_children(t_data *pipex, int cnt);
 static int	create_pipes(t_data *pipex, t_list *parsed);
+static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i);
 
 int	execute(t_info *info, t_list *parsed)
 {
 	t_data		*pipex;
 	int			i;
-	int			status;
 
 	i = 0;
 	pipex = info->pipex;
@@ -37,7 +37,7 @@ int	execute(t_info *info, t_list *parsed)
 		i ++;
 		parsed = parsed->next;
 	}
-	wait_for_children(pipex, i, status);
+	wait_for_children(pipex, i);
 	setup_signals_parent();
 	return (SUCCESS);
 }
@@ -60,20 +60,25 @@ static int	create_pipes(t_data *pipex, t_list *parsed)
 	return (SUCCESS);
 }
 
-static void	fork_process(t_info *info, t_data *pipex, t_parsed *parsed, int i)
+static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i)
 {
 	pipex->pid[i] = fork();
 	if (pipex->pid[i] == -1)
-		return (g_exit_code = 1, FAILURE);
+	{
+		g_exit_code = 1;
+		exit_error(info, __FILE__, __LINE__, "fork");
+	}
 	if (pipex->pid[i] == 0)
 		ft_child_process(pipex, parsed, info, i);
 	close(pipex->pipe_fd[i][1]);
 }
 
-static void	wait_for_children(t_data *pipex, int cnt, int status)
+static void	wait_for_children(t_data *pipex, int cnt)
 {
 	int	j;
+	int status;
 
+	status = 0;
 	j = 0;
 	while (j <= cnt)
 	{

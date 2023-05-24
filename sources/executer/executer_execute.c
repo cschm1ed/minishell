@@ -43,8 +43,10 @@ static void	handle_duplications(t_data *pipex, t_list *parsed,
 	content = lst_get_parsed(parsed);
 	close(pipex->pipe_fd[cnt][0]);
 	if (parsed->next && content->redirect_output == NULL)
+	{
 		if (dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO) == -1)
 			close(pipex->pipe_fd[cnt][1]);
+	}
 	else
 	{
 		close(pipex->pipe_fd[cnt][1]);
