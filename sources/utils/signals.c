@@ -16,9 +16,9 @@ void	keybindings_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
+		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_printf("\n");
 		rl_redisplay();
 		g_exit_code = 1;
 	}
