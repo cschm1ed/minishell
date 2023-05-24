@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/23 16:32:40 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/23 16:32:40 by cschmied         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
-#include <dirent.h>
 
 static int	update_env(t_info *info);
 
 int	execute_cd(t_info *info, char *dir)
 {
-	t_variable*	variable;
-	DIR*		directory;
+	t_variable	*variable;
+	DIR			*directory;
 
-	variable = (t_variable*)lst_find_node(info->env_lst, "USER")->content;
+	variable = (t_variable *)lst_find_node(info->env_lst, "USER")->content;
 	if (!dir)
 		dir = ft_strjoin("/Users/", variable->value);
 	if (!chdir(dir))

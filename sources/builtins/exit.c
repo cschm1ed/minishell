@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-int execute_exit(t_info *info, char **arg, int exit_code)
+int	execute_exit(t_info *info, char **arg, int exit_code)
 {
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (info)

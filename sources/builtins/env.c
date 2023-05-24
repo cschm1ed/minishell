@@ -14,10 +14,11 @@
 
 static void	print_var_lst(t_list *lst, int fd_out);
 
-int execute_env(t_info *info, int fd_out)
+int	execute_env(t_info *info, int fd_out)
 {
 	print_var_lst(info->env_lst, fd_out);
-	ft_putstr_fd("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n", fd_out);
+	ft_putstr_fd("_=/Users/cschmied/Documents/", fd_out);
+	ft_putstr_fd("minishell/sources/builtins/env.c\n", fd_out);
 	return (0);
 }
 

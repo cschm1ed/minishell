@@ -12,19 +12,19 @@
 
 #include <minishell.h>
 
-int execute_unset(t_info *info, char **arg)
+int	execute_unset(t_info *info, char **arg)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	while (arg[i])
 	{
 		ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
-					delete_variable);
-		ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst, arg[i]),
-					delete_variable);
+			delete_variable);
+		ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst,
+				arg[i]), delete_variable);
 		ft_lstrmone(&(info->user_vars), lst_find_node(info->user_vars, arg[i]),
-					delete_variable);
+			delete_variable);
 		i ++;
 	}
 	return (SUCCESS);

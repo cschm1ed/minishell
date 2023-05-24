@@ -13,8 +13,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-int	g_exit_code;
-
 # define SYNERR "minishell: syntax error\n"
 # define SUCCESS 0
 # define FAILURE 1
@@ -32,11 +30,11 @@ int	g_exit_code;
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <termios.h>
-# include "../libft/libft.h"
+# include <dirent.h>
+# include <libft.h>
+
 # include "colors.h"
 # include "structs.h"
-
 # include "../sources/builtins/builtins.h"
 # include "../sources/executer/executer.h"
 # include "../sources/lexer/lexer.h"
@@ -44,6 +42,6 @@ int	g_exit_code;
 # include "../sources/utils/utils.h"
 # include "../sources/debug/debug.h"
 
-// void	rl_replace_line(char *c, int i);
+int	g_exit_code;
 
 #endif

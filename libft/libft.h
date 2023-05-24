@@ -72,7 +72,7 @@ int		ft_printf(const char *str, ...);
 char	**ft_free_dbl_ptr(char **array);
 
 int		ft_isspace(char c);
-int     ft_strisnum(const char *str);
+int		ft_strisnum(const char *str);
 int		ft_isquote(char c);
 int		ft_isspecial(char c);
 int		ft_isredirect(char c);

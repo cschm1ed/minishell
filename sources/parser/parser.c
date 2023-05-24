@@ -26,7 +26,7 @@ static int	add_args(t_list	**t_start, t_list *node);
  *
  * @return - NULL in case of an error
  */
-t_list *parser(t_list **parsed, char **lexed)
+t_list	*parser(t_list **parsed, char **lexed)
 {
 	t_list	*token_lst;
 
@@ -78,8 +78,8 @@ static int	parse_command(t_list **p_lst, t_list **t_start)
 	ft_lstadd_back(p_lst, node);
 	if (t_start == NULL)
 		return (unexpected_token("|"));
-	if (delimiter_and_append(t_start, lst_get_parsed(node)) == FAILURE
-        || redirects(t_start, lst_get_parsed(node)) == FAILURE)
+	if (delimiter_and_append(t_start, lst_get_parsed(node))
+		== FAILURE || redirects(t_start, lst_get_parsed(node)) == FAILURE)
 		return (FAILURE);
 	if (add_args(t_start, node) == FAILURE)
 		return (FAILURE);
@@ -96,7 +96,8 @@ static int	add_args(t_list **t_start, t_list *node)
 	while (args && ft_strcmp(args->content, "|") != 0)
 	{
 		if (*(args->content) != 0)
-			if (str_arr_add(&(lst_get_parsed(node)->args), args->content) == NULL)
+			if (str_arr_add(&(lst_get_parsed(node)->args),
+					args->content) == NULL)
 				return (FAILURE);
 		args = args->next;
 	}

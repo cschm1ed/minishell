@@ -75,11 +75,11 @@ static char	**ft_split_string(char **result, const char *s, char c)
 
 static void	free_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (arr == NULL)
-		return;
+		return ;
 	while (arr[i])
 	{
 		free(arr[i]);

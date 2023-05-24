@@ -12,9 +12,12 @@
 
 #include <minishell.h>
 
-int main(int argc, char **argv, char **envp)
+void	command_line_mode(char *const *argv, t_commands *commands,
+			t_info *info);
+
+int	main(int argc, char **argv, char **envp)
 {
-	t_commands  commands;
+	t_commands	commands;
 	t_info		*info;
 
 	info = info_init(envp);
@@ -26,21 +29,9 @@ int main(int argc, char **argv, char **envp)
 	if (argc >= 3)
 	{
 		if (ft_strcmp(argv[1], "-n") == 0)
-		{
-			commands.raw = argv[2];
-			commands.lexed = lexer(commands.raw, info);
-			if (commands.lexed)
-			{
-				commands.parsed = parser(&commands.parsed, commands.lexed);
-				if (commands.parsed == NULL)
-					execute_exit(info, NULL, 1);
-				execute(info, commands.parsed);
-			}
-			//free_cmds(&commands);
-			return (0);
-		}
+			command_line_mode(argv, &commands, info);
 	}
-    while (1)
+	while (1)
     {
         commands.raw = ft_readline("minishell: ", info);
 		commands.lexed = lexer(commands.raw, info);
@@ -55,4 +46,19 @@ int main(int argc, char **argv, char **envp)
     }
 	(void)argc;
 	(void)argv;
+}
+
+void	command_line_mode(char *const *argv, t_commands *commands, t_info *info)
+{
+	(*commands).raw = argv[2];
+	(*commands).lexed = lexer((*commands).raw, info);
+	if ((*commands).lexed)
+	{
+		(*commands).parsed = parser(&(*commands).parsed, (*commands).lexed);
+		if ((*commands).parsed == NULL)
+			execute_exit(info, NULL, 1);
+		execute(info, (*commands).parsed);
+	}
+	//free_cmds(&commands);
+	exit (0);
 }
