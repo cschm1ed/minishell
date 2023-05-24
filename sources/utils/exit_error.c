@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:37:07 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 14:37:07 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:17:50 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void    exit_error(t_info *info, char *file, int line, char *msg)
+void	exit_error(t_info *info, char *file, int line, char *msg)
 {
 	if (file)
 		ft_printf("%s: ", file);
