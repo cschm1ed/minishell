@@ -6,14 +6,14 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/23 16:17:14 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/24 15:09:57 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 static int	count_specials(char *lxd, int *i, char c);
-static void	print_invalid_num_of_specials(char c, int cnt);
+static int	print_invalid_num_of_specials(char c, int cnt);
 
 int valid_num_of_quotes(char *cmd)
 {
@@ -80,12 +80,12 @@ static int	count_specials(char *lxd, int *i, char c)
 		cnt++;
 		(*i)++;
 	}
-	if (cnt >= 3)
-		return (print_invalid_num_of_specials(c, cnt), FAILURE);
+	if (cnt >= 2)
+		return (print_invalid_num_of_specials(c, cnt));
 	return (SUCCESS);
 }
 
-static void	print_invalid_num_of_specials(char c, int cnt)
+static int	print_invalid_num_of_specials(char c, int cnt)
 {
 	if (c == '<' && cnt == 3)
 		unexpected_token("<");
@@ -95,8 +95,11 @@ static void	print_invalid_num_of_specials(char c, int cnt)
 		unexpected_token(">");
 	else if (c == '>' && cnt > 3)
 		unexpected_token(">>");
-	else if (c == '|' && cnt == 3)
+	else if (c == '|' && cnt == 2)
 		unexpected_token("|");
-	else if (c == '|' && cnt > 3)
+	else if (c == '|' && cnt > 2)
 		unexpected_token("||");
+	else
+		return (SUCCESS);
+	return (FAILURE);
 }
