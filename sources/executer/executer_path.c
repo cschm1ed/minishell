@@ -16,6 +16,8 @@ static char	*get_relative_path(char *cmd, t_info *info);
 
 char	*get_path(char *cmd, t_info *info)
 {
+	char	*path;
+
 	if (ft_strchr(cmd, '/') != NULL)
 	{
 		if (access(cmd, F_OK) == -1)
@@ -23,9 +25,11 @@ char	*get_path(char *cmd, t_info *info)
 				ft_printf("minishell: %s: command not found\n", cmd), NULL);
 		return (ft_strdup(cmd));
 	}
-	get_relative_path(cmd, info);
-	return (g_exit_code = 127,
-		ft_printf("minishell: %s: command not found\n", cmd), NULL);
+	path = get_relative_path(cmd, info);
+	if (path == NULL)
+		return (g_exit_code = 127,
+			ft_printf("minishell: %s: command not found\n", cmd), NULL);
+	return (path);
 }
 
 static char	*get_relative_path(char *cmd, t_info *info)
@@ -48,11 +52,11 @@ static char	*get_relative_path(char *cmd, t_info *info)
 		joined = ft_strsjoin(paths[i], "/", cmd);
 		if (joined == NULL)
 		{
-			ft_free_dbl_ptr(paths);
+			ft_free_dbl_ptr(&paths);
 			exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		if (access(joined, F_OK) != -1)
-			return (ft_free_dbl_ptr(paths), joined);
+			return (ft_free_dbl_ptr(&paths), joined);
 	}
 	return (NULL);
 }

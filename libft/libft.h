@@ -69,7 +69,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void*));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
 int		ft_printf(const char *str, ...);
-char	**ft_free_dbl_ptr(char **array);
+char	**ft_free_dbl_ptr(char ***array);
 
 int		ft_isspace(char c);
 int		ft_strisnum(const char *str);

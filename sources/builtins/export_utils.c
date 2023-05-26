@@ -55,7 +55,7 @@ int	print_sorted_lst(t_info *info, int fd_out)
 			ptr = ptr->next;
 		print_variable(fd_out, ptr);
 	}
-	free(array);
+	ft_free_dbl_ptr(&array);
 	last->next = NULL;
 	return (SUCCESS);
 }
@@ -117,7 +117,7 @@ int	var_lst_add(t_list **list, char **arg)
 			return (perror("malloc"), FAILURE);
 		var->name = ft_strdup(split[0]);
 		var->value = ft_strdup(split[1]);
-		ft_free_dbl_ptr(split);
+		ft_free_dbl_ptr(&split);
 		ft_lstadd_back(list, ft_lstnew((void *)(var)));
 		i ++;
 	}

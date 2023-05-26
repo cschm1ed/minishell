@@ -22,6 +22,12 @@
 int	unexpected_token(char *token)
 {
 	g_exit_code = 258;
+	if (token == NULL)
+	{
+		ft_printf
+			("minishell: syntax error near unexpected token `newline'\n");
+		return (FAILURE);
+	}
 	ft_printf("minishell: syntax error near unexpected token `%s'\n", token);
 	return (FAILURE);
 }

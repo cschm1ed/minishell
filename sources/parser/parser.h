@@ -14,10 +14,10 @@
 # define PARSER_H
 
 // main
-t_list	*parser(t_list **parsed, char **lexed);
+t_list	*parser(t_list **parsed, char **lexed, t_info *info);
 
 // redirections
-int		redirects(t_list **tokens, t_parsed *parsed);
-int		delimiter_and_append(t_list **tokens, t_parsed *parsed);
+int		redirects(t_list **tokens, t_parsed *parsed, t_info *info);
+int		delimiter_and_append(t_list **tokens, t_parsed *parsed, t_info *info);
 
 #endif

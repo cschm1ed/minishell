@@ -97,8 +97,8 @@ char	**ft_split(const char *s, char c)
 {
 	char	**result;
 
-	result = ft_calloc((ft_count_strings(s, c) + 1), sizeof(char *));
-	if (!result)
+	result = ft_calloc(ft_count_strings(s, c) + 1, sizeof(char *));
+	if (result == NULL)
 		return (NULL);
 	if (ft_split_string(result, s, c) == NULL)
 		return (NULL);

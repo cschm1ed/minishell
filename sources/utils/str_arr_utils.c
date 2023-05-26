@@ -40,9 +40,12 @@ char	**str_arr_add(char ***array, char *toadd)
 	if (new == NULL)
 		return (perror("malloc"), NULL);
 	cpy_arr(*array, new);
-	new[size] = toadd;
 	if (*array != NULL)
 		free (*array);
+	new[size] = ft_strdup(toadd);
+	if (new[size] == NULL)
+		return (ft_free_dbl_ptr(&new),
+				free(new), perror("malloc"), NULL);
 	*array = new;
 	return (new);
 }

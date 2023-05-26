@@ -53,7 +53,7 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 			}
 			split[j] = ft_substr(s, start, i - start);
 			if (!split[j++])
-				return (ft_free_dbl_ptr(split));
+				return (ft_free_dbl_ptr(&split));
 			start = i;
 		}
 		else

@@ -1,7 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirects.c                        :+:      :+:    :+:   */
+/*   find_and_remove_redirects.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/24 19:53:39 by cschmied          #+#    #+#             */
+/*   Updated: 2023/05/24 20:46:56 by cschmied         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirects.c                        				:+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,8 +24,10 @@
 
 #include <minishell.h>
 
-static int	redirect(t_list *tokens, t_list **head, t_list **redirect);
-static int	set_mode(t_list *tokens, t_list **head, t_list **add, int flag);
+static int	redirect(t_list *tokens, t_list **head, t_list **redirect,
+				t_info *info);
+static int	set_mode(t_list *tokens, t_list **head, t_list **add,
+				t_info *info);
 
 /**
  * @brief checks token list for redirect '>' or delimiter '<' symbols
@@ -24,7 +38,7 @@ static int	set_mode(t_list *tokens, t_list **head, t_list **add, int flag);
  * @param parsed - the struct into which information should be stored
  * @return - returns FAILURE in case of an error otherwise SUCCESS
  */
-int	redirects(t_list **tokens, t_parsed *parsed)
+int	redirects(t_list **tokens, t_parsed *parsed, t_info *info)
 {
 	t_list	*ptr;
 
@@ -35,13 +49,15 @@ int	redirects(t_list **tokens, t_parsed *parsed)
 	{
 		if (ft_strcmp(ptr->content, ">") == 0)
 		{
-			if (redirect(ptr, tokens, &(parsed->redirect_output)) == FAILURE)
+			if (redirect(ptr, tokens,
+					&(parsed->redirect_output), info) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}
 		else if (ft_strcmp((char *)ptr->content, "<") == 0)
 		{
-			if (redirect(ptr, tokens, &(parsed->redirect_input)) == FAILURE)
+			if (redirect(ptr, tokens,
+					&(parsed->redirect_input), info) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}
@@ -51,7 +67,8 @@ int	redirects(t_list **tokens, t_parsed *parsed)
 	return (SUCCESS);
 }
 
-static int	redirect(t_list *tokens, t_list **head, t_list **redirect)
+static int	redirect(t_list *tokens, t_list **head, t_list **redirect,
+					t_info *info)
 {
 	t_list	*tmp;
 	t_list	*node;
@@ -59,12 +76,17 @@ static int	redirect(t_list *tokens, t_list **head, t_list **redirect)
 
 	if (tokens->next == NULL)
 		return (unexpected_token("newline"));
+	else if (ft_isspecial(*tokens->next->content))
+		return (unexpected_token(tokens->next->content));
 	name = ft_strdup(tokens->next->content);
 	if (name == NULL)
-		return (FAILURE);
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	node = lst_newvar_node(NULL, name, REDIRECT);
 	if (node == NULL)
-		return (free(name), FAILURE);
+	{
+		free(name);
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	ft_lstadd_back(redirect, node);
 	tmp = tokens;
 	ft_lstrmone(head, tmp->next, free);
@@ -81,7 +103,7 @@ static int	redirect(t_list *tokens, t_list **head, t_list **redirect)
  * @param parsed - the struct into which information should be stored
  * @return - returns FAILURE in case of an error otherwise SUCCESS
  */
-int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
+int	delimiter_and_append(t_list **tokens, t_parsed *parsed, t_info *info)
 {
 	t_list	*ptr;
 
@@ -92,15 +114,14 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 	{
 		if (ft_strcmp((char *)ptr->content, ">>") == 0)
 		{
-			if (set_mode(ptr, tokens, &(parsed->redirect_output),
-					APPEND) == FAILURE)
+			if (set_mode(ptr, tokens,
+					&(parsed->redirect_output), info) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}
 		else if (ft_strcmp((char *)ptr->content, "<<") == 0)
 		{
-			if (set_mode(ptr, tokens, &(parsed->here_docs),
-					DELIMITER) == FAILURE)
+			if (set_mode(ptr, tokens, &(parsed->here_docs), info) == FAILURE)
 				return (FAILURE);
 			ptr = *tokens;
 		}
@@ -110,22 +131,25 @@ int	delimiter_and_append(t_list **tokens, t_parsed *parsed)
 	return (SUCCESS);
 }
 
-static int	set_mode(t_list *tokens, t_list **head, t_list **add, int flag)
+static int	set_mode(t_list *tokens, t_list **head, t_list **add, t_info *info)
 {
 	t_list	*tmp;
 	t_list	*node;
 	char	*name;
 
 	if (tokens->next == NULL)
-		return (printf
-			("minishell: syntax error near unexpected token `newline'\n"),
-			FAILURE);
+		return (unexpected_token(NULL));
+	else if (ft_isspecial(*tokens->next->content) == TRUE)
+		return (unexpected_token(tokens->next->content));
 	name = ft_strdup(tokens->next->content);
 	if (name == NULL)
-		return (FAILURE);
-	node = lst_newvar_node(NULL, name, flag);
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	node = lst_newvar_node(NULL, name, 1);
 	if (node == NULL)
-		return (free(name), FAILURE);
+	{
+		free(name);
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	ft_lstadd_back(add, node);
 	tmp = tokens;
 	ft_lstrmone(head, tmp->next, free);
