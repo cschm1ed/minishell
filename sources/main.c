@@ -20,6 +20,9 @@ int	main(int argc, char **argv, char **envp)
 	t_commands	commands;
 	t_info		*info;
 
+	commands.raw = NULL;
+	commands.lexed = NULL;
+	commands.parsed = NULL;
 	info = info_init(envp);
 	if (info == NULL)
 		return (perror("info"), 1);
@@ -37,12 +40,11 @@ int	main(int argc, char **argv, char **envp)
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed)
 		{
-			commands.parsed = parser(&commands.parsed, commands.lexed);
-			if (commands.parsed == NULL)
-				execute_exit(info, NULL, 1);
-			execute(info, commands.parsed);
+			commands.parsed = parser(&commands.parsed, commands.lexed, info);
+			if (commands.parsed != NULL)
+				execute(info, commands.parsed);
 		}
-		free_cmds(&commands);
+		free_cmds(&commands, info);
 	}
 	(void)argc;
 	(void)argv;
@@ -54,11 +56,11 @@ void	command_line_mode(char *const *argv, t_commands *commands, t_info *info)
 	(*commands).lexed = lexer((*commands).raw, info);
 	if ((*commands).lexed)
 	{
-		(*commands).parsed = parser(&(*commands).parsed, (*commands).lexed);
+		(*commands).parsed = parser(&(*commands).parsed, (*commands).lexed, info);
 		if ((*commands).parsed == NULL)
 			execute_exit(info, NULL, 1);
 		execute(info, (*commands).parsed);
 	}
-	//free_cmds(&commands);
+	free_info(&info);
 	exit (0);
 }

@@ -12,16 +12,20 @@
 
 #include "libft.h"
 
-char	**ft_free_dbl_ptr(char **array)
+char	**ft_free_dbl_ptr(char ***array)
 {
 	int		i;
 
 	i = 0;
-	if (array)
+	if (*array)
 	{
-		while (array[i])
-			free(array[i++]);
-		free(array);
+		while ((*array)[i])
+		{
+			free((*array)[i]);
+			i ++;
+		}
+		free(*array);
 	}
+	*array = NULL;
 	return (NULL);
 }

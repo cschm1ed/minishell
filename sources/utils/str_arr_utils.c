@@ -29,20 +29,18 @@ char	**str_arr_add(char ***array, char *toadd)
 	size = 0;
 	if (toadd == NULL)
 		return (*array);
-	if (*array == NULL)
-		size = 0;
-	else
-	{
-		while ((*array)[size])
-			size ++;
-	}
+	while (*array && (*array)[size])
+		size ++;
 	new = ft_calloc(size + 2, sizeof(char *));
 	if (new == NULL)
 		return (perror("malloc"), NULL);
 	cpy_arr(*array, new);
-	new[size] = toadd;
 	if (*array != NULL)
 		free (*array);
+	new[size] = ft_strdup(toadd);
+	if (new[size] == NULL)
+		return (ft_free_dbl_ptr(&new),
+			free(new), perror("malloc"), NULL);
 	*array = new;
 	return (new);
 }
@@ -74,12 +72,16 @@ t_list	*str_arr_to_lst(char **arr)
 	int		i;
 	t_list	*new_lst;
 	t_list	*new_node;
+	char	*dup;
 
 	i = 0;
 	new_lst = NULL;
 	while (arr[i])
 	{
-		new_node = ft_lstnew((void *)arr[i]);
+		dup = ft_strdup(arr[i]);
+		if (dup == NULL)
+			return (ft_lstclear(&new_lst, free), NULL);
+		new_node = ft_lstnew(dup);
 		if (!new_node)
 			return (perror("malloc"), NULL);
 		ft_lstadd_back(&new_lst, new_node);

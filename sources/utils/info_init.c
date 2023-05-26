@@ -30,9 +30,6 @@ t_info	*info_init(char **env)
 	info = ft_calloc(sizeof(t_info), 1);
 	if (info == NULL)
 		return (perror("malloc"), NULL);
-	info->pipex = ft_calloc(sizeof(t_data), 1);
-	if (info->pipex == NULL)
-		return (perror("malloc"), NULL);
 	info->env_lst = var_list_init(env);
 	if (info->env_lst == NULL)
 		return (NULL);

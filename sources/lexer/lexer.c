@@ -22,9 +22,9 @@ char	**lexer(char *cmd, t_info *info)
 	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd) == FALSE)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
-	lexed = ft_calloc((amt_substrs + 1), sizeof(char *));
+	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));
 	if (!lexed)
-		return (perror(""), NULL);
+		return (perror("malloc"), NULL);
 	lexed = split_if_isspace_or_isspecial(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
@@ -32,7 +32,7 @@ char	**lexer(char *cmd, t_info *info)
 		return (NULL);
 	lexed = iterate_through_cmd(lexed);
 	if (valid_num_of_specials(lexed) == FALSE)
-		return (ft_free_dbl_ptr(lexed));
+		return (ft_free_dbl_ptr(&lexed));
 	return (lexed);
 }
 
@@ -52,7 +52,7 @@ static char	**iterate_through_cmd(char **lexed)
 	{
 		trimmed = trim_quotes(ft_strdup(lexed[i]));
 		if (!trimmed)
-			return (free (trimmed), ft_free_dbl_ptr(lexed));
+			return (free (trimmed), ft_free_dbl_ptr(&lexed));
 		free (lexed[i]);
 		lexed[i] = trimmed;
 	}

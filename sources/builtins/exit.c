@@ -15,18 +15,27 @@
 int	execute_exit(t_info *info, char **arg, int exit_code)
 {
 	ft_putstr_fd("exit\n", STDERR_FILENO);
-	if (info)
-		free_info(&info);
-	if (arg && *arg)
+	if (arg && arg[1] && arg[2])
 	{
-		if (ft_strisnum(*arg) != 0)
+		ft_printf("minishell: exit: too many arguments\n");
+		g_exit_code = 1;
+		return (FAILURE);
+	}
+	if (arg && arg[1])
+	{
+		if (ft_strisnum(arg[1]) != 0
+			&& !(*arg[1] == '-' && ft_strisnum(arg[1] + 1) == 0)
+			&& arg[1][1] != 0)
 		{
-			ft_printf("minishell: exit: %s: numeric argument required\n", *arg);
+			ft_printf("minishell: exit: %s: numeric argument required\n",
+				arg[1]);
 			exit_code = 255;
 		}
 		else
-			exit_code = ft_atoi(*arg);
+			exit_code = ft_atoi(arg[1]);
 	}
+	if (info)
+		free_info(&info);
 	exit(exit_code);
 	return (exit_code);
 }

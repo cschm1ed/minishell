@@ -20,8 +20,10 @@ int	count_substrs(char *s)
 	size_t	i;
 
 	cnt = 0;
-	i = -1;
-	while (s[++i])
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i])
 	{
 		if (ft_isspace(s[i]) == FALSE)
 		{
@@ -29,6 +31,7 @@ int	count_substrs(char *s)
 			terminate_string(s, &i);
 			skip_specials(s, &i);
 		}
+		i ++;
 	}
 	return (cnt);
 }
@@ -53,7 +56,7 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 			}
 			split[j] = ft_substr(s, start, i - start);
 			if (!split[j++])
-				return (ft_free_dbl_ptr(split));
+				return (ft_free_dbl_ptr(&split));
 			start = i;
 		}
 		else

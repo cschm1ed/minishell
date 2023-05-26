@@ -22,22 +22,25 @@ int	execute(t_info *info, t_list *parsed)
 	int			i;
 
 	i = 0;
+	info->pipex = ft_calloc(sizeof(t_data), 1);
 	pipex = info->pipex;
-	if (create_pipes(pipex, parsed) == FAILURE)
-		exit_error(info, __FILE__, __LINE__, "pipe");
-	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed));
-	if (pipex->pid == NULL)
+	if (pipex == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	if (execute_single(info, parsed, pipex) == SUCCESS)
-		return (SUCCESS);
+		return (free_pipex(&info->pipex), SUCCESS);
+	if (create_pipes(pipex, parsed) == FAILURE)
+		exit_error(info, __FILE__, __LINE__, "pipe");
+	pipex->pid = ft_calloc(sizeof(pid_t), ft_lstsize(parsed) + 1);
+	if (pipex->pid == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	while (parsed)
 	{
 		setup_signals_child();
-		fork_process(info, pipex, parsed, i);
-		i ++;
+		fork_process(info, pipex, parsed, i++);
 		parsed = parsed->next;
 	}
 	wait_for_children(pipex, i);
+	free_pipex(&info->pipex);
 	setup_signals_parent();
 	return (SUCCESS);
 }
@@ -48,11 +51,13 @@ static int	create_pipes(t_data *pipex, t_list *parsed)
 	int	i;
 
 	amt = ft_lstsize(parsed);
-	pipex->pipe_fd = malloc(amt * sizeof(int *));
 	i = 0;
+	pipex->pipe_fd = ft_calloc(amt + 1, sizeof(int *));
 	while (i < amt)
 	{
-		pipex->pipe_fd[i] = malloc(2 * sizeof(int));
+		pipex->pipe_fd[i] = ft_calloc(2, sizeof(int));
+		if (pipex->pipe_fd[i] == NULL)
+			return (FAILURE);
 		if (pipe(pipex->pipe_fd[i]) == -1)
 			return (FAILURE);
 		i ++;

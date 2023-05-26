@@ -48,8 +48,7 @@ int	create_outfiles(t_list *parsed)
 	int		flags;
 
 	redirects = lst_get_parsed(parsed)->redirect_output;
-	if (redirects == NULL)
-		return (STDOUT_FILENO);
+	fd = STDOUT_FILENO;
 	while (redirects)
 	{
 		filename = lst_get_var(redirects)->value;
@@ -68,44 +67,6 @@ int	create_outfiles(t_list *parsed)
 		redirects = redirects->next;
 	}
 	return (fd);
-}
-
-int	**create_pipes(t_list *parsed)
-{
-	int	i;
-	int	len;
-	int	**pipes;
-
-	i = 0;
-	len = ft_lstsize(parsed);
-	pipes = ft_calloc(len, sizeof(int [2]));
-	if (pipes == NULL)
-		return (perror("malloc"), NULL);
-	while (i < len)
-	{
-		pipes[i] = ft_calloc(1, sizeof(int [2]));
-		if (pipe(pipes[i]) == -1)
-			return (perror("pipe"), close_pipes(pipes), free(pipes), NULL);
-		i ++;
-	}
-	return (pipes);
-}
-
-void	close_pipes(int **pipes)
-{
-	int	i;
-
-	i = 0;
-	while (pipes[i])
-	{
-		if (pipes[i][0] != -1)
-			close(pipes[i][0]);
-		if (pipes[i][1] != -1)
-			close(pipes[i][0]);
-		pipes[i][0] = -1;
-		pipes[i][1] = -1;
-		i ++;
-	}
 }
 
 void	handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)

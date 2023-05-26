@@ -12,8 +12,8 @@
 
 #include <minishell.h>
 
-static void	handle_duplications(t_data *pipex, t_list *parsed,
-				t_info *info, int cnt);
+static void	dup_infiles(t_data *pipex, t_list *parsed, int cnt);
+static void	dup_outfiles(t_data *pipex, t_list *parsed, t_info *info, int cnt);
 
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
@@ -23,44 +23,61 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	setup_signals_parent();
 	content = lst_get_parsed(parsed);
 	handle_files(pipex, parsed, info, cnt);
-	handle_duplications(pipex, parsed, info, cnt);
+	dup_infiles(pipex, parsed, cnt);
+	dup_outfiles(pipex, parsed, info, cnt);
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
 	if (!pipex->cmd_path)
-		execute_exit(info, NULL, 1);
+	{
+		free_info(&info);
+		exit(1);
+	}
 	exit_builtin = execute_builtin_if(info, parsed, pipex, -1);
 	if (exit_builtin != 1000)
-		return (exit_builtin);
+	{
+		free_info(&info);
+		exit (exit_builtin);
+	}
+	close_pipes(&pipex);
 	if (execve(pipex->cmd_path, content->args, info->env) <= -1)
-		return (127);
-	return (SUCCESS);
+		exit (127);
+	exit (SUCCESS);
 }
 
-static void	handle_duplications(t_data *pipex, t_list *parsed,
-				t_info *info, int cnt)
+static void	dup_outfiles( t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed	*content;
 
 	content = lst_get_parsed(parsed);
-	close(pipex->pipe_fd[cnt][0]);
+	if (parsed != info->commands->parsed && !content->redirect_input)
+	{
+		dup2(pipex->pipe_fd[cnt - 1][0], STDIN_FILENO);
+		if (pipex->pipe_fd[cnt - 1][0] != STDIN_FILENO)
+			close(pipex->pipe_fd[cnt - 1][0]);
+	}
+	else if (pipex->file_fd[0] != STDIN_FILENO)
+	{
+		dup2(pipex->file_fd[0], STDIN_FILENO);
+		close(pipex->file_fd[0]);
+	}
+}
+
+static void	dup_infiles(t_data *pipex, t_list *parsed, int cnt)
+{
+	t_parsed	*content;
+
+	content = lst_get_parsed(parsed);
 	if (parsed->next && content->redirect_output == NULL)
 	{
-		if (dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO) == -1)
-			close(pipex->pipe_fd[cnt][1]);
+		dup2(pipex->pipe_fd[cnt][1], STDOUT_FILENO);
+		close(pipex->pipe_fd[cnt][1]);
 	}
 	else
 	{
 		close(pipex->pipe_fd[cnt][1]);
-		dup2(pipex->file_fd[1], STDOUT_FILENO);
 		if (pipex->file_fd[1] != STDOUT_FILENO)
+		{
+			dup2(pipex->file_fd[1], STDOUT_FILENO);
 			close(pipex->file_fd[1]);
-	}
-	close(pipex->pipe_fd[cnt][1]);
-	if (parsed != info->commands->parsed && !content->redirect_input)
-		dup2(pipex->pipe_fd[cnt - 1][0], STDIN_FILENO);
-	else
-	{
-		dup2(pipex->file_fd[0], STDIN_FILENO);
-		if (pipex->file_fd[0] != STDIN_FILENO)
-			close(pipex->file_fd[0]);
+		}
 	}
 }

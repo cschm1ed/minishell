@@ -22,7 +22,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	int		exit_code;
 
 	if (cnt == -1)
-		fd_out = STDOUT_FILENO;
+		fd_out = 1;
 	else if (parsed->next)
 	{
 		fd_out = pipex->pipe_fd[cnt][1];
@@ -34,8 +34,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	exit_code = execute_builtin(info, parsed, cmd, fd_out);
 	if (exit_code == 1000)
 		return (exit_code);
-	if (parsed->next)
-		close(pipex->pipe_fd[cnt][1]);
+	close(fd_out);
 	return (exit_code);
 }
 
@@ -50,7 +49,7 @@ static int	execute_builtin(t_info *info,
 	else if (ft_strcmp(cmd, "env") == 0)
 		exit_code = execute_env(info, fd_out);
 	else if (ft_strcmp(cmd, "exit") == 0)
-		exit_code = execute_exit(info, &lst_get_parsed(parsed)->args[1], 0);
+		exit_code = execute_exit(info, lst_get_parsed(parsed)->args, 0);
 	else if (ft_strcmp(cmd, "export") == 0)
 		exit_code = execute_export(info, lst_get_parsed(parsed)->args, fd_out);
 	else if (ft_strcmp(cmd, "pwd") == 0)
