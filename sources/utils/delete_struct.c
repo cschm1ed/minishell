@@ -63,6 +63,8 @@ void	delete_parsed(void *content)
 		ft_lstclear(&(parsed->redirect_input), delete_variable);
 	if (parsed->redirect_output)
 		ft_lstclear(&(parsed->redirect_output), delete_variable);
+	if (parsed->here_docs)
+		ft_lstclear(&parsed->here_docs, delete_variable);
 	if (content)
 		free(content);
 }

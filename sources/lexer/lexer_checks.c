@@ -43,13 +43,13 @@ int	valid_num_of_specials(char **lxd)
 	int	s;
 	int	i;
 
-	s = -1;
+	s = 0;
 	if (lxd == NULL)
 		return (0);
-	while (lxd[++s])
+	while (lxd[s])
 	{
-		i = -1;
-		while (lxd[s] && lxd[s][++i])
+		i = 0;
+		while (lxd[s][i])
 		{
 			if (ft_isredirect(lxd[s][i]) == TRUE || lxd[s][i] == '|')
 				if (count_specials(lxd[s], &i, lxd[s][i]) == FAILURE)
@@ -57,7 +57,9 @@ int	valid_num_of_specials(char **lxd)
 			if (lxd[s + 1] && ft_isredirect(lxd[s][i] == TRUE)
 				&& ft_isredirect(lxd[s + 1][i]) == TRUE)
 				return (unexpected_token(&lxd[s + 1][i]), FALSE);
+			i ++;
 		}
+		s ++;
 	}
 	return (TRUE);
 }

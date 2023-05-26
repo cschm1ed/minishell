@@ -20,10 +20,10 @@ int	count_substrs(char *s)
 	size_t	i;
 
 	cnt = 0;
-	i = -1;
+	i = 0;
 	if (s == NULL)
 		return (0);
-	while (s[++i])
+	while (s[i])
 	{
 		if (ft_isspace(s[i]) == FALSE)
 		{
@@ -31,6 +31,7 @@ int	count_substrs(char *s)
 			terminate_string(s, &i);
 			skip_specials(s, &i);
 		}
+		i ++;
 	}
 	return (cnt);
 }

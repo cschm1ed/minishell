@@ -1,7 +1,7 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
 
-case: cat | ->  undefined?
+case: cat | ->  undefined? --> ja
 echo '"'$hello'"' --->lexer
 
 - open fds

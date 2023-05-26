@@ -57,6 +57,7 @@ static char	*get_relative_path(char *cmd, t_info *info)
 		}
 		if (access(joined, F_OK) != -1)
 			return (ft_free_dbl_ptr(&paths), joined);
+		free(joined);
 	}
-	return (NULL);
+	return (ft_free_dbl_ptr(&paths), NULL);
 }

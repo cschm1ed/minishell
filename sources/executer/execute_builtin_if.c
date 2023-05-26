@@ -34,6 +34,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	exit_code = execute_builtin(info, parsed, cmd, fd_out);
 	if (exit_code == 1000)
 		return (exit_code);
+	close(fd_out);
 	return (exit_code);
 }
 
