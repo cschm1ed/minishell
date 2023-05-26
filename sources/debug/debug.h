@@ -19,7 +19,6 @@ void	print_parsed(t_list *parsed);
 void	print_linked_lst(t_list *lst);
 void	print_lexed(char **array);
 
-#ifdef DEBUG
 static inline void* original_malloc(size_t size) {
 #undef malloc
 	void* result = malloc(size);
@@ -53,6 +52,5 @@ static inline int original_close(int fd) {
         } while (0)
 	return result;
 }
-#endif
 
 #endif

@@ -69,23 +69,6 @@ int	create_outfiles(t_list *parsed)
 	return (fd);
 }
 
-void	close_pipes(int **pipes)
-{
-	int	i;
-
-	i = 0;
-	while (pipes[i])
-	{
-		if (pipes[i][0] != -1)
-			close(pipes[i][0]);
-		if (pipes[i][1] != -1)
-			close(pipes[i][0]);
-		pipes[i][0] = -1;
-		pipes[i][1] = -1;
-		i ++;
-	}
-}
-
 void	handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex, info);

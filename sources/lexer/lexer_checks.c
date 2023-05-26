@@ -44,6 +44,8 @@ int	valid_num_of_specials(char **lxd)
 	int	i;
 
 	s = -1;
+	if (lxd == NULL)
+		return (0);
 	while (lxd[++s])
 	{
 		i = -1;

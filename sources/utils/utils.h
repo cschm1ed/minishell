@@ -37,9 +37,9 @@ void		delete_variable(void *content);
 void		delete_parsed(void *content);
 void		free_pipex(t_data **pipex);
 void		free_info(t_info **info);
-void free_cmds(t_commands *commands, t_info *info);
+void		free_cmds(t_commands *commands, t_info *info);
 void		exit_error(t_info *info, char *file, int line, char *msg);
-
+void		close_pipes(t_data **pipex);
 // etc
 t_info		*info_init(char **env);
 int			unexpected_token(char *token);

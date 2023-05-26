@@ -50,7 +50,10 @@ void	delete_parsed(void *content)
 	if (parsed == NULL)
 		return ;
 	if (parsed->args)
+	{
 		ft_free_dbl_ptr(&parsed->args);
+		parsed->args = NULL;
+	}
 	if (parsed->cmd)
 	{
 		free(parsed->cmd);

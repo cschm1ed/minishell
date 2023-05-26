@@ -22,7 +22,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	int		exit_code;
 
 	if (cnt == -1)
-		fd_out = STDOUT_FILENO;
+		fd_out = 1;
 	else if (parsed->next)
 	{
 		fd_out = pipex->pipe_fd[cnt][1];
@@ -34,8 +34,6 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	exit_code = execute_builtin(info, parsed, cmd, fd_out);
 	if (exit_code == 1000)
 		return (exit_code);
-	if (parsed->next)
-		close(pipex->pipe_fd[cnt][1]);
 	return (exit_code);
 }
 

@@ -6,4 +6,4 @@ echo '"'$hello'"' --->lexer
 
 - open fds
 - norminette und comments --> norminette | grep -v libft | grep -v "OK"
-- edge cases
+- edge cases|

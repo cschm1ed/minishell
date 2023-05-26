@@ -81,6 +81,6 @@ int		ft_isredirect(char c);
 int		ft_strcmp(const char *str1, const char *str2);
 char	*ft_strsjoin(const char *s1, const char *s2, const char *s3);
 
-# include "../sources/debug/debug.h"
+//# include "../sources/debug/debug.h"
 
 #endif

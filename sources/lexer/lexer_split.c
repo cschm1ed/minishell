@@ -21,6 +21,8 @@ int	count_substrs(char *s)
 
 	cnt = 0;
 	i = -1;
+	if (s == NULL)
+		return (0);
 	while (s[++i])
 	{
 		if (ft_isspace(s[i]) == FALSE)

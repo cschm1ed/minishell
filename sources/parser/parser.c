@@ -29,15 +29,13 @@ static int	add_args(t_list **t_start, t_list *node, t_info *info);
  */
 t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 {
-	t_list	*token_lst;
-
 	*parsed = NULL;
-	token_lst = str_arr_to_lst(lexed);
-	if (token_lst == NULL)
+	info->token_lst = str_arr_to_lst(lexed);
+	if (info->token_lst == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
-	if (distribute_commands(&token_lst, parsed, info) == FAILURE)
-		return (ft_lstclear(&token_lst, do_nothing), NULL);
-	return (ft_lstclear(&token_lst, do_nothing), *parsed);
+	if (distribute_commands(&info->token_lst, parsed, info) == FAILURE)
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	return (*parsed);
 }
 
 static int	distribute_commands(t_list **token_lst, t_list **parsed,

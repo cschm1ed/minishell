@@ -26,6 +26,7 @@ typedef struct s_info {
 	char		**env;
 	t_list		*user_vars;
 	t_list		*export_lst;
+	t_list		*token_lst;
 	t_commands	*commands;
 	t_data		*pipex;
 	char		*pwd;
