@@ -37,7 +37,10 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 		if (buffer == NULL)
 			return (-1);
 		if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
-			return (free(buffer), close(hpipe[1]), hpipe[0]);
+		{
+			close(hpipe[1]);
+			return (free(buffer), hpipe[0]);
+		}
 		write(hpipe[1], buffer, ft_strlen(buffer));
 		free(buffer);
 	}

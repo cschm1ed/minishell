@@ -39,7 +39,8 @@ char	*ft_strsjoin(const char *s1, const char *s2, const char *s3)
 
 	if (!s1 || !s2 || !s3)
 		return (join_edge_cases(s1, s2, s3));
-	result = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1, sizeof(char));
+	result = ft_calloc(ft_strlen(s1) + ft_strlen(s2)
+			+ ft_strlen(s3) + 1, sizeof(char));
 	if (!result)
 		return (NULL);
 	ft_memmove(result, s1, ft_strlen(s1));

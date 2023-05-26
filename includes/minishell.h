@@ -40,7 +40,7 @@
 # include "../sources/lexer/lexer.h"
 # include "../sources/parser/parser.h"
 # include "../sources/utils/utils.h"
-# include "../sources/debug/debug.h"
+//# include "../sources/debug/debug.h"
 
 int	g_exit_code;
 

@@ -28,7 +28,7 @@ char	*ft_readline(const char *str, t_info *info)
 
 	tmp = readline(str);
 	if (tmp == NULL)
-		execute_exit(info, NULL, 0);
+		exit_error(info, __FILE__, __LINE__, "readline");
 	if (tmp && !str_isspace(tmp))
 		add_history(tmp);
 	return (tmp);

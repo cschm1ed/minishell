@@ -39,3 +39,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	}
 	*lst = NULL;
 }
+
+void	do_nothing(void *arg)
+{
+	(void)arg;
+}

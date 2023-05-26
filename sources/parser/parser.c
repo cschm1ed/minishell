@@ -33,9 +33,11 @@ t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 
 	*parsed = NULL;
 	token_lst = str_arr_to_lst(lexed);
+	if (token_lst == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	if (distribute_commands(&token_lst, parsed, info) == FAILURE)
-		return (ft_lstclear(&token_lst, free), NULL);
-	return (ft_lstclear(&token_lst, free), *parsed);
+		return (ft_lstclear(&token_lst, do_nothing), NULL);
+	return (ft_lstclear(&token_lst, do_nothing), *parsed);
 }
 
 static int	distribute_commands(t_list **token_lst, t_list **parsed,

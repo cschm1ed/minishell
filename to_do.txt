@@ -2,8 +2,8 @@
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
 
 case: cat | ->  undefined?
-echo '"'$hello'"
+echo '"'$hello'"' --->lexer
 
 - open fds
-- norminette und comments --> norminette | grep -v libft | grep -v "OK !"
+- norminette und comments --> norminette | grep -v libft | grep -v "OK"
 - edge cases

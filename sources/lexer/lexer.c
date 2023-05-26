@@ -24,7 +24,7 @@ char	**lexer(char *cmd, t_info *info)
 	amt_substrs = count_substrs(cmd);
 	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));
 	if (!lexed)
-		return (perror(""), NULL);
+		return (perror("malloc"), NULL);
 	lexed = split_if_isspace_or_isspecial(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
