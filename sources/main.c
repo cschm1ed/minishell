@@ -15,6 +15,16 @@
 void	command_line_mode(char *const *argv, t_commands *commands,
 			t_info *info);
 
+void	print_lexed(char **lxd)
+{
+	int i;
+
+	i = 0;
+	while (lxd[i])
+		printf("%s\n", lxd[i++]);
+	printf(RED"--end--\n"ESCAPE);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_commands	commands;

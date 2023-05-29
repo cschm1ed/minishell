@@ -12,10 +12,8 @@
 
 #include <minishell.h>
 
-static int	parse_command(t_list **p_lst, t_list **t_start, t_info *info);
-static int	distribute_commands(t_list **token_lst, t_list **parsed,
-				t_info *info);
-static int	add_args(t_list **t_start, t_list *node, t_info *info);
+static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info);
+static int distribute_commands(t_list **parsed, t_info *info);
 
 /**
  * Takes a list of tokens created by the lexer, and fills one parsed struct
@@ -33,31 +31,30 @@ t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 	info->token_lst = str_arr_to_lst(lexed);
 	if (info->token_lst == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
-	if (distribute_commands(&info->token_lst, parsed, info) == FAILURE)
-		exit_error(info, __FILE__, __LINE__, "malloc");
+	if (distribute_commands(parsed, info) == FAILURE)
+		return (*parsed);
 	return (*parsed);
 }
 
-static int	distribute_commands(t_list **token_lst, t_list **parsed,
-					t_info *info)
+static int distribute_commands(t_list **parsed, t_info *info)
 {
 	int		first;
 	t_list	*node;
 
-	node = *token_lst;
+	node = info->token_lst;
 	first = TRUE;
 	while (node)
 	{
 		if (ft_strcmp(node->content, "|") != 0 && first == TRUE)
 		{
-			if (parse_command(parsed, &node, info) == FAILURE)
+			if (parse_command(parsed, node, info) == FAILURE)
 				return (FAILURE);
 		}
 		else if (ft_strcmp(node->content, "|") == 0)
 		{
 			if (first == TRUE)
 				return (unexpected_token("|"));
-			else if (parse_command(parsed, &(node->next), info) == FAILURE)
+			else if (parse_command(parsed, node->next, info) == FAILURE)
 				return (FAILURE);
 		}
 		first = FALSE;
@@ -68,7 +65,7 @@ static int	distribute_commands(t_list **token_lst, t_list **parsed,
 	return (SUCCESS);
 }
 
-static int	parse_command(t_list **p_lst, t_list **t_start, t_info *info)
+static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 {
 	t_list		*node;
 
@@ -77,32 +74,8 @@ static int	parse_command(t_list **p_lst, t_list **t_start, t_info *info)
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	ft_lstadd_back(p_lst, node);
 	if (t_start == NULL)
-		return (unexpected_token("|"));
-	if (delimiter_and_append(t_start, lst_get_parsed(node), info)
-		== FAILURE || redirects(t_start, lst_get_parsed(node), info) == FAILURE)
-		return (FAILURE);
-	add_args(t_start, node, info);
-	return (SUCCESS);
-}
-
-static int	add_args(t_list **t_start, t_list *node, t_info *info)
-{
-	t_list		*args;
-
-	args = *t_start;
-	if (args != NULL)
-	{
-		lst_get_parsed(node)->cmd = ft_strdup(args->content);
-		if (lst_get_parsed(node)->cmd == NULL)
-			exit_error(info, __FILE__, __LINE__, "malloc");
-	}
-	while (args && ft_strcmp(args->content, "|") != 0)
-	{
-		if (*(args->content) != 0)
-			if (str_arr_add(&(lst_get_parsed(node)->args),
-					args->content) == NULL)
-				exit_error(info, __FILE__, __LINE__, "malloc");
-		args = args->next;
-	}
+		return (unexpected_token("|"), FAILURE);
+	redirects(t_start, lst_get_parsed(node), info);
+	add_args(node, info);
 	return (SUCCESS);
 }
