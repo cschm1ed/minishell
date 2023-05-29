@@ -12,26 +12,18 @@
 
 #include <minishell.h>
 
-static void	dup_infiles(t_data *pipex, t_list *parsed, int cnt);
-static void	dup_outfiles(t_data *pipex, t_list *parsed, t_info *info, int cnt);
+static void		dup_infiles(t_data *pipex, t_list *parsed, int cnt);
+static void		dup_outfiles(t_data *pipex, t_list *parsed,
+					t_info *info, int cnt);
+static t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt);
 
 int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed	*content;
 	int			exit_builtin;
-	char 		**env;
+	char		**env;
 
-	setup_signals_parent();
-	content = lst_get_parsed(parsed);
-	handle_files(pipex, parsed, info, cnt);
-	dup_infiles(pipex, parsed, cnt);
-	dup_outfiles(pipex, parsed, info, cnt);
-	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, info);
-	if (!pipex->cmd_path)
-	{
-		free_info(&info);
-		exit(1);
-	}
+	content = setup(pipex, parsed, &info, cnt);
 	exit_builtin = execute_builtin_if(info, parsed, pipex, -1);
 	if (exit_builtin != 1000)
 	{
@@ -45,6 +37,24 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	if (execve(pipex->cmd_path, content->args, env) <= -1)
 		exit (127);
 	exit (SUCCESS);
+}
+
+t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt)
+{
+	t_parsed	*content;
+
+	setup_signals_parent();
+	content = lst_get_parsed(parsed);
+	handle_files(pipex, parsed, (*info), cnt);
+	dup_infiles(pipex, parsed, cnt);
+	dup_outfiles(pipex, parsed, (*info), cnt);
+	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, (*info));
+	if (!pipex->cmd_path)
+	{
+		free_info(info);
+		exit(1);
+	}
+	return (content);
 }
 
 static void	dup_outfiles( t_data *pipex, t_list *parsed, t_info *info, int cnt)

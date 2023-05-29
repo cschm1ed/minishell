@@ -29,11 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	info->commands = &commands;
 	if (info == NULL)
 		return (ft_printf("info error\n"), 1);
-	if (argc >= 3)
-	{
-		if (ft_strcmp(argv[1], "-n") == 0)
-			command_line_mode(argv, &commands, info);
-	}
 	while (1)
 	{
 		commands.raw = ft_readline("minishell: ", info);
@@ -46,21 +41,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free_cmds(&commands, info);
 	}
-	(void)argc;
-	(void)argv;
-}
-
-void	command_line_mode(char *const *argv, t_commands *commands, t_info *info)
-{
-	(*commands).raw = argv[2];
-	(*commands).lexed = lexer((*commands).raw, info);
-	if ((*commands).lexed)
-	{
-		(*commands).parsed = parser(&(*commands).parsed, (*commands).lexed, info);
-		if ((*commands).parsed == NULL)
-			execute_exit(info, NULL, 1);
-		execute(info, (*commands).parsed);
-	}
-	free_info(&info);
-	exit (0);
+	return ((void)argc, (void)argv, 0);
 }
