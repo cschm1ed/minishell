@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 14:06:48 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:17:48 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	terminate_string(char *s, int *i);
 
 int	count_substrs(char *s)
 {
-	int		cnt;
+	int	cnt;
 	int	i;
 
 	cnt = 0;
@@ -31,7 +31,8 @@ int	count_substrs(char *s)
 			terminate_string(s, &i);
 			skip_specials(s, &i);
 		}
-		i ++;
+		if (s[i])
+			i ++;
 	}
 	return (cnt);
 }
