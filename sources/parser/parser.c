@@ -76,6 +76,6 @@ static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 	if (t_start == NULL)
 		return (unexpected_token("|"), FAILURE);
 	redirects(t_start, lst_get_parsed(node), info);
-	add_args(node, info);
+	add_args(node, info, t_start);
 	return (SUCCESS);
 }

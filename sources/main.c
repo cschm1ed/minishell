@@ -25,6 +25,23 @@ void	print_lexed(char **lxd)
 	printf(RED"--end--\n"ESCAPE);
 }
 
+void	print_parsed(t_info *info)
+{
+	t_list		*ptr;
+	t_parsed	*parsed;
+
+	ptr = info->commands->parsed;
+	while (ptr)
+	{
+		parsed = lst_get_parsed(ptr);
+		printf("command: %s\n", parsed->cmd);
+		if (lst_get_var(parsed->redirect_output)->value)
+			printf("out:	 %s\n", lst_get_var(parsed->redirect_output)->value);
+		printf("--end node--\n");
+		ptr = ptr->next;
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_commands	commands;
@@ -47,7 +64,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			commands.parsed = parser(&commands.parsed, commands.lexed, info);
 			if (commands.parsed != NULL)
+			{
+				//print_parsed(info);
 				execute(info, commands.parsed);
+			}
 		}
 		free_cmds(&commands, info);
 	}

@@ -60,11 +60,11 @@ t_list *set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	return (tmp);
 }
 
-int add_args(t_list *node, t_info *info)
+int add_args(t_list *node, t_info *info, t_list *start)
 {
 	t_list		*args;
 
-	args = info->token_lst;
+	args = start;
 	if (args != NULL)
 	{
 		lst_get_parsed(node)->cmd = ft_strdup(args->content);
