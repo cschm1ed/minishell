@@ -17,10 +17,13 @@ static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
 
 int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
-	char	*buffer;
+	char	**buffer;
 	t_list	*heredocs;
 	int		hpipe[2];
 
+	buffer = ft_calloc(2, sizeof(char *));
+	if (buffer == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	heredocs = lst_get_parsed(parsed)->here_docs;
 	if (cnt > 0)
 	{
@@ -29,17 +32,23 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	}
 	heredocs = ignore_multiple_heredocs(info, heredocs);
 	if (pipe(hpipe) == -1)
-		return (-1);
+		return (free(buffer), -1);
 	while (1)
 	{
 		ft_putstr_fd("> ", STDIN_FILENO);
-		buffer = get_next_line(STDIN_FILENO);
-		if (buffer == NULL)
-			return (-1);
-		if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
+		buffer[0] = get_next_line(STDIN_FILENO);
+		if (buffer[0] == NULL)
+			return (free(buffer), -1);
+		if (ft_strchr(buffer[0], '$'))
+			if (replace_variables(info, buffer) == FAILURE)
+			{
+				free(buffer);
+				exit_error(info, __FILE__, __LINE__, "malloc");
+			}
+		if (compare_delimiter(*buffer, lst_get_var(heredocs)->value) == 0)
 			return (close(hpipe[1]), free(buffer), hpipe[0]);
-		write(hpipe[1], buffer, ft_strlen(buffer));
-		free(buffer);
+		write(hpipe[1], buffer[0], ft_strlen(buffer[0]));
+		free(buffer[0]);
 	}
 	return (SUCCESS);
 }

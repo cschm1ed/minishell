@@ -62,7 +62,10 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 	if (str[*j] == '$')
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
-		skip_until_quote(str, j);
+	{
+		skip_until_quote(str, (unsigned long *)j);
+		*j += 1;
+	}
 	else if (str[*j] == '"')
 	{
 		(*j)++;

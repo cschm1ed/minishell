@@ -19,6 +19,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed	*content;
 	int			exit_builtin;
+	char 		**env;
 
 	setup_signals_parent();
 	content = lst_get_parsed(parsed);
@@ -38,7 +39,10 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 		exit (exit_builtin);
 	}
 	close_pipes(&pipex);
-	if (execve(pipex->cmd_path, content->args, info->env) <= -1)
+	env = env_to_arr(info);
+	if (env == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	if (execve(pipex->cmd_path, content->args, env) <= -1)
 		exit (127);
 	exit (SUCCESS);
 }

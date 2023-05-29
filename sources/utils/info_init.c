@@ -13,6 +13,7 @@
 #include "../../includes/minishell.h"
 
 static t_list	*var_list_init(char **env);
+static int		update_shlvl(t_info *info);
 
 /**
  * @brief Initializes an info struct with a list of variables from an
@@ -37,6 +38,8 @@ t_info	*info_init(char **env)
 	if (!info->pwd)
 		return (perror("malloc"), NULL);
 	info->env = env;
+	if (update_shlvl(info) == FAILURE)
+		return (perror("malloc"), NULL);
 	return (info);
 }
 
@@ -55,4 +58,22 @@ static t_list	*var_list_init(char **env)
 	if (var_lst_add(&ret, env) == FAILURE)
 		return (ft_lstclear(&ret, delete_variable), NULL);
 	return (ret);
+}
+
+static int update_shlvl(t_info *info)
+{
+	char	*val;
+	char	*new;
+	int		x;
+
+	val = lst_find_var_val(info->env_lst, "SHLVL");
+	if (val)
+	{
+		x = ft_atoi(val);
+		new = ft_itoa(x + 1);
+		if (new == NULL)
+			return (FAILURE);
+		lst_replace_var_val(info->env_lst, "SHLVL", new);
+	}
+	return (SUCCESS);
 }

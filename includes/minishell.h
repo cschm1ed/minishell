@@ -31,6 +31,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
+# include <signal.h>
+# include <sys/wait.h>
 # include <libft.h>
 # include <signal.h>
 # include <sys/wait.h>

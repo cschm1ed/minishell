@@ -90,28 +90,6 @@ t_list	*str_arr_to_lst(char **arr)
 	return (new_lst);
 }
 
-/**
- * @brief Checks if a given string is in an array of strings.
- *
- * @param arr A null-terminated array of strings.
- * @param find The string to search for in the array.
- *
- * @return TRUE if the string is in the array, or FALSE otherwise.
- */
-int	str_in_arr(char **arr, char *find)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		if (ft_strcmp(arr[i], find) != 0)
-			return (TRUE);
-		i ++;
-	}
-	return (FALSE);
-}
-
 void	bubble_sort_str_array(char **array, int len)
 {
 	int		i;
@@ -134,4 +112,30 @@ void	bubble_sort_str_array(char **array, int len)
 		}
 		i ++;
 	}
+}
+
+char **env_to_arr(t_info *info)
+{
+	t_list		*ptr;
+	t_variable	*var;
+	char		*new;
+	char 		**out;
+	int 		i;
+
+	i = 0;
+	ptr = info->env_lst;
+	out = ft_calloc(sizeof(char*), ft_lstsize(info->env_lst) + 1);
+	if (out == NULL)
+		return (NULL);
+	while (ptr)
+	{
+		var = lst_get_var(ptr);
+		new = ft_strsjoin(var->name, "=", var->value);
+		if (new == NULL)
+			return (ft_free_dbl_ptr(&out), NULL);
+		out[i] = new;
+		ptr = ptr->next;
+		i ++;
+	}
+	return (out);
 }

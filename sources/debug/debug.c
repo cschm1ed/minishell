@@ -60,13 +60,3 @@ void	print_linked_lst(t_list *lst)
 		lst = lst->next;
 	}
 }
-
-void	print_lexed(char **array)
-{
-	int i;
-
-	i = -1;
-	while (array[++i])
-		ft_printf(CYAN"%s\n"ESCAPE, array[i]);
-	ft_printf(RED"--end lexed--\n"ESCAPE);
-}
