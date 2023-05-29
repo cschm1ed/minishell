@@ -6,13 +6,13 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/29 16:40:30 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 18:02:49 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	count_specials(char *lxd, int *i, char c);
+static int	count_specials(char *lxd, char c);
 static int	print_invalid_num_of_specials(char c, int cnt);
 
 int	valid_num_of_quotes(char *cmd)
@@ -50,10 +50,9 @@ int	valid_num_of_specials(char **lxd)
 		while (lxd[s] && lxd[s][i])
 		{
 			if (ft_isredirect(lxd[s][i]) == TRUE || lxd[s][i] == '|')
-				if (count_specials(lxd[s], &i, lxd[s][i]) == FAILURE)
+				if (count_specials(lxd[s], lxd[s][i]) == FAILURE)
 					return (FALSE);
-			if (lxd[s][i] && ft_isredirect(lxd[s][i] == TRUE)
-				&& lxd[s + 1] && ft_isredirect(lxd[s + 1][i]) == TRUE)
+			if (lxd[s][i] == '>' && lxd[s + 1][i] == '<')
 				return (unexpected_token(&lxd[s + 1][i]), FALSE);
 			if (lxd[s][i])
 				i++;
@@ -70,18 +69,17 @@ int	valid_num_of_specials(char **lxd)
  * @param c special character
  * @return int 
  */
-static int	count_specials(char *lxd, int *i, char c)
+static int	count_specials(char *lxd, char c)
 {
 	int	cnt;
+	int	i;
 
 	cnt = 0;
-	while (lxd[(*i)] && lxd[(*i)] == c)
+	i = 0;
+	while (lxd[i] && lxd[i] == c)
 	{
-		if ((c == '>' && lxd[(*i)] == '<')
-			|| (c == '<' && lxd[(*i)] == '>'))
-			return (3);
 		cnt++;
-		(*i)++;
+		i++;
 	}
 	if (cnt >= 2)
 		return (print_invalid_num_of_specials(c, cnt));
