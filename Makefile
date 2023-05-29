@@ -6,7 +6,7 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/29 15:30:41 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/29 16:39:32 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ OBJS        := $(SRCS:%.c=$(BUILDDIR)/%.o)
 # Compiler
 CC          := cc
 CFLAGS      := -g -Wall -Werror -Wextra -I ./includes -I ./libft -O2 -D BUFFER_SIZE=25
-LDFLAGS     := -lreadline -g -Wall -Werror -Wextra -I ./includes -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
+LDFLAGS     := -g -Wall -Werror -Wextra -I ./includes -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 MAKE        := make
 RM          := rm -f
 
@@ -51,14 +51,11 @@ BLUE        := \033[0;34m
 ESCAPE      := \033[0m
 
 # Build rules
-
 ${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
 	@echo "$(GREEN)linking...$(ESCAPE)"
 	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
 	@clear
 	@echo "$(BLUE)$$HEADER $(ESCAPE)"
-
-
 
 $(BUILDDIR)/%.o: %.c $(BUILDDIR)
 	@${CC} $(CFLAGS) -c $< -o $@

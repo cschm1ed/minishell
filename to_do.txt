@@ -1,10 +1,6 @@
-- memory leaks
-    -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
-    --> docker run -ti -v $(PWD):/test memory-test:0.1 bash -c "cd /test/; make && valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell"
+--> Makefile relinking
+--> History
+--> Memory allocation
 
-case: cat | ->  undefined? --> ja
-echo '"'$hello'"' --->lexer
-
-- open fds
-- norminette und comments --> norminette | grep -v libft | grep -v "OK"
-- edge cases|
+Commands
+--> ls >< cat

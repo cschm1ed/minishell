@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/29 15:19:56 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 16:40:30 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,14 @@ static int	print_invalid_num_of_specials(char c, int cnt);
 int	valid_num_of_quotes(char *cmd)
 {
 	int		i;
-	char	quote;
 
 	i = -1;
 	while (cmd[++i])
 	{
 		if (ft_isquote(cmd[i]) == TRUE)
 		{
-			quote = cmd[i];
 			if (skip_until_quote(cmd, &i) == FALSE)
-				return (unexpected_token(&quote), g_exit_code = 258, FALSE);
+				return (printf(SYNERR), g_exit_code = 258, FALSE);
 		}
 	}
 	return (TRUE);
