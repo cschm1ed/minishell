@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 18:00:11 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:57:57 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ static char	*update_str(char *str, size_t start, size_t end);
 
 char	*trim_quotes(char *str)
 {
-	size_t	i;
-	size_t	start;
+	int	i;
+	int	start;
 
 	i = -1;
 	start = 0;
+	if (str == NULL)
+		return (NULL);
 	while (str[++i])
 	{
 		if (ft_isquote(str[i]) == TRUE)
@@ -40,6 +42,8 @@ static char	*update_str(char *str, size_t start, size_t end)
 	char	*tmp2;
 	char	*tmp3;
 
+	if (str + start == 0)
+		return (NULL);
 	tmp1 = ft_substr(str, 0, start - 1);
 	tmp2 = ft_substr(str, start, (end) - start);
 	tmp3 = ft_substr(str, end + 1, ft_strlen(str) - (end));

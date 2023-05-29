@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:15:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:13:12 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:46:23 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs);
 char	*trim_quotes(char *str);
 
 // utils
-int		skip_until_quote(const char *s, size_t *i);
-int		skip_specials(char *s, size_t *i);
+int		skip_until_quote(const char *s, int *i);
+int		skip_specials(char *s, int *i);
 
 #endif

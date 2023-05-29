@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 18:39:59 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:01:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		commands.raw = ft_readline("minishell: ", info);
 		commands.lexed = lexer(commands.raw, info);
-		if (commands.lexed)
+		if (commands.lexed && commands.lexed[0])
 		{
 			commands.parsed = parser(&commands.parsed, commands.lexed, info);
 			if (commands.parsed != NULL)

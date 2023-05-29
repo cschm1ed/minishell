@@ -6,18 +6,18 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/22 18:00:03 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:06:48 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	terminate_string(char *s, size_t *i);
+static int	terminate_string(char *s, int *i);
 
 int	count_substrs(char *s)
 {
 	int		cnt;
-	size_t	i;
+	int	i;
 
 	cnt = 0;
 	i = 0;
@@ -38,9 +38,9 @@ int	count_substrs(char *s)
 
 char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 {
-	size_t	start;
-	size_t	i;
-	size_t	j;
+	int	start;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -65,7 +65,7 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 	return (split);
 }
 
-static int	terminate_string(char *s, size_t *i)
+static int	terminate_string(char *s, int *i)
 {
 	while (s[*i] && ft_isspace(s[*i]) == FALSE && ft_isspecial(s[*i]) == FALSE)
 	{

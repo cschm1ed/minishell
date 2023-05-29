@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/23 16:23:05 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 11:48:20 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # include <readline/history.h>
 # include <dirent.h>
 # include <libft.h>
+# include <signal.h>
+# include <sys/wait.h>
 
 # include "colors.h"
 # include "structs.h"

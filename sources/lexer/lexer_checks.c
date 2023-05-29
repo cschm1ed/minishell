@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/24 15:12:49 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:56:35 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	print_invalid_num_of_specials(char c, int cnt);
 
 int	valid_num_of_quotes(char *cmd)
 {
-	size_t	i;
+	int	i;
 	char	quote;
 
 	i = -1;
@@ -49,17 +49,18 @@ int	valid_num_of_specials(char **lxd)
 	while (lxd[s])
 	{
 		i = 0;
-		while (lxd[s][i])
+		while (lxd[s] && lxd[s][i])
 		{
 			if (ft_isredirect(lxd[s][i]) == TRUE || lxd[s][i] == '|')
 				if (count_specials(lxd[s], &i, lxd[s][i]) == FAILURE)
 					return (FALSE);
-			if (lxd[s + 1] && ft_isredirect(lxd[s][i] == TRUE)
-				&& ft_isredirect(lxd[s + 1][i]) == TRUE)
+			if (lxd[s][i] && ft_isredirect(lxd[s][i] == TRUE)
+				&& lxd[s + 1] && ft_isredirect(lxd[s + 1][i]) == TRUE)
 				return (unexpected_token(&lxd[s + 1][i]), FALSE);
-			i ++;
+			if (lxd[s][i])
+				i++;
 		}
-		s ++;
+		s++;
 	}
 	return (TRUE);
 }

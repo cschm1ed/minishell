@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:48:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 18:29:41 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 11:47:38 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	char	*filename;
 	int		fd;
 
+	fd = STDIN_FILENO;
 	redirects = lst_get_parsed(parsed)->redirect_input;
 	if (redirects == NULL && lst_get_parsed(parsed)->here_docs == NULL)
 		return (STDIN_FILENO);
