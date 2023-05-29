@@ -35,8 +35,10 @@ void	print_parsed(t_info *info)
 	{
 		parsed = lst_get_parsed(ptr);
 		printf("command: %s\n", parsed->cmd);
-		if (lst_get_var(parsed->redirect_output)->value)
+		if (lst_get_var(parsed->redirect_output))
 			printf("out:	 %s\n", lst_get_var(parsed->redirect_output)->value);
+		if (lst_get_parsed(parsed->redirect_input))
+			printf("in:	 %s\n", lst_get_var(parsed->redirect_input)->value);
 		printf("--end node--\n");
 		ptr = ptr->next;
 	}
@@ -65,6 +67,7 @@ int	main(int argc, char **argv, char **envp)
 			commands.parsed = parser(&commands.parsed, commands.lexed, info);
 			if (commands.parsed != NULL)
 			{
+				//printf("size: %d\n", ft_lstsize(commands.parsed));
 				//print_parsed(info);
 				execute(info, commands.parsed);
 			}

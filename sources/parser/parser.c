@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info);
+static t_list * parse_command(t_list **p_lst, t_list *t_start, t_info *info);
 static int distribute_commands(t_list **parsed, t_info *info);
 
 /**
@@ -47,14 +47,16 @@ static int distribute_commands(t_list **parsed, t_info *info)
 	{
 		if (ft_strcmp(node->content, "|") != 0 && first == TRUE)
 		{
-			if (parse_command(parsed, node, info) == FAILURE)
+			node = parse_command(parsed, node, info);
+			if (node == NULL)
 				return (FAILURE);
 		}
 		else if (ft_strcmp(node->content, "|") == 0)
 		{
 			if (first == TRUE)
 				return (unexpected_token("|"));
-			else if (parse_command(parsed, node->next, info) == FAILURE)
+			node = parse_command(parsed, node, info);
+			if (node == NULL)
 				return (FAILURE);
 		}
 		first = FALSE;
@@ -65,7 +67,7 @@ static int distribute_commands(t_list **parsed, t_info *info)
 	return (SUCCESS);
 }
 
-static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info)
+static t_list * parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 {
 	t_list		*node;
 
@@ -74,8 +76,17 @@ static int	parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	ft_lstadd_back(p_lst, node);
 	if (t_start == NULL)
-		return (unexpected_token("|"), FAILURE);
-	redirects(t_start, lst_get_parsed(node), info);
-	add_args(node, info, t_start);
-	return (SUCCESS);
+		return (unexpected_token("|"), NULL);
+	if (ft_strcmp(t_start->content, "|") == 0)
+	{
+		redirects(t_start->next, lst_get_parsed(node), info);
+		add_args(node, info, t_start->next);
+		return (t_start->next);
+	}
+	else
+	{
+		redirects(t_start, lst_get_parsed(node), info);
+		add_args(node, info, info->token_lst);
+		return (info->token_lst);
+	}
 }
