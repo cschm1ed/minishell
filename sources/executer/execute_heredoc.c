@@ -6,14 +6,13 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:51:05 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:53:26 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int		final_heredoc(t_data *pipex, t_info *info, t_list *heredocs,
-					int hpipe[2]);
+static int		final_heredoc(t_info *info, t_list *heredocs, int hpipe[2]);
 static int		compare_delimiter(const char *str, const char *delimiter);
 static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
 
@@ -31,11 +30,10 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	heredocs = ignore_multiple_heredocs(info, heredocs);
 	if (pipe(hpipe) == -1)
 		return (-1);
-	return (final_heredoc_redirect(pipex, info, heredocs, hpipe));
+	return (final_heredoc(info, heredocs, hpipe));
 }
 
-static int	final_heredoc(t_data *pipex, t_info *info, t_list *heredocs,
-		int hpipe[2])
+static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 {
 	char	**buffer;
 
