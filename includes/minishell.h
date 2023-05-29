@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:04:45 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 11:48:20 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:29:29 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 # include "../sources/lexer/lexer.h"
 # include "../sources/parser/parser.h"
 # include "../sources/utils/utils.h"
-//# include "../sources/debug/debug.h"
 
 int	g_exit_code;
 

@@ -6,24 +6,22 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 18:38:01 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:51:05 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+static int		final_heredoc(t_data *pipex, t_info *info, t_list *heredocs,
+					int hpipe[2]);
 static int		compare_delimiter(const char *str, const char *delimiter);
 static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
 
 int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
-	char	**buffer;
 	t_list	*heredocs;
 	int		hpipe[2];
 
-	buffer = ft_calloc(2, sizeof(char *));
-	if (buffer == NULL)
-		exit_error(info, __FILE__, __LINE__, "malloc");
 	heredocs = lst_get_parsed(parsed)->here_docs;
 	if (cnt > 0)
 	{
@@ -32,7 +30,18 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	}
 	heredocs = ignore_multiple_heredocs(info, heredocs);
 	if (pipe(hpipe) == -1)
-		return (free(buffer), -1);
+		return (-1);
+	return (final_heredoc_redirect(pipex, info, heredocs, hpipe));
+}
+
+static int	final_heredoc(t_data *pipex, t_info *info, t_list *heredocs,
+		int hpipe[2])
+{
+	char	**buffer;
+
+	buffer = ft_calloc(2, sizeof(char *));
+	if (buffer == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	while (1)
 	{
 		ft_putstr_fd("> ", STDIN_FILENO);
@@ -40,11 +49,13 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 		if (buffer[0] == NULL)
 			return (free(buffer), -1);
 		if (ft_strchr(buffer[0], '$'))
+		{
 			if (replace_variables(info, buffer) == FAILURE)
 			{
 				free(buffer);
 				exit_error(info, __FILE__, __LINE__, "malloc");
 			}
+		}
 		if (compare_delimiter(*buffer, lst_get_var(heredocs)->value) == 0)
 			return (close(hpipe[1]), free(buffer), hpipe[0]);
 		write(hpipe[1], buffer[0], ft_strlen(buffer[0]));

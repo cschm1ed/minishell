@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:30:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 12:28:18 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:37:21 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			str_in_arr(char **arr, char *find);
 t_list		*str_arr_to_lst(char **arr);
 char		**str_arr_add(char ***array, char *toadd);
 void		bubble_sort_str_array(char **array, int len);
-char **env_to_arr(t_info *info);
+char		**env_to_arr(t_info *info);
 
 // frees and deletes
 void		delete_variable(void *content);

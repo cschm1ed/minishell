@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/24 15:57:52 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:35:32 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	t_parsed	*content;
 	int			exit_builtin;
-	char 		**env;
+	char		**env;
 
 	setup_signals_parent();
 	content = lst_get_parsed(parsed);

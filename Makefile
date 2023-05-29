@@ -6,12 +6,12 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/29 13:55:20 by lspohle          ###   ########.fr        #
+#    Updated: 2023/05/29 15:30:41 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Directories
-VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft:sources/debug
+VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
 
 BUILDDIR    := build
 LIBFTDIR    := libft
@@ -24,7 +24,7 @@ LIBFT       := libft.a
 UTILS       := ft_isspace.c ft_isspecial.c str_arr_utils.c ft_isredirect.c ft_isquote.c info_init.c \
                ft_lstrmone.c delete_struct.c lst_get_struct.c lst_find_var_val.c \
                lsts_find_var_val.c ft_strcmp.c lst_replace_var_val.c exit_error.c \
-               unexpected_token.c ft_strsjoin.c lst_new_node.c debug.c free.c signals.c
+               unexpected_token.c ft_strsjoin.c lst_new_node.c free.c signals.c
 
 LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
 PARSER      := find_and_remove_redirects.c parser.c

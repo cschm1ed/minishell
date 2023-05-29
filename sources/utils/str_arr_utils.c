@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:04:29 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:24:48 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:37:00 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,17 +114,17 @@ void	bubble_sort_str_array(char **array, int len)
 	}
 }
 
-char **env_to_arr(t_info *info)
+char	**env_to_arr(t_info *info)
 {
 	t_list		*ptr;
 	t_variable	*var;
 	char		*new;
-	char 		**out;
-	int 		i;
+	char		**out;
+	int			i;
 
 	i = 0;
 	ptr = info->env_lst;
-	out = ft_calloc(sizeof(char*), ft_lstsize(info->env_lst) + 1);
+	out = ft_calloc(sizeof(char *), ft_lstsize(info->env_lst) + 1);
 	if (out == NULL)
 		return (NULL);
 	while (ptr)

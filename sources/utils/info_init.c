@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 16:08:02 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/29 15:36:09 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_list	*var_list_init(char **env)
 	return (ret);
 }
 
-static int update_shlvl(t_info *info)
+static int	update_shlvl(t_info *info)
 {
 	char	*val;
 	char	*new;
