@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:40 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/23 16:32:40 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:22:48 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ int	execute_cd(t_info *info, char *dir)
 
 	variable = (t_variable *)lst_find_node(info->env_lst, "USER")->content;
 	if (!dir)
+	{
 		dir = ft_strjoin("/Users/", variable->value);
+		if (!dir)
+			exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	if (!chdir(dir))
 		return (update_env(info));
 	directory = opendir(dir);

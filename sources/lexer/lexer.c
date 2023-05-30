@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 15:02:13 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:04:03 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ static char	**iterate_through_cmd(char **lexed)
 		lexed[i] = trimmed;
 	}
 	if (ft_strlen(lexed[0]) == 0)
-		ft_printf("minishell: %s: command not found\n", lexed[0]);
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(lexed[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	}
 	return (lexed);
 }

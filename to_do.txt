@@ -1,9 +1,18 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
-    --> docker run -ti -v $(PWD):/test memory-test:0.1 bash -c "cd /test/; make && valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell"
+    --> echo sth | cat
 
-- open fds
-- norminette und comments --> norminette | grep -v libft | grep -v "OK"
-- edge cases|
-
---> echo sth | cat
+- edge cases
+    --> cd ~/Desktop
+    --> echo "" "" "" "" tol (echo)
+    --> echo $ ($ stehen lassen, anstatt versuchen zu ersetzen)
+    --> echo $?$
+    --> echo $:$= | cat -e (nach ft_isspecial nicht replacen)
+    --> echo $"HOME" (dollar --> ft_isspecial...dollar weg)
+    --> echo $HOME9
+    
+If we're still motivated to walk the extra mile...
+    --> echo $UID
+    --> echo $9HOME
+    --> echo $hola*
+    --> echo \$HOME (backslash davor ignorieren)

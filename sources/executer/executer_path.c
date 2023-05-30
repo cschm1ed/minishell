@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:06:49 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:26:17 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:56:12 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	is_directory(char *path)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putstr_fd(": is a directory\n", STDERR_FILENO);
-	return (TRUE);
+	return (g_exit_code = 126, TRUE);
 }
 
 static void	path_not_found(char *cmd)

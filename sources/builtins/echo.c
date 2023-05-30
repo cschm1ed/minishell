@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:55:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/16 15:20:07 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:39:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	execute_echo(t_parsed *parsed, int fd_out)
 	int		j;
 
 	args = parsed->args;
-	j = 0;
+	j = 1;
+	if (!args[j])
+		return (ft_putchar_fd('\n', fd_out), 0);
 	if (ft_isoption(args[j]))
 	{
 		while (args[++j])
@@ -31,14 +33,13 @@ int	execute_echo(t_parsed *parsed, int fd_out)
 		}
 	}
 	print_args(args, j, fd_out);
-	if (!ft_isoption(args[0]))
+	if (!ft_isoption(args[1]))
 		ft_putchar_fd('\n', fd_out);
 	return (0);
 }
 
 static void	print_args(char **args, int j, int fd_out)
 {
-	j++;
 	while (args[j])
 	{
 		ft_putstr_fd(args[j], fd_out);

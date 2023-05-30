@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 15:25:47 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 17:02:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	valid_num_of_quotes(char *cmd)
 		if (ft_isquote(cmd[i]) == TRUE)
 		{
 			if (skip_until_quote(cmd, &i) == FALSE)
-				return (printf(SYNERR), g_exit_code = 258, FALSE);
+				return (ft_putstr_fd(SYNERR, STDERR_FILENO),
+					g_exit_code = 258, FALSE);
 		}
 	}
 	return (TRUE);
