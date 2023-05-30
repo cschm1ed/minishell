@@ -52,7 +52,7 @@ int	valid_num_of_specials(char **lxd)
 			if (ft_isredirect(lxd[s][i]) == TRUE || lxd[s][i] == '|')
 				if (count_specials(lxd[s], lxd[s][i]) == FAILURE)
 					return (FALSE);
-			if (lxd[s][i] == '>' && lxd[s + 1][i] == '<')
+			if (lxd[s][i] == '>' && lxd[s + 1] && lxd[s + 1][i] == '<')
 				return (unexpected_token(&lxd[s + 1][i]), FALSE);
 			if (lxd[s][i])
 				i++;

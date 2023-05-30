@@ -56,13 +56,13 @@ void	free_cmds(t_commands *commands, t_info *info)
 		free(commands->raw);
 	if (commands->parsed)
 		ft_lstclear(&(commands->parsed), delete_parsed);
-	if (commands->lexed)
-		ft_free_dbl_ptr(&commands->lexed);
 	if (info && info->token_lst)
 	{
 		ft_lstclear(&info->token_lst, free);
 		info->token_lst = NULL;
 	}
+	if (commands->lexed)
+		ft_free_dbl_ptr(&commands->lexed);
 	if (info->pipex)
 		free_pipex(&info->pipex);
 	commands->raw = NULL;

@@ -80,10 +80,10 @@ t_list	*str_arr_to_lst(char **arr)
 	{
 		dup = ft_strdup(arr[i]);
 		if (dup == NULL)
-			return (ft_lstclear(&new_lst, free), NULL);
+			return (ft_lstclear(&new_lst, free), perror("malloc"), NULL);
 		new_node = ft_lstnew(dup);
-		if (!new_node)
-			return (perror("malloc"), NULL);
+		if (new_node == NULL)
+			return (ft_lstclear(&new_lst, free), perror("malloc"), NULL);
 		ft_lstadd_back(&new_lst, new_node);
 		i ++;
 	}

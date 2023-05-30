@@ -27,7 +27,6 @@ char		*lsts_find_var_val(t_info *info, char *name);
 int			lst_replace_var_val(t_list *list, char *name, char *new);
 
 // str_arr_utils
-int			str_in_arr(char **arr, char *find);
 t_list		*str_arr_to_lst(char **arr);
 char		**str_arr_add(char ***array, char *toadd);
 void		bubble_sort_str_array(char **array, int len);

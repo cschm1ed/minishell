@@ -12,8 +12,8 @@
 
 #include <minishell.h>
 
-static t_list * parse_command(t_list **p_lst, t_list *t_start, t_info *info);
-static int distribute_commands(t_list **parsed, t_info *info);
+static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info);
+static int		distribute_commands(t_list **parsed, t_info *info);
 
 /**
  * Takes a list of tokens created by the lexer, and fills one parsed struct
@@ -36,25 +36,19 @@ t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 	return (*parsed);
 }
 
-static int distribute_commands(t_list **parsed, t_info *info)
+static int	distribute_commands(t_list **parsed, t_info *info)
 {
 	int		first;
 	t_list	*node;
 
-	node = info->token_lst;
 	first = TRUE;
+	node = info->token_lst;
 	while (node)
 	{
-		if (ft_strcmp(node->content, "|") != 0 && first == TRUE)
+		if (first == TRUE && ft_strcmp(node->content, "|") == 0)
+			return (unexpected_token("|"));
+		if (ft_strcmp(node->content, "|") == 0 || first == TRUE)
 		{
-			node = parse_command(parsed, node, info);
-			if (node == NULL)
-				return (FAILURE);
-		}
-		else if (ft_strcmp(node->content, "|") == 0)
-		{
-			if (first == TRUE)
-				return (unexpected_token("|"));
 			node = parse_command(parsed, node, info);
 			if (node == NULL)
 				return (FAILURE);
@@ -67,9 +61,9 @@ static int distribute_commands(t_list **parsed, t_info *info)
 	return (SUCCESS);
 }
 
-static t_list * parse_command(t_list **p_lst, t_list *t_start, t_info *info)
+static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 {
-	t_list		*node;
+	t_list	*node;
 
 	node = lst_newparsed_node();
 	if (node == NULL)

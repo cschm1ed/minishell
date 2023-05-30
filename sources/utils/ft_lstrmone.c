@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 /**
  * Removes one node from a linked list and frees all its memory.
  *
@@ -21,14 +21,9 @@
 void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 {
 	t_list	*prev;
-	t_list	*next;
+	t_list	*curr;
 
-	if (node == NULL)
-		return ;
-	prev = *head;
-	if (node == NULL)
-		return ;
-	if (*head == NULL)
+	if (!node || !(*head))
 		return ;
 	if (node == *head)
 	{
@@ -36,11 +31,17 @@ void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
 		ft_lstdelone(node, del);
 		return ;
 	}
-	while (prev && prev->next != node)
-		prev = prev->next;
-	if (prev == NULL)
-		return ;
-	next = prev->next->next;
-	ft_lstdelone(node, del);
-	prev->next = next;
+	prev = *head;
+	curr = (*head)->next;
+	while (curr)
+	{
+		if (curr == node)
+		{
+			prev->next = curr->next;
+			ft_lstdelone(curr, del);
+			return ;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
 }

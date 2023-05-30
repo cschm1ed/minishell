@@ -56,7 +56,7 @@ static int	execute_builtin(t_info *info,
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		exit_code = execute_pwd(info, fd_out);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1]);
+		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1], fd_out);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else

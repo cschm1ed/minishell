@@ -38,6 +38,6 @@ int		var_lst_add(t_list **list, char **arg);
 int		execute_pwd(t_info *info, int fd_out);
 
 // unset
-int		execute_unset(t_info *info, char **arg);
+int execute_unset(t_info *info, char **arg, int fd_out);
 
 #endif

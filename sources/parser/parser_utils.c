@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-void redirects(t_list *tokens, t_parsed *parsed, t_info *info)
+void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 {
 	t_list	*ptr;
 
@@ -34,7 +34,7 @@ void redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 	}
 }
 
-t_list *set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
+t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 {
 	t_list	*tmp;
 	t_list	*node;
@@ -60,7 +60,7 @@ t_list *set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	return (tmp);
 }
 
-int add_args(t_list *node, t_info *info, t_list *start)
+int	add_args(t_list *node, t_info *info, t_list *start)
 {
 	t_list		*args;
 
@@ -75,7 +75,7 @@ int add_args(t_list *node, t_info *info, t_list *start)
 	{
 		if (*(args->content) != 0)
 			if (str_arr_add(&(lst_get_parsed(node)->args),
-							args->content) == NULL)
+					args->content) == NULL)
 				exit_error(info, __FILE__, __LINE__, "malloc");
 		args = args->next;
 	}

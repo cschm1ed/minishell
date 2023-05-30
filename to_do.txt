@@ -5,3 +5,13 @@
 - open fds
 - norminette und comments --> norminette | grep -v libft | grep -v "OK"
 - edge cases|
+
+
+
+cases:
+
+    ":" -> bash nothing -> minishell -> command not found
+    "!" -> bash unexpected token -> minishell command not found
+    ">"  ">>" "<>" ->  "" -> segfault in lexer
+    "<"  "<<" ->  "" -> remove command not found
+    "> > > >" -> "" -> segfault lexer
