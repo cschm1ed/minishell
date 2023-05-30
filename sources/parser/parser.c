@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 14:38:51 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:38:16 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info);
 static int		distribute_commands(t_list **parsed, t_info *info);
+static t_list	*add_redirect(t_list *t_start, t_info *info, t_list *node,
+					t_list *parsed);
 
 /**
  * Takes a list of tokens created by the lexer, and fills one parsed struct
@@ -63,30 +65,27 @@ static int	distribute_commands(t_list **parsed, t_info *info)
 
 static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 {
-	t_list	*node;
+	t_list	*parsed;
 
-	node = lst_newparsed_node();
-	if (node == NULL)
+	parsed = lst_newparsed_node();
+	if (parsed == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
-	ft_lstadd_back(p_lst, node);
+	ft_lstadd_back(p_lst, parsed);
 	if (t_start == NULL)
 		return (unexpected_token("|"), NULL);
 	if (ft_strcmp(t_start->content, "|") == 0)
-	{
-		if (invalid_special(t_start->next->content) == TRUE
-			|| invalid_colon(t_start->next->content))
-			return (NULL);
-		redirects(t_start->next, lst_get_parsed(node), info);
-		add_args(node, info, t_start->next);
-		return (t_start->next);
-	}
+		return (add_redirect(t_start->next, info, t_start->next, parsed));
 	else
-	{
-		if (invalid_special(t_start->content) == TRUE
-			|| invalid_colon(t_start->content) == TRUE)
-			return (NULL);
-		redirects(t_start, lst_get_parsed(node), info);
-		add_args(node, info, info->token_lst);
-		return (info->token_lst);
-	}
+		return (add_redirect(t_start, info, info->token_lst, parsed));
+}
+
+static t_list	*add_redirect(t_list *t_start, t_info *info, t_list *node,
+			t_list *parsed)
+{
+	if (invalid_special(t_start->content) == TRUE
+		|| invalid_colon(t_start->content) == TRUE)
+		return (NULL);
+	redirects(t_start, lst_get_parsed(parsed), info);
+	add_args(parsed, info, node);
+	return (node);
 }

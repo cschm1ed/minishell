@@ -5,3 +5,5 @@
 - open fds
 - norminette und comments --> norminette | grep -v libft | grep -v "OK"
 - edge cases|
+
+--> echo sth | cat

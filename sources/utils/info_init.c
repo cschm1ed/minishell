@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:36:09 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:45:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,11 @@ static int	update_shlvl(t_info *info)
 		new = ft_itoa(x + 1);
 		if (new == NULL)
 			return (FAILURE);
-		lst_replace_var_val(info->env_lst, "SHLVL", new);
+		if (val)
+		{
+			free(val);
+			lst_replace_var_val(info->env_lst, "SHLVL", new);
+		}
 	}
 	return (SUCCESS);
 }
