@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 22:55:07 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 22:55:07 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/30 13:43:27 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	invalid_identifier(char *arg, int fd_out);
 
-int execute_unset(t_info *info, char **arg, int fd_out)
+int	execute_unset(t_info *info, char **arg, int fd_out)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 18:38:29 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:42:55 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	if (cnt == -1)
 		fd_out = 1;
 	else if (parsed->next)
-	{
 		fd_out = pipex->pipe_fd[cnt][1];
-		ft_printf("next is %d\n", fd_out);
-	}
 	else
 		fd_out = pipex->file_fd[1];
 	cmd = lst_get_parsed(parsed)->cmd;
@@ -56,7 +53,8 @@ static int	execute_builtin(t_info *info,
 	else if (ft_strcmp(cmd, "pwd") == 0)
 		exit_code = execute_pwd(info, fd_out);
 	else if (ft_strcmp(cmd, "unset") == 0)
-		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1], fd_out);
+		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1],
+				fd_out);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
 	else

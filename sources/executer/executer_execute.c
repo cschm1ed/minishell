@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/29 16:23:53 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:05:20 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt)
 	if (!pipex->cmd_path)
 	{
 		free_info(info);
-		exit(1);
+		exit(g_exit_code);
 	}
 	return (content);
 }

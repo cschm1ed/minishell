@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:52:03 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:27:56 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:42:28 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int		var_lst_add(t_list **list, char **arg);
 int		execute_pwd(t_info *info, int fd_out);
 
 // unset
-int execute_unset(t_info *info, char **arg, int fd_out);
+int		execute_unset(t_info *info, char **arg, int fd_out);
 
 #endif
