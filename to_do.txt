@@ -5,9 +5,3 @@
 - open fds
 - norminette und comments --> norminette | grep -v libft | grep -v "OK"
 - edge cases|
-
-
-
-cases:
-    "<"  "<<" ->  "" -> remove command not found
-    "ls | >" -> für jeden Command

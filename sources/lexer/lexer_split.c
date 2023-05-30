@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:17:48 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:22:36 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,12 @@ static int	terminate_string(char *s, int *i)
 {
 	while (s[*i] && ft_isspace(s[*i]) == FALSE && ft_isspecial(s[*i]) == FALSE)
 	{
-		if (ft_isspecial(s[*i + 1]) == TRUE)
-			return (FALSE);
 		if (ft_isquote(s[*i]) == TRUE)
 			skip_until_quote(s, i);
-		(*i)++;
+		if (ft_isspecial(s[*i + 1]) == TRUE)
+			return (FALSE);
+		if (s[*i])
+			(*i)++;
 	}
 	return (TRUE);
 }

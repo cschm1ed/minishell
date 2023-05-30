@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 13:44:10 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:25:47 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,6 @@
 
 static int	count_specials(char *lxd, char c);
 static int	print_invalid_num_of_specials(char c, int cnt);
-
-int	invalid_colon(char *cmd)
-{
-	int	i;
-	int	colon;
-
-	colon = 0;
-	i = 0;
-	while (cmd[i] && (ft_isspace(cmd[i]) || cmd[i] == ':'))
-	{
-		if (cmd[i] == ':')
-			colon++;
-		i++;
-	}
-	if (!cmd[i] && colon == 1)
-		return (g_exit_code = 0, TRUE);
-	return (FALSE);
-}
-
-int	invalid_special(char *cmd)
-{
-	int	i;
-	int	special;
-
-	special = 0;
-	i = 0;
-	while (cmd[i]
-		&& (ft_isspace(cmd[i]) || ft_isspecial(cmd[i]) || cmd[i] == '!'))
-	{
-		if (ft_isspecial(cmd[i]) || cmd[i] == '!')
-			special++;
-		i++;
-	}
-	if (!cmd[i] && special >= 1)
-		return (g_exit_code = 258, unexpected_token("newline"), TRUE);
-	return (FALSE);
-}
 
 int	valid_num_of_quotes(char *cmd)
 {

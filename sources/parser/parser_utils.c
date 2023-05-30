@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:53:39 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 14:48:19 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:26:03 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,41 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 		args = args->next;
 	}
 	return (SUCCESS);
+}
+
+int	invalid_colon(char *cmd)
+{
+	int	i;
+	int	colon;
+
+	colon = 0;
+	i = 0;
+	while (cmd[i] && (ft_isspace(cmd[i]) || cmd[i] == ':'))
+	{
+		if (cmd[i] == ':')
+			colon++;
+		i++;
+	}
+	if (!cmd[i] && colon == 1)
+		return (g_exit_code = 0, TRUE);
+	return (FALSE);
+}
+
+int	invalid_special(char *cmd)
+{
+	int	i;
+	int	special;
+
+	special = 0;
+	i = 0;
+	while (cmd[i]
+		&& (ft_isspace(cmd[i]) || ft_isspecial(cmd[i]) || cmd[i] == '!'))
+	{
+		if (ft_isspecial(cmd[i]) || cmd[i] == '!')
+			special++;
+		i++;
+	}
+	if (!cmd[i] && special >= 1)
+		return (g_exit_code = 258, unexpected_token("newline"), TRUE);
+	return (FALSE);
 }

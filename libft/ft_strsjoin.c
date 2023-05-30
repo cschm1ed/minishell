@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsjoin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:40 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 14:40:11 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:24:01 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 static char	*join_edge_cases(const char *s1, const char *s2, const char *s3)
 {
 	if (!s1 && !s2 && !s3)
-	{
-		ft_printf("HERE\n");
 		return (NULL);
-	}
 	else if (!s1 && !s2)
 		return (ft_strdup(s3));
 	else if (!s1 && !s3)
