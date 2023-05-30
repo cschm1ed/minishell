@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 21:33:16 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/12 16:37:37 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:38:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 	if (info->token_lst == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	if (distribute_commands(parsed, info) == FAILURE)
-		return (*parsed);
+		return (NULL);
 	return (*parsed);
 }
 
@@ -73,12 +73,18 @@ static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 		return (unexpected_token("|"), NULL);
 	if (ft_strcmp(t_start->content, "|") == 0)
 	{
+		if (invalid_special(t_start->next->content) == TRUE
+			|| invalid_colon(t_start->next->content))
+			return (NULL);
 		redirects(t_start->next, lst_get_parsed(node), info);
 		add_args(node, info, t_start->next);
 		return (t_start->next);
 	}
 	else
 	{
+		if (invalid_special(t_start->content) == TRUE
+			|| invalid_colon(t_start->content) == TRUE)
+			return (NULL);
 		redirects(t_start, lst_get_parsed(node), info);
 		add_args(node, info, info->token_lst);
 		return (info->token_lst);

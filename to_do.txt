@@ -9,9 +9,5 @@
 
 
 cases:
-
-    ":" -> bash nothing -> minishell -> command not found
-    "!!!!" -> bash unexpected token -> minishell command not found
-    ">"  ">>" "<>" ->  "" -> segfault in lexer
     "<"  "<<" ->  "" -> remove command not found
     "ls | >" -> für jeden Command

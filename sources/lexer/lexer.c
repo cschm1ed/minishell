@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 13:39:58 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:25:28 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ char	**lexer(char *cmd, t_info *info)
 
 	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd) == FALSE)
 		return (NULL);
-	if (invalid_colon(cmd) == TRUE || invalid_special(cmd) == TRUE)
-		return (NULL);
+	// if (invalid_colon(cmd) == TRUE || invalid_special(cmd) == TRUE)
+	// 	return (NULL);
 	amt_substrs = count_substrs(cmd);
 	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));
 	if (!lexed)
