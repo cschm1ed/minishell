@@ -14,7 +14,7 @@
 
 void	keybindings_parent(int signum)
 {
-	if (signum == SIGINT)
+	if (signum == SIGINT || signum == SIGTSTP)
 	{
 		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 0);
@@ -24,8 +24,6 @@ void	keybindings_parent(int signum)
 	}
 	else if (signum == SIGQUIT)
 		(void)signum;
-    else if (signum == SIGTSTP)
-        (void)signum;
 }
 
 void	keybindings_child(int signum)
