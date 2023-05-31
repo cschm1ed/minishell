@@ -111,7 +111,7 @@ static int	with_value(t_info *info, char *arg)
 
 static void	invalid_identifier(char *arg, int fd_out)
 {
-	ft_putstr_fd("export: `", fd_out);
+	ft_putstr_fd("minishell: export: `", fd_out);
 	ft_putstr_fd(arg, fd_out);
 	ft_putstr_fd("': not a valid identifier\n", fd_out);
 }
