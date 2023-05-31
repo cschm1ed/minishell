@@ -26,11 +26,11 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	{
 		filename = lst_get_var(redirects)->value;
 		if (access(filename, F_OK) == -1 || access(filename, R_OK) == -1)
-			return (ft_printf("minishell: %s: %s\n",
+			return (ft_printf("minishell: %s: %s\n", STDERR_FILENO,
 					filename, strerror(errno)), -1);
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
-			return (ft_printf("minishell: %s: :%s\n",
+			return (ft_printf("minishell: %s: :%s\n", STDERR_FILENO,
 					filename, strerror(errno)), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);
@@ -54,14 +54,14 @@ int	create_outfiles(t_list *parsed)
 	{
 		filename = lst_get_var(redirects)->value;
 		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1)
-			return (ft_printf("minishell no access: %s: %s\n",
+			return (ft_printf("minishell no access: %s: %s\n", STDERR_FILENO,
 					filename, strerror(errno)), -1);
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 		if (lst_get_var(redirects)->key == APPEND)
 			flags = O_WRONLY | O_APPEND | O_CREAT;
 		fd = open(filename, flags, 0644);
 		if (fd == -1)
-			return (ft_printf("minishell open failed: %s: :%s\n",
+			return (ft_printf("minishell open failed: %s: :%s\n", STDERR_FILENO,
 					filename, strerror(errno)), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);

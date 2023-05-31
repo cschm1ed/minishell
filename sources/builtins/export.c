@@ -13,7 +13,6 @@
 #include <minishell.h>
 
 static void	no_value(t_info *info, char *arg);
-static void	invalid_identifier(char *arg, int fd_out);
 static int	with_value(t_info *info, char *arg);
 static int	export_variable(t_info *info, char *const *arg, int fd_out, int i);
 
@@ -42,14 +41,14 @@ static int	export_variable(t_info *info, char *const *arg, int fd_out, int i)
 	if (ft_strchr(arg[i], '=') != NULL
 		&& *(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
 	{
-		invalid_identifier(arg[i], fd_out);
+		ft_printf("minishell: export: %s: nor a valid identifier\n", fd_out, arg[i]);
 		exit_code = 1;
 	}
-    else if (check_if_varname_is_valid(arg[i]) == FALSE)
-    {
-        invalid_identifier(arg[i], fd_out);
-        exit_code = 1;
-    }
+	else if (check_if_varname_is_valid(arg[i]) == FALSE)
+	{
+		ft_printf("minishell: export: %s: nor a valid identifier\n", fd_out, arg[i]);
+		exit_code = 1;
+	}
 	else if (ft_strchr(arg[i], '=') == NULL
 		|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		no_value(info, arg[i]);
@@ -107,11 +106,4 @@ static int	with_value(t_info *info, char *arg)
 		return (free(name), free(value), FAILURE);
 	ft_lstadd_back(&(info->env_lst), node);
 	return (SUCCESS);
-}
-
-static void	invalid_identifier(char *arg, int fd_out)
-{
-	ft_putstr_fd("minishell: export: `", fd_out);
-	ft_putstr_fd(arg, fd_out);
-	ft_putstr_fd("': not a valid identifier\n", fd_out);
 }

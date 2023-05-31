@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		return (perror("info"), 1);
 	info->commands = &commands;
 	if (info == NULL)
-		return (ft_printf("info error\n"), 1);
+		return (ft_printf("info error\n", STDERR_FILENO), 1);
 	while (1)
 	{
 		commands.raw = ft_readline("minishell: ", info);

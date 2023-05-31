@@ -31,7 +31,8 @@ int	execute_cd(t_info *info, char *dir)
 	directory = opendir(dir);
 	if (directory)
 		closedir(directory);
-	return (ft_printf("minishell: cd: %s: %s\n", dir, strerror(errno)), 1);
+	return (ft_printf("minishell: cd: %s: %s\n", STDERR_FILENO,
+				dir, strerror(errno)), 1);
 }
 
 static int	update_env(t_info *info)

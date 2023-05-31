@@ -60,10 +60,6 @@ static char	**iterate_through_cmd(char **lexed)
 		lexed[i] = trimmed;
 	}
 	if (ft_strlen(lexed[0]) == 0)
-	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(lexed[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	}
+		ft_printf("minishell: %s: command not found\n", STDERR_FILENO, lexed[0]);
 	return (lexed);
 }

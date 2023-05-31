@@ -21,15 +21,15 @@ char	**cpy_lst_to_array(t_list *lst, char ***array)
 	int		len;
 
 	i = 0;
-    if (ft_lstsize(lst) == 0)
-        return (NULL);
+	if (ft_lstsize(lst) == 0)
+		return (NULL);
 	*array = ft_calloc(sizeof(char *), ft_lstsize(lst) + 1);
 	if (!*array)
 		return (perror("malloc"), NULL);
 	len = ft_lstsize(lst);
 	while (i < len)
 	{
-        (*array)[i++] = lst_get_var(lst)->name;
+		(*array)[i++] = lst_get_var(lst)->name;
 		lst = lst->next;
 	}
 	return (*array);
@@ -38,50 +38,44 @@ char	**cpy_lst_to_array(t_list *lst, char ***array)
 int	print_sorted_lst(t_info *info, int fd_out)
 {
 	int		i;
-    int     j;
 	char	**array;
 	t_list	*last;
-    t_list  *last2;
+	t_list	*last2;
 	t_list	*ptr;
 
 	i = 0;
 	last = ft_lstlast(info->env_lst);
 	last->next = info->export_lst;
-    last2 = ft_lstlast(info->env_lst);
-    last2->next = info->user_vars;
+	last2 = ft_lstlast(info->env_lst);
+	last2->next = info->user_vars;
 	array = cpy_lst_to_array(info->env_lst, &array);
-    if (array == NULL)
-    {
-        last2->next = NULL;
-        last->next = NULL;
+	if (array == NULL)
+	{
+		last2->next = NULL;
+		last->next = NULL;
 		exit_error(info, __FILE__, __LINE__, "malloc");
-    }
+	}
 	bubble_sort_str_array(array, ft_lstsize(info->env_lst));
 	while (i < ft_lstsize(info->env_lst))
 	{
-        j = 0;
 		ptr = info->env_lst;
-		while (ft_strcmp(lst_get_var(ptr)->name, array[i]) != 0 && j < ft_lstsize(info->env_lst))
+		while (ft_strcmp(lst_get_var(ptr)->name, array[i]) != 0)
 			ptr = ptr->next;
 		print_variable(fd_out, ptr);
-        i ++;
+		i ++;
 	}
 	free(array);
-    last2->next = NULL;
+	last2->next = NULL;
 	last->next = NULL;
 	return (SUCCESS);
 }
 
 static void	print_variable(int fd_out, t_list *ptr)
 {
-	ft_putstr_fd("declare -x ", fd_out);
-	ft_putstr_fd(lst_get_var(ptr)->name, fd_out);
+	ft_printf("declare -x %s", fd_out, lst_get_var(ptr)->name);
 	if (lst_get_var(ptr)->value[0])
-	{
-		ft_putstr_fd("=", fd_out);
-		ft_putstr_fd(lst_get_var(ptr)->value, fd_out);
-	}
-	ft_putchar_fd('\n', fd_out);
+		ft_printf("=%s", fd_out, lst_get_var(ptr)->value);
+	ft_printf("\n", fd_out);
 }
 
 int	check_if_varname_is_valid(char *str)

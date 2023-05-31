@@ -24,13 +24,12 @@ int	unexpected_token(char *token)
 	g_exit_code = 258;
 	if (token == NULL)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+		ft_printf("minishell: syntax error near unexpected token `newline'\n",
 			STDERR_FILENO);
 		return (FAILURE);
 	}
-	ft_putstr_fd("minishell: syntax error near unexpected token `",
+	ft_printf("minishell: syntax error near unexpected token `",
 		STDERR_FILENO);
-	ft_putstr_fd(token, STDERR_FILENO);
-	ft_putstr_fd("'\n", STDERR_FILENO);
+	ft_printf("%s\n", STDERR_FILENO, token);
 	return (FAILURE);
 }

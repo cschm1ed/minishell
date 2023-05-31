@@ -14,7 +14,6 @@
 
 int	execute_pwd(t_info *info, int fd_out)
 {
-	ft_putstr_fd(info->pwd, fd_out);
-	ft_putchar_fd('\n', fd_out);
+	ft_printf("%s\n", fd_out, info->pwd);
 	return (0);
 }

@@ -15,9 +15,9 @@
 void	exit_error(t_info *info, char *file, int line, char *msg)
 {
 	if (file)
-		ft_printf("%s: ", file);
+		ft_printf("%s: ", STDERR_FILENO, file);
 	if (line)
-		ft_printf("c (%d): ", line);
+		ft_printf("c (%d): ", STDERR_FILENO, line);
 	if (msg)
 		perror(msg);
 	execute_exit(info, NULL, 1);

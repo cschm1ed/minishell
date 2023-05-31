@@ -12,8 +12,6 @@
 
 #include <minishell.h>
 
-static void	invalid_identifier(char *arg, int fd_out);
-
 int	execute_unset(t_info *info, char **arg, int fd_out)
 {
 	int	i;
@@ -22,7 +20,8 @@ int	execute_unset(t_info *info, char **arg, int fd_out)
 	while (arg[i])
 	{
 		if (check_if_varname_is_valid(arg[i]) == FALSE)
-			return (invalid_identifier(arg[i], fd_out), 1);
+			return (ft_printf("unset: `%s': not a valid identifier\n",
+							fd_out, arg[i]), SUCCESS);
 		ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
 			delete_variable);
 		ft_lstrmone(&(info->export_lst), lst_find_node(info->export_lst,
@@ -32,11 +31,4 @@ int	execute_unset(t_info *info, char **arg, int fd_out)
 		i ++;
 	}
 	return (SUCCESS);
-}
-
-static void	invalid_identifier(char *arg, int fd_out)
-{
-	ft_putstr_fd("unset: `", fd_out);
-	ft_putstr_fd(arg, fd_out);
-	ft_putstr_fd("': not a valid identifier\n", fd_out);
 }

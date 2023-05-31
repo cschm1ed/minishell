@@ -27,30 +27,30 @@
 #include "libft.h"
 
 // Converts from (long) integer to string
-static void	f_itoa(long int num, char *base, int n, int *cnt)
+static void f_itoa(long int num, char *base, int n, int *cnt, int fd)
 {
 	if (num < 0)
 	{
 		num *= -1;
-		*cnt += write(1, "-", 1);
+		*cnt += write(fd, "-", 1);
 	}
 	if (num >= n)
-		f_itoa(num / n, base, n, cnt);
+		f_itoa(num / n, base, n, cnt, fd);
 	*cnt += 1;
-	ft_putchar_fd(base[num % n], 1);
+	ft_putchar_fd(base[num % n], fd);
 }
 
 // Converts from (long) unsigned integer to string
-static void	f_utoa(long unsigned int num, char *base, unsigned int n, int *cnt)
+static void f_utoa(long unsigned int num, char *base, unsigned int n, int *cnt, int fd)
 {
 	if (num >= n)
-		f_utoa(num / n, base, n, cnt);
+		f_utoa(num / n, base, n, cnt, fd);
 	*cnt += 1;
-	ft_putchar_fd(base[num % n], 1);
+	ft_putchar_fd(base[num % n], fd);
 }
 
 // Prints either string or pointer converted to string
-static void	f_str(va_list args, int *cnt, int pointer)
+static void f_str(va_list args, int *cnt, int pointer, int fd)
 {
 	char	*tmp;
 
@@ -59,20 +59,20 @@ static void	f_str(va_list args, int *cnt, int pointer)
 		tmp = va_arg(args, char *);
 		if (!tmp)
 		{
-			*cnt += write(1, "(null)", 6);
+			*cnt += write(fd, "(null)", 6);
 			return ;
 		}
-		*cnt += write(1, tmp, ft_strlen(tmp));
+		*cnt += write(fd, tmp, ft_strlen(tmp));
 	}
 	else if (pointer == 1)
 	{
-		*cnt += write(1, "0x", 2);
-		f_utoa(va_arg(args, long unsigned int), "0123456789abcdef", 16, cnt);
+		*cnt += write(fd, "0x", 2);
+		f_utoa(va_arg(args, long unsigned int), "0123456789abcdef", 16, cnt, fd);
 	}
 }
 
 // Differentiates between the different identifiers
-static void	f_identify(char c, va_list args, int *cnt)
+static void f_identify(char c, va_list args, int *cnt, int fd)
 {
 	if (c == 'c')
 	{
@@ -80,37 +80,37 @@ static void	f_identify(char c, va_list args, int *cnt)
 		*cnt += 1;
 	}
 	else if (c == '%')
-		*cnt += write(1, "%", 1);
+		*cnt += write(fd, "%", 1);
 	else if (c == 's')
-		f_str(args, cnt, 0);
+		f_str(args, cnt, 0, fd);
 	else if (c == 'p')
-		f_str(args, cnt, 1);
+		f_str(args, cnt, 1, fd);
 	else if (c == 'd' || c == 'i')
-		f_itoa(va_arg(args, int), "0123456789", 10, cnt);
+		f_itoa(va_arg(args, int), "0123456789", 10, cnt, fd);
 	else if (c == 'u')
-		f_utoa(va_arg(args, unsigned int), "0123456789", 10, cnt);
+		f_utoa(va_arg(args, unsigned int), "0123456789", 10, cnt, fd);
 	else if (c == 'x')
-		f_utoa(va_arg(args, unsigned int), "0123456789abcdef", 16, cnt);
+		f_utoa(va_arg(args, unsigned int), "0123456789abcdef", 16, cnt, fd);
 	else if (c == 'X')
-		f_utoa(va_arg(args, unsigned int), "0123456789ABCDEF", 16, cnt);
+		f_utoa(va_arg(args, unsigned int), "0123456789ABCDEF", 16, cnt, fd);
 }
 
 // Initializes the list of arguments and prints the string
-int	ft_printf(const char *str, ...)
+int	ft_printf(const char *str, int fd, ...)
 {
 	va_list	args;
 	int		i;
 	int		cnt;
 
-	va_start(args, str);
+	va_start(args, fd);
 	i = -1;
 	cnt = 0;
 	while (str[++i])
 	{
 		if (str[i] == '%')
-			f_identify(str[++i], args, &cnt);
+			f_identify(str[++i], args, &cnt, fd);
 		else
-			cnt += write(1, &str[i], 1);
+			cnt += write(fd, &str[i], 1);
 	}
 	va_end(args);
 	return (cnt);

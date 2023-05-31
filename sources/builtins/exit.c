@@ -17,7 +17,7 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (arg && arg[1] && arg[2])
 	{
-		ft_printf("minishell: exit: too many arguments\n");
+		ft_printf("minishell: exit: too many arguments\n", STDERR_FILENO);
 		g_exit_code = 1;
 		return (FAILURE);
 	}
@@ -28,7 +28,7 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 			&& arg[1][1] != 0)
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n",
-				arg[1]);
+				STDERR_FILENO, arg[1]);
 			exit_code = 255;
 		}
 		else
