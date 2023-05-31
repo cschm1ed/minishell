@@ -42,8 +42,6 @@ void	keybindings_child(int signum)
 		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
 		g_exit_code = 131;
 	}
-    else if (signum == SIGTSTP)
-        (void)signum;
 }
 
 void	setup_signals_parent(void)
@@ -57,5 +55,4 @@ void	setup_signals_child(void)
 {
 	signal (SIGQUIT, keybindings_child);
 	signal (SIGINT, keybindings_child);
-    signal (SIGTSTP, keybindings_child);
 }
