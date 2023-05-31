@@ -81,3 +81,51 @@ static int	update_shlvl(t_info *info)
 	}
 	return (SUCCESS);
 }
+
+/**
+ * frees all memory, a s_variable struct holds.
+ *
+ * @param content pointer to the struct to be deleted.
+ */
+void	delete_variable(void *content)
+{
+	t_variable	*ptr;
+
+	ptr = (t_variable *)content;
+	if (ptr == NULL)
+		return ;
+	if (ptr->name)
+		free(ptr->name);
+	if (ptr->value)
+		free(ptr->value);
+	ptr->name = NULL;
+	ptr->value = NULL;
+	free(ptr);
+}
+
+/**
+ * frees all memory held by a s_parsed struct.
+ *
+ * @param content - pointer to the struct to be freed
+ */
+void	delete_parsed(void *content)
+{
+	t_parsed	*parsed;
+
+	parsed = (t_parsed *)content;
+	if (parsed == NULL)
+		return ;
+	if (parsed->args)
+		ft_free_dbl_ptr(&parsed->args);
+	if (parsed->cmd)
+		free(parsed->cmd);
+	if (parsed->redirect_input)
+		ft_lstclear(&(parsed->redirect_input), delete_variable);
+	if (parsed->redirect_output)
+		ft_lstclear(&(parsed->redirect_output), delete_variable);
+	if (parsed->here_docs)
+		ft_lstclear(&parsed->here_docs, delete_variable);
+	if (content)
+		free(content);
+	ft_bzero(parsed, sizeof(parsed));
+}

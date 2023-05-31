@@ -46,13 +46,10 @@ static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 		buffer[0] = get_next_line(STDIN_FILENO);
 		if (buffer[0] == NULL)
 			return (free(buffer), -1);
-		if (ft_strchr(buffer[0], '$'))
+		if (replace_variables(info, buffer) == FAILURE)
 		{
-			if (replace_variables(info, buffer) == FAILURE)
-			{
-				free(buffer);
-				exit_error(info, __FILE__, __LINE__, "malloc");
-			}
+			free(buffer);
+			exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		if (compare_delimiter(*buffer, lst_get_var(heredocs)->value) == 0)
 			return (close(hpipe[1]), free(buffer), hpipe[0]);
@@ -64,12 +61,10 @@ static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 
 static int	compare_delimiter(const char *str, const char *delimiter)
 {
-	int	i;
 
-	i = 0;
-	while (str[i] == delimiter[i])
-		i ++;
-	if (str[i] == '\n' && str[i + 1] == 0)
+	if (strnstr(str, delimiter, ft_strlen(delimiter)) == str
+			&& *(str + ft_strlen(delimiter)) == '\n'
+			&& *(str + ft_strlen(delimiter) + 1) == 0)
 		return (0);
 	return (1);
 }
@@ -82,7 +77,7 @@ static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 	{
 		while (1)
 		{
-			ft_putstr_fd("> ", STDIN_FILENO);
+			ft_printf("> ", STDIN_FILENO);
 			buffer = get_next_line(STDIN_FILENO);
 			if (buffer == NULL)
 				exit_error(info, __FILE__, __LINE__, "get next line");

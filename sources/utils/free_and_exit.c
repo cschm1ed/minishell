@@ -57,14 +57,12 @@ void	free_cmds(t_commands *commands, t_info *info)
 	if (commands->parsed)
 		ft_lstclear(&(commands->parsed), delete_parsed);
 	if (info && info->token_lst)
-	{
 		ft_lstclear(&info->token_lst, free);
-		info->token_lst = NULL;
-	}
 	if (commands->lexed)
 		ft_free_dbl_ptr(&commands->lexed);
 	if (info->pipex)
 		free_pipex(&info->pipex);
+	info->token_lst = NULL;
 	commands->raw = NULL;
 	commands->lexed = NULL;
 	commands->parsed = NULL;
@@ -79,16 +77,23 @@ void	close_pipes(t_data **pipex)
 	while ((*pipex)->pipe_fd[i] != NULL)
 	{
 		if ((*pipex)->pipe_fd[i][0] > 2)
-		{
 			close((*pipex)->pipe_fd[i][0]);
-			(*pipex)->pipe_fd[i][0] = -1;
-		}
 		if ((*pipex)->pipe_fd[i][1] > 2)
-		{
 			close((*pipex)->pipe_fd[i][1]);
-			(*pipex)->pipe_fd[i][1] = -1;
-		}
+		(*pipex)->pipe_fd[i][0] = -1;
+		(*pipex)->pipe_fd[i][1] = -1;
 		free((*pipex)->pipe_fd[i]);
 		i ++;
 	}
+}
+
+void	exit_error(t_info *info, char *file, int line, char *msg)
+{
+	if (file)
+		ft_printf("%s: ", STDERR_FILENO, file);
+	if (line)
+		ft_printf("c (%d): ", STDERR_FILENO, line);
+	if (msg)
+		perror(msg);
+	execute_exit(info, NULL, 1);
 }

@@ -89,11 +89,8 @@ int	invalid_colon(char *cmd)
 	colon = 0;
 	i = 0;
 	while (cmd[i] && (ft_isspace(cmd[i]) || cmd[i] == ':'))
-	{
-		if (cmd[i] == ':')
+		if (cmd[i++] == ':')
 			colon++;
-		i++;
-	}
 	if (!cmd[i] && colon == 1)
 		return (g_exit_code = 0, TRUE);
 	return (FALSE);
