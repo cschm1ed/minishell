@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 18:09:34 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:52:58 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_lexed(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

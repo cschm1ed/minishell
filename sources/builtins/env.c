@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 19:03:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 19:03:58 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:52:35 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	print_var_lst(t_list *lst, int fd_out);
 
-int execute_env(t_info *info, int fd_out, char **args)
+int	execute_env(t_info *info, int fd_out, char **args)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	if (args[1])

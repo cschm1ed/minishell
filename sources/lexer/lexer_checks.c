@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 17:02:59 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:46:23 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 
 static int	count_specials(char *lxd, char c);
 static int	print_invalid_num_of_specials(char c, int cnt);
+
+int	only_isspace(char *cmd)
+{
+	int	i;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (ft_isspace(cmd[i]) == FALSE)
+			return (FALSE);
+	}
+	return (TRUE);
+}
 
 int	valid_num_of_quotes(char *cmd)
 {
