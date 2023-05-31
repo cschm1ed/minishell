@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 21:53:03 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 13:05:20 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:52:56 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	t_parsed	*content;
 	char		**env;
 
-    content = setup(pipex, parsed, &info, cnt);
+	content = setup(pipex, parsed, &info, cnt);
 	close_pipes(&pipex);
 	env = env_to_arr(info);
 	if (env == NULL)
@@ -35,19 +35,19 @@ int	ft_child_process(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 static t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt)
 {
 	t_parsed	*content;
-    int         exit_builtin;
+	int			exit_builtin;
 
 	setup_signals_child();
 	content = lst_get_parsed(parsed);
 	handle_files(pipex, parsed, (*info), cnt);
 	dup_infiles(pipex, parsed, cnt);
 	dup_outfiles(pipex, parsed, (*info), cnt);
-    exit_builtin = execute_builtin_if(*info, parsed, pipex, -1);
-    if (exit_builtin != 1000)
-    {
-        free_info(info);
-        exit (exit_builtin);
-    }
+	exit_builtin = execute_builtin_if(*info, parsed, pipex, -1);
+	if (exit_builtin != 1000)
+	{
+		free_info(info);
+		exit (exit_builtin);
+	}
 	pipex->cmd_path = get_path(lst_get_parsed(parsed)->cmd, (*info));
 	if (!pipex->cmd_path)
 	{

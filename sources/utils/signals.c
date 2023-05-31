@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 13:13:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:23:54 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:53:14 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	keybindings_child(int signum)
 		rl_replace_line("", 0);
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
-        g_exit_code = 130;
+		g_exit_code = 130;
 	}
 	else if (signum == SIGQUIT)
 	{

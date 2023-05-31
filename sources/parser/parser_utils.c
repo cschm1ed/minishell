@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:53:39 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 15:26:03 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:53:35 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 	}
 	while (args && ft_strcmp(args->content, "|") != 0)
 	{
-        if (str_arr_add(&(lst_get_parsed(node)->args),
-                args->content) == NULL)
-            exit_error(info, __FILE__, __LINE__, "malloc");
+		if (str_arr_add(&(lst_get_parsed(node)->args),
+				args->content) == NULL)
+			exit_error(info, __FILE__, __LINE__, "malloc");
 		args = args->next;
 	}
 	return (SUCCESS);

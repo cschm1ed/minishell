@@ -4,12 +4,17 @@
 
 - edge cases
     --> cd ~/Desktop
-    --> echo "" "" "" "" tol (echo) -->lexer entfernt empty args
-    --> echo $"HOME" (dollar --> ft_isspecial...dollar weg)
-    --> echo $HOME9
+    --> $?$?$?
+    --> echo $9HOME (variablen dürfen nicht mit digits anfangen)
+    --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
+    --> unset PWD
+        env | grep PWD (OLDPWD wird auch geunsetted)
     
 If we're still motivated to walk the extra mile...
     --> echo $UID
-    --> echo $9HOME
     --> echo $hola*
     --> echo \$HOME (backslash davor ignorieren)
+    --> $HOME
+    --> $USERdskjhfkdshfsd
+    --> export HOLA="bonjour      "  
+        echo $HOLA | cat -e

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/31 15:51:14 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 17:28:06 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static char	**iterate_through_cmd(char **lexed)
 	i = -1;
 	while (lexed[++i])
 	{
+		if (valid_num_of_quotes(lexed[i]) == FALSE)
+			return (NULL);
 		trimmed = trim_quotes(ft_strdup(lexed[i]));
 		if (!trimmed)
 			return (free (trimmed), ft_free_dbl_ptr(&lexed));
