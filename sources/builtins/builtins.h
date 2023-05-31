@@ -22,7 +22,7 @@ int		execute_cd(t_info *info, char *directory);
 int		execute_echo(t_parsed *parsed, int fd_out);
 
 // env
-int		execute_env(t_info *info, int fd_out);
+int execute_env(t_info *info, int fd_out, char **args);
 
 // exit
 int		execute_exit(t_info *info, char **arg, int exit_code);

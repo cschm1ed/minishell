@@ -12,8 +12,14 @@
 
 #include <minishell.h>
 
-void	command_line_mode(char *const *argv, t_commands *commands,
-			t_info *info);
+void	print_lexed(char **str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		printf("%s\n", str[i++]);
+}
 
 int	main(int argc, char **argv, char **envp)
 {

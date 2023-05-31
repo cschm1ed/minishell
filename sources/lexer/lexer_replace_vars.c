@@ -59,7 +59,8 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 	char	*str;
 
 	str = lexed[i];
-	if (str[*j] == '$')
+	if (str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
+		|| str[*j + 1] == '?'))
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
 	{
@@ -71,7 +72,8 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 		(*j)++;
 		while (str[*j] && str[*j] != '"' && str[*j] != '$')
 			(*j)++;
-		if (str[*j] == '$')
+		if (str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
+			|| str[*j + 1] == '?'))
 			return (replace_var(str, j, info));
 	}
 	else
@@ -96,7 +98,7 @@ static char	*replace_var(char *str, int *j, t_info *info)
 	if (get_name_len(str + (*j)) == 0)
 		return (ft_strdup(""));
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
-	if (ft_strcmp(name, "?") == 0)
+	if (*name == '?')
 	{
 		value = ft_itoa(g_exit_code);
 		return (value);
@@ -160,7 +162,7 @@ static int	get_name_len(const char *str)
 		return (1);
 	if (*str == '$')
 		str++;
-	if (ft_strcmp(str, "?") == 0)
+	if (*str == '?')
 		return (1);
 	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))
 		i++;

@@ -45,7 +45,7 @@ static int	execute_builtin(t_info *info,
 	if (ft_strcmp(cmd, "echo") == 0)
 		exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
 	else if (ft_strcmp(cmd, "env") == 0)
-		exit_code = execute_env(info, fd_out);
+		exit_code = execute_env(info, fd_out, lst_get_parsed(parsed)->args);
 	else if (ft_strcmp(cmd, "exit") == 0)
 		exit_code = execute_exit(info, lst_get_parsed(parsed)->args, 0);
 	else if (ft_strcmp(cmd, "export") == 0)

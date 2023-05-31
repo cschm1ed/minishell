@@ -4,10 +4,7 @@
 
 - edge cases
     --> cd ~/Desktop
-    --> echo "" "" "" "" tol (echo)
-    --> echo $ ($ stehen lassen, anstatt versuchen zu ersetzen)
-    --> echo $?$
-    --> echo $:$= | cat -e (nach ft_isspecial nicht replacen)
+    --> echo "" "" "" "" tol (echo) -->lexer entfernt empty args
     --> echo $"HOME" (dollar --> ft_isspecial...dollar weg)
     --> echo $HOME9
     

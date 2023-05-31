@@ -47,4 +47,6 @@
 
 int	g_exit_code;
 
+void	print_lexed(char **arg);
+
 #endif
