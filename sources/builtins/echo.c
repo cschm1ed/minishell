@@ -46,8 +46,6 @@ static void	print_args(char **args, int j, int fd_out)
 			ft_putchar_fd(' ', fd_out);
 		else
 			ft_putstr_fd(args[j], fd_out);
-		if (args[++j])
-			ft_putstr_fd(" ", fd_out);
 		j ++;
 	}
 }
