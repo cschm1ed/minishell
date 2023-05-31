@@ -24,6 +24,8 @@ void	keybindings_parent(int signum)
 	}
 	else if (signum == SIGQUIT)
 		(void)signum;
+    else if (signum == SIGTSTP)
+        (void)signum;
 }
 
 void	keybindings_child(int signum)
@@ -40,16 +42,20 @@ void	keybindings_child(int signum)
 		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
 		g_exit_code = 131;
 	}
+    else if (signum == SIGTSTP)
+        (void)signum;
 }
 
 void	setup_signals_parent(void)
 {
 	signal (SIGINT, keybindings_parent);
 	signal (SIGQUIT, keybindings_parent);
+    signal (SIGTSTP, keybindings_parent);
 }
 
 void	setup_signals_child(void)
 {
 	signal (SIGQUIT, keybindings_child);
 	signal (SIGINT, keybindings_child);
+    signal (SIGTSTP, keybindings_child);
 }
