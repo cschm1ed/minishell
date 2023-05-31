@@ -33,6 +33,7 @@ void	keybindings_child(int signum)
 		rl_replace_line("", 0);
 		ft_putchar_fd('\n', 1);
 		rl_on_new_line();
+        g_exit_code = 130;
 	}
 	else if (signum == SIGQUIT)
 	{
