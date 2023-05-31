@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:31:32 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:52:05 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 
 	str = lexed[i];
 	if (str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
-		|| str[*j + 1] == '?'))
+			|| str[*j + 1] == '?'))
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
 	{
@@ -73,7 +73,7 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 		while (str[*j] && str[*j] != '"' && str[*j] != '$')
 			(*j)++;
 		if (str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
-			|| str[*j + 1] == '?'))
+				|| str[*j + 1] == '?'))
 			return (replace_var(str, j, info));
 	}
 	else

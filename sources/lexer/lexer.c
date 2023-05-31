@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 16:04:03 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:51:14 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	**lexer(char *cmd, t_info *info)
 	char	**lexed;
 	int		amt_substrs;
 
-	if (cmd == NULL || *cmd == 0 || valid_num_of_quotes(cmd) == FALSE)
+	if (cmd == NULL || *cmd == 0
+		|| valid_num_of_quotes(cmd) == FALSE || only_isspace(cmd) == TRUE)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
 	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));

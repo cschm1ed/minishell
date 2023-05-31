@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:52:03 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 13:42:28 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:53:13 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		execute_cd(t_info *info, char *directory);
 int		execute_echo(t_parsed *parsed, int fd_out);
 
 // env
-int execute_env(t_info *info, int fd_out, char **args);
+int		execute_env(t_info *info, int fd_out, char **args);
 
 // exit
 int		execute_exit(t_info *info, char **arg, int exit_code);
