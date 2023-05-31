@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_export.c                                   :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -45,14 +45,14 @@ static int	export_variable(t_info *info, char *const *arg, int fd_out, int i)
 		invalid_identifier(arg[i], fd_out);
 		exit_code = 1;
 	}
+    else if (check_if_varname_is_valid(arg[i]) == FALSE)
+    {
+        invalid_identifier(arg[i], fd_out);
+        exit_code = 1;
+    }
 	else if (ft_strchr(arg[i], '=') == NULL
 		|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		no_value(info, arg[i]);
-	else if (check_if_varname_is_valid(arg[i]) == FALSE)
-	{
-		invalid_identifier(arg[i], fd_out);
-		exit_code = 1;
-	}
 	else
 	{
 		if (with_value(info, arg[i]) == FAILURE)
@@ -76,7 +76,7 @@ static void	no_value(t_info *info, char *arg)
 		free(name);
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	}
-	node = lst_newvar_node(arg, value, 0);
+	node = lst_newvar_node(name, value, 0);
 	if (node == NULL)
 	{
 		free(name);
