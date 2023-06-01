@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:36:52 by lspohle           #+#    #+#             */
-/*   Updated: 2023/04/01 17:32:29 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 14:43:11 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int		ft_printf(const char *str, int fd, ...);
 char	**ft_free_dbl_ptr(char ***array);
 
 int		ft_isspace(char c);
-int		ft_strisnum(const char *str);
 int		ft_isquote(char c);
 int		ft_isspecial(char c);
 int		ft_isredirect(char c);

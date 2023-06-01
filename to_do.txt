@@ -9,7 +9,10 @@
     --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
     --> unset PWD
         env | grep PWD (OLDPWD wird auch geunsetted)
-    
+    --> chmod 000 minishell -> permission denied
+	--> env: when _=/Users/cschmied/CLionProjects/minishell/./minishell
+				_=/Users/cschmied/Documents/minishell/sources/builtins/env.c
+	-->
 If we're still motivated to walk the extra mile...
     --> echo $UID
     --> echo $hola*
