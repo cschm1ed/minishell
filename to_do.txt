@@ -2,6 +2,7 @@
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
     --> echo sth | cat
     --> ctrl+c when delimiter
+	--> ctrl+d segfault
 - edge cases
     --> cd ~/Desktop
     --> $?$?$?

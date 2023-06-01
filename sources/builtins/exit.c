@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:47:16 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/01 14:45:39 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:58:05 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,21 @@ static int	ft_strisnum(const char *str)
 
 	j = 0;
 	i = 0;
-	while (ft_isspace(str[j]) || str[i] == '-' || str[i] == '+')
+	while (str[i] == '-' || str[i] == '+')
 		j ++;
-	if (ft_strlen(str + j) > 19)
-		return (1);
-	else if (ft_strlen(str + j) == 19)
+	if (ft_strlen(str + j) <= 20)
 	{
-		while (str[i + j])
+		if (ft_strlen(str + j) == 20 && (str[j] != '-' || str[j + 18] > '8'))
+			return (1);
+		while (str[j + i])
 		{
-			if (str[i + j] > max[i])
-				if (str[j] != '-' || str[18] >= '8')
-					return (1);
+			if (str[j + i] > max[i])
+				return (1);
 			i ++;
 		}
 	}
+	else
+		return (1);
 	i = 0;
 	while (str[i + j])
 	{
