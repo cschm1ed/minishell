@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 /**
  * @brief Finds the value of a variable with a given name in a linked list.
@@ -37,4 +37,26 @@ t_list	*lst_find_node(t_list *lst, char *name)
 		lst = lst->next;
 	}
 	return (NULL);
+}
+
+/**
+ * @brief Returns a pointer to the variable contained in a
+ * 										given node of a linked list.
+ *
+ * @param lst A pointer to the node in the linked list.
+ *
+ * @return A pointer to the variable contained in the node.
+ */
+t_variable	*lst_get_var(t_list *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	return ((t_variable *)(lst->content));
+}
+
+t_parsed	*lst_get_parsed(t_list *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	return ((t_parsed *)(lst->content));
 }

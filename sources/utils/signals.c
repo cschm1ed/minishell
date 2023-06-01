@@ -42,14 +42,8 @@ void	keybindings_child(int signum)
 	}
 }
 
-void	setup_signals_parent(void)
+void	setup_signals(void (*func)(int))
 {
-	signal (SIGINT, keybindings_parent);
-	signal (SIGQUIT, keybindings_parent);
-}
-
-void	setup_signals_child(void)
-{
-	signal (SIGQUIT, keybindings_child);
-	signal (SIGINT, keybindings_child);
+	signal (SIGINT, func);
+	signal (SIGQUIT, func);
 }

@@ -1,7 +1,7 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
     --> echo sth | cat
-
+    --> ctrl+c when delimiter
 - edge cases
     --> cd ~/Desktop
     --> $?$?$?
@@ -13,6 +13,10 @@
 	--> env: when _=/Users/cschmied/CLionProjects/minishell/./minishell
 				_=/Users/cschmied/Documents/minishell/sources/builtins/env.c
 	-->
+    --> unset HOLA=
+    --> unset $HOLA
+    --> unset HOME (home not set + ~)
+>>>>>>> refactored
 If we're still motivated to walk the extra mile...
     --> echo $UID
     --> echo $hola*
@@ -21,3 +25,5 @@ If we're still motivated to walk the extra mile...
     --> $USERdskjhfkdshfsd
     --> export HOLA="bonjour      "  
         echo $HOLA | cat -e
+    --> rewrite export smarter
+    --> invalid option function for builtins

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 /**
  * Creates a t_list node and allocates memory for a t_paesed struct
@@ -56,4 +56,64 @@ t_list	*lst_newvar_node(char *name, char *value, int key)
 	if (node == NULL)
 		return (free(var), perror("malloc"), NULL);
 	return (node);
+}
+
+int	lst_replace_var_val(t_list *list, char *name, char *new)
+{
+	char	*replacement;
+
+	replacement = ft_strdup(new);
+	if (replacement == NULL)
+		return (perror("malloc"), FAILURE);
+	if (lst_find_node(list, name) != NULL)
+		lst_get_var(lst_find_node(list, name))->value = replacement;
+	else
+		free(replacement);
+	return (SUCCESS);
+}
+
+/**
+ * returns the value of the variable searched for by looking through
+ * the env_lst and user_vars list.
+ *
+ * @param info - general info struct
+ * @param name - name of the variable whose value is sought
+ * @return
+ */
+char	*lsts_find_var_val(t_info *info, char *name)
+{
+	if (lst_find_var_val(info->env_lst, name))
+		return (lst_find_var_val(info->env_lst, name));
+	if (lst_find_var_val(info->export_lst, name))
+		return (lst_find_var_val(info->export_lst, name));
+	else
+		return (lst_find_var_val(info->user_vars, name));
+}
+
+void	ft_lstrmone(t_list **head, t_list *node, void (*del)(void*))
+{
+	t_list	*prev;
+	t_list	*curr;
+
+	if (!node || !(*head))
+		return ;
+	if (node == *head)
+	{
+		*head = node->next;
+		ft_lstdelone(node, del);
+		return ;
+	}
+	prev = *head;
+	curr = (*head)->next;
+	while (curr)
+	{
+		if (curr == node)
+		{
+			prev->next = curr->next;
+			ft_lstdelone(curr, del);
+			return ;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
 }

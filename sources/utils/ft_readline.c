@@ -29,7 +29,7 @@ char	*ft_readline(const char *str, t_info *info)
 	tmp = readline(str);
 	if (tmp == NULL)
 		execute_exit(info, NULL, 0);
-	if (tmp && !str_isspace(tmp))
+	else if (!str_isspace(tmp))
 		add_history(tmp);
 	return (tmp);
 }

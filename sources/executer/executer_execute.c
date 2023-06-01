@@ -37,7 +37,7 @@ static t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt)
 	t_parsed	*content;
 	int			exit_builtin;
 
-	setup_signals_child();
+	setup_signals(keybindings_child);
 	content = lst_get_parsed(parsed);
 	handle_files(pipex, parsed, (*info), cnt);
 	dup_infiles(pipex, parsed, cnt);
