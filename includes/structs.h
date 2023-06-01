@@ -20,6 +20,7 @@ typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 typedef struct s_list		t_list;
 typedef struct s_data		t_data;
+typedef struct s_command    t_command;
 
 typedef struct s_info {
 	t_list		*env_lst;
@@ -28,6 +29,7 @@ typedef struct s_info {
 	t_list		*export_lst;
 	t_list		*token_lst;
 	t_commands	*commands;
+	t_command   *builtins;
 	t_data		*pipex;
 	char		*pwd;
 }	t_info;
@@ -68,5 +70,11 @@ typedef struct s_data
 	pid_t	*pid;
 	char	*cmd_path;
 }	t_data;
+
+typedef struct s_command
+{
+	const char  *command;
+	int         (*execute_function)(t_info *, char **, int);
+}   t_command;
 
 #endif

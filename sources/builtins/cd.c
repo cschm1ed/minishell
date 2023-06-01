@@ -14,25 +14,26 @@
 
 static int	update_env(t_info *info);
 
-int	execute_cd(t_info *info, char *dir)
+int execute_cd(t_info *info, char **args, int fd_out)
 {
 	t_variable	*variable;
 	DIR			*directory;
 
-	variable = (t_variable *)lst_find_node(info->env_lst, "USER")->content;
-	if (!dir)
+	variable = lst_get_var(lst_find_node(info->env_lst, "USER"));
+	if (!args[1])
 	{
-		dir = ft_strjoin("/Users/", variable->value);
-		if (!dir)
+		args[1] = ft_strjoin("/Users/", variable->value);
+		if (!args[1])
 			exit_error(info, __FILE__, __LINE__, "malloc");
 	}
-	if (!chdir(dir))
+	if (!chdir(args[1]))
 		return (update_env(info));
-	directory = opendir(dir);
+	directory = opendir(args[1]);
 	if (directory)
 		closedir(directory);
+	(void)fd_out;
 	return (ft_printf("minishell: cd: %s: %s\n", STDERR_FILENO,
-				dir, strerror(errno)), 1);
+	                  args[1], strerror(errno)), 1);
 }
 
 static int	update_env(t_info *info)

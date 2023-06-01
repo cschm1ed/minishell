@@ -16,7 +16,9 @@ int	execute_unset(t_info *info, char **arg, int fd_out)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
+	if (arg == NULL || arg[0] == NULL)
+		return (1);
 	while (arg[i])
 	{
 		if (check_if_varname_is_valid(arg[i]) == FALSE)

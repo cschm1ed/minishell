@@ -12,8 +12,8 @@
 
 #include <minishell.h>
 
-int	execute_pwd(t_info *info, int fd_out)
+int execute_pwd(t_info *info, char **args, int fd_out)
 {
 	ft_printf("%s\n", fd_out, info->pwd);
-	return (0);
+	return ((void)args, 0);
 }

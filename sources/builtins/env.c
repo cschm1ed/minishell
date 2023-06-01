@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-int	execute_env(t_info *info, int fd_out, char **args)
+int execute_env(t_info *info, char **args, int fd_out)
 {
 	int	i;
 	t_list  *lst;

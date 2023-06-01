@@ -16,13 +16,13 @@
 # include <minishell.h>
 
 // cd
-int		execute_cd(t_info *info, char *directory);
+int execute_cd(t_info *info, char **args, int directory);
 
 // echo
-int		execute_echo(t_parsed *parsed, int fd_out);
+int execute_echo(t_info *info, char **args, int fd_out);
 
 // env
-int		execute_env(t_info *info, int fd_out, char **args);
+int execute_env(t_info *info, char **args, int fd_out);
 
 // exit
 int		execute_exit(t_info *info, char **arg, int exit_code);
@@ -35,7 +35,7 @@ int		check_if_varname_is_valid(char *str);
 int		var_lst_add(t_list **list, char **arg);
 
 // pwd
-int		execute_pwd(t_info *info, int fd_out);
+int execute_pwd(t_info *info, char **args, int fd_out);
 
 // unset
 int		execute_unset(t_info *info, char **arg, int fd_out);

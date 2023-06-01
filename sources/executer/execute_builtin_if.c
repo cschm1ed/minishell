@@ -37,46 +37,39 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 }
 
 static int	execute_builtin(t_info *info,
-				t_list *parsed, char *cmd, int fd_out)
+                              t_list *parsed, char *cmd, int fd_out)
 {
-	int	exit_code;
+	int i;
 
-	exit_code = 0;
-	if (ft_strcmp(cmd, "echo") == 0)
-		exit_code = execute_echo(lst_get_parsed(parsed), fd_out);
-	else if (ft_strcmp(cmd, "env") == 0)
-		exit_code = execute_env(info, fd_out, lst_get_parsed(parsed)->args);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		exit_code = execute_exit(info, lst_get_parsed(parsed)->args, 0);
-	else if (ft_strcmp(cmd, "export") == 0)
-		exit_code = execute_export(info, lst_get_parsed(parsed)->args, fd_out);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		exit_code = execute_pwd(info, fd_out);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		exit_code = execute_unset(info, &lst_get_parsed(parsed)->args[1],
-				fd_out);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		exit_code = execute_cd(info, lst_get_parsed(parsed)->args[1]);
-	else
-		return (1000);
-	return (exit_code);
+	i = 0;
+	while (info->builtins[i].command)
+	{
+		if (ft_strcmp(info->builtins[i].command, cmd) == 0)
+		{
+			return (info->builtins[i].execute_function
+					(info, lst_get_parsed(parsed)->args, fd_out));
+		}
+		i ++;
+	}
+	return (1000);
 }
 
 int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 {
 	char	*cmd;
+	int     i;
+	int     flag;
 
+	i = 0;
+	flag = FALSE;
 	cmd = lst_get_parsed(parsed)->cmd;
 	if (cmd == NULL)
 		return (FAILURE);
+	while (info->builtins[i].command)
+		if (ft_strcmp(info->builtins[i++].command, cmd) == 0)
+			flag = TRUE;
 	if (ft_lstsize(parsed) != 1
-		|| (ft_strcmp(cmd, "exit") != 0
-			&& ft_strcmp(cmd, "echo") != 0
-			&& ft_strcmp(cmd, "env") != 0
-			&& ft_strcmp(cmd, "cd") != 0
-			&& ft_strcmp(cmd, "export") != 0
-			&& ft_strcmp(cmd, "pwd") != 0
-			&& ft_strcmp(cmd, "unset") != 0))
+		|| flag == FALSE)
 		return (FAILURE);
 	handle_files(pipex, parsed, info, 0);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)

@@ -18,3 +18,4 @@ If we're still motivated to walk the extra mile...
     --> $USERdskjhfkdshfsd
     --> export HOLA="bonjour      "  
         echo $HOLA | cat -e
+    --> rewrite export smarter

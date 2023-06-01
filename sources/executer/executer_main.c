@@ -32,12 +32,12 @@ int	execute(t_info *info, t_list *parsed)
 		return (free_pipex(&info->pipex), SUCCESS);
 	while (parsed)
 	{
-		setup_signals_child();
+		setup_signals(keybindings_child);
 		fork_process(info, pipex, parsed, i++);
 		parsed = parsed->next;
 	}
 	wait_for_children(pipex, i);
-	setup_signals_parent();
+	setup_signals(keybindings_parent);
 	return (free_pipex(&info->pipex), SUCCESS);
 }
 

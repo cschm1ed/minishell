@@ -15,12 +15,10 @@
 static void	print_args(char **args, int j, int fd_out);
 static int	ft_isoption(const char *args);
 
-int	execute_echo(t_parsed *parsed, int fd_out)
+int execute_echo(t_info *info, char **args, int fd_out)
 {
-	char	**args;
 	int		j;
 
-	args = parsed->args;
 	j = 1;
 	if (!args[j])
 		return (ft_putchar_fd('\n', fd_out), 0);
@@ -35,7 +33,7 @@ int	execute_echo(t_parsed *parsed, int fd_out)
 	print_args(args, j, fd_out);
 	if (!ft_isoption(args[1]))
 		ft_putchar_fd('\n', fd_out);
-	return (0);
+	return ((void)info, 0);
 }
 
 static void	print_args(char **args, int j, int fd_out)
