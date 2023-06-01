@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:40 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 12:39:15 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 12:48:38 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,17 @@ int execute_cd(t_info *info, char **args, int fd_out)
 {
 	t_variable	*variable;
 	DIR			*directory;
-
+	char		*tmp;
+	
 	variable = lst_get_var(lst_find_node(info->env_lst, "USER"));
 	if (!args[1])
 	{
-		args[1] = ft_strjoin("/Users/", variable->value);
-		if (!args[1])
+		tmp = ft_strjoin("/Users/", variable->value);
+		if (tmp == NULL)
 			exit_error(info, __FILE__, __LINE__, "malloc");
+		if (str_arr_add(&args, tmp) == NULL)
+			exit_error(info, __FILE__, __LINE__, "malloc");
+
 	}
 	if (!chdir(args[1]))
 		return (update_env(info));
