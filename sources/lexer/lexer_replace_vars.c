@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_replace_vars.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/31 17:09:29 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:04:05 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ static int	get_name_len(const char *str)
 		return (1);
 	if (*str == '$')
 		str++;
-	if (*str == '?')
+	if (*str == '?' || ft_isdigit(*str))
 		return (1);
 	while (str && str[i] && (ft_isalnum(str[i]) == TRUE || str[i] == '_'))
 		i++;

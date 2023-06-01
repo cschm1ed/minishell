@@ -5,12 +5,9 @@
 	--> ctrl+d segfault
 
 - edge cases
-	-->minishell: echo hola ||| cat
-		minishell: syntax error near unexpected token `||
 	--> exit 
     --> cd ~/Desktop
     --> $?$?$?
-    --> echo $9HOME (variablen dürfen nicht mit digits anfangen)
     --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
     --> unset PWD
         env | grep PWD (OLDPWD wird auch geunsetted)

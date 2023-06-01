@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unexpected_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 14:04:35 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 17:02:40 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 16:00:12 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	unexpected_token(char *token)
 			STDERR_FILENO);
 		return (FAILURE);
 	}
-	ft_printf("minishell: syntax error near unexpected token `",
-		STDERR_FILENO);
-	ft_printf("%s\n", STDERR_FILENO, token);
+	ft_printf("minishell: syntax error near unexpected token `%s'\n",
+		STDERR_FILENO, token);
 	return (FAILURE);
 }

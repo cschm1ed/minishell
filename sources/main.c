@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:38:11 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/31 17:53:53 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 15:57:51 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	commands.raw = NULL;
 	commands.lexed = NULL;
 	commands.parsed = NULL;
+	setup_signals(keybindings_parent);
 	info = info_init(envp);
 	if (info == NULL)
 		return (perror("info"), 1);
