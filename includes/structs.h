@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/23 16:14:34 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 13:30:37 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_variable	t_variable;
 typedef struct s_info		t_info;
 typedef struct s_list		t_list;
 typedef struct s_data		t_data;
-typedef struct s_command    t_command;
+typedef struct s_command	t_command;
 
 typedef struct s_info {
 	t_list		*env_lst;
@@ -29,7 +29,7 @@ typedef struct s_info {
 	t_list		*export_lst;
 	t_list		*token_lst;
 	t_commands	*commands;
-	t_command   *builtins;
+	t_command	*builtins;
 	t_data		*pipex;
 	char		*pwd;
 }	t_info;
@@ -73,8 +73,8 @@ typedef struct s_data
 
 typedef struct s_command
 {
-	const char  *command;
-	int         (*execute_function)(t_info *, char **, int);
-}   t_command;
+	const char	*command;
+	int			(*execute_function)(t_info *, char **, int);
+}	t_command;
 
 #endif

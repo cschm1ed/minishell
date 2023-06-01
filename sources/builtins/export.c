@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:24:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/04/28 23:24:23 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:21:33 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,22 @@ static int	export_variable(t_info *info, char *const *arg, int fd_out, int i)
 	if (ft_strchr(arg[i], '=') != NULL
 		&& *(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
 	{
-		ft_printf("minishell: export: %s: nor a valid identifier\n", fd_out, arg[i]);
+		ft_printf("minishell: export: %s: nor a valid identifier\n",
+			fd_out, arg[i]);
 		exit_code = 1;
 	}
 	else if (check_if_varname_is_valid(arg[i]) == FALSE)
 	{
-		ft_printf("minishell: export: %s: nor a valid identifier\n", fd_out, arg[i]);
+		ft_printf("minishell: export: %s: nor a valid identifier\n",
+			fd_out, arg[i]);
 		exit_code = 1;
 	}
 	else if (ft_strchr(arg[i], '=') == NULL
 		|| *(ft_strchr(arg[i], '=') + 1) == 0)
 		no_value(info, arg[i]);
 	else
-	{
 		if (with_value(info, arg[i]) == FAILURE)
 			exit_error(info, __FILE__, __LINE__, "malloc");
-	}
 	return (exit_code);
 }
 

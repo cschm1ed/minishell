@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 09:45:49 by lspohle           #+#    #+#             */
-/*   Updated: 2023/01/05 21:14:25 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 13:29:15 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,36 @@
 #include "libft.h"
 
 // Converts from (long) integer to string
-static void f_itoa(long int num, char *base, int n, int *cnt, int fd)
+static void	f_itoa(long int num, char *base, int *cnt, int fd)
 {
+	unsigned int	n;
+
+	n = ft_strlen(base);
 	if (num < 0)
 	{
 		num *= -1;
 		*cnt += write(fd, "-", 1);
 	}
 	if (num >= n)
-		f_itoa(num / n, base, n, cnt, fd);
+		f_itoa(num / n, base, cnt, fd);
 	*cnt += 1;
 	ft_putchar_fd(base[num % n], fd);
 }
 
 // Converts from (long) unsigned integer to string
-static void f_utoa(long unsigned int num, char *base, unsigned int n, int *cnt, int fd)
+static void	f_utoa(long unsigned int num, char *base, int *cnt, int fd)
 {
+	unsigned int	n;
+
+	n = ft_strlen(base);
 	if (num >= n)
-		f_utoa(num / n, base, n, cnt, fd);
+		f_utoa(num / n, base, cnt, fd);
 	*cnt += 1;
 	ft_putchar_fd(base[num % n], fd);
 }
 
 // Prints either string or pointer converted to string
-static void f_str(va_list args, int *cnt, int pointer, int fd)
+static void	f_str(va_list args, int *cnt, int pointer, int fd)
 {
 	char	*tmp;
 
@@ -67,12 +73,12 @@ static void f_str(va_list args, int *cnt, int pointer, int fd)
 	else if (pointer == 1)
 	{
 		*cnt += write(fd, "0x", 2);
-		f_utoa(va_arg(args, long unsigned int), "0123456789abcdef", 16, cnt, fd);
+		f_utoa(va_arg(args, long unsigned int), "0123456789abcdef", cnt, fd);
 	}
 }
 
 // Differentiates between the different identifiers
-static void f_identify(char c, va_list args, int *cnt, int fd)
+static void	f_identify(char c, va_list args, int *cnt, int fd)
 {
 	if (c == 'c')
 	{
@@ -86,13 +92,13 @@ static void f_identify(char c, va_list args, int *cnt, int fd)
 	else if (c == 'p')
 		f_str(args, cnt, 1, fd);
 	else if (c == 'd' || c == 'i')
-		f_itoa(va_arg(args, int), "0123456789", 10, cnt, fd);
+		f_itoa(va_arg(args, int), "0123456789", cnt, fd);
 	else if (c == 'u')
-		f_utoa(va_arg(args, unsigned int), "0123456789", 10, cnt, fd);
+		f_utoa(va_arg(args, unsigned int), "0123456789", cnt, fd);
 	else if (c == 'x')
-		f_utoa(va_arg(args, unsigned int), "0123456789abcdef", 16, cnt, fd);
+		f_utoa(va_arg(args, unsigned int), "0123456789abcdef", cnt, fd);
 	else if (c == 'X')
-		f_utoa(va_arg(args, unsigned int), "0123456789ABCDEF", 16, cnt, fd);
+		f_utoa(va_arg(args, unsigned int), "0123456789ABCDEF", cnt, fd);
 }
 
 // Initializes the list of arguments and prints the string

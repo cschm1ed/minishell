@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:52:03 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/31 15:53:13 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 13:06:40 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include <minishell.h>
 
 // cd
-int execute_cd(t_info *info, char **args, int directory);
+int		execute_cd(t_info *info, char **args, int directory);
 
 // echo
-int execute_echo(t_info *info, char **args, int fd_out);
+int		execute_echo(t_info *info, char **args, int fd_out);
 
 // env
-int execute_env(t_info *info, char **args, int fd_out);
+int		execute_env(t_info *info, char **args, int fd_out);
 
 // exit
 int		execute_exit(t_info *info, char **arg, int exit_code);
@@ -35,7 +35,7 @@ int		check_if_varname_is_valid(char *str);
 int		var_lst_add(t_list **list, char **arg);
 
 // pwd
-int execute_pwd(t_info *info, char **args, int fd_out);
+int		execute_pwd(t_info *info, char **args, int fd_out);
 
 // unset
 int		execute_unset(t_info *info, char **arg, int fd_out);
