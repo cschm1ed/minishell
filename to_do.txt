@@ -9,7 +9,9 @@
     --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
     --> unset PWD
         env | grep PWD (OLDPWD wird auch geunsetted)
-    
+    --> unset HOLA=
+    --> unset $HOLA
+    --> unset HOME (home not set + ~)
 If we're still motivated to walk the extra mile...
     --> echo $UID
     --> echo $hola*
@@ -19,3 +21,4 @@ If we're still motivated to walk the extra mile...
     --> export HOLA="bonjour      "  
         echo $HOLA | cat -e
     --> rewrite export smarter
+    --> invalid option function for builtins

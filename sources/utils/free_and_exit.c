@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:26:27 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:18:53 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 12:00:53 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	free_info(t_info **info)
 		free_cmds((*info)->commands, *info);
 	if ((*info)->pwd)
 		free((*info)->pwd);
+	if ((*info)->builtins)
+		free((*info)->builtins);
 	free(*info);
 	*info = NULL;
 }
