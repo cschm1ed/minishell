@@ -3,7 +3,11 @@
     --> echo sth | cat
     --> ctrl+c when delimiter
 	--> ctrl+d segfault
+
 - edge cases
+	-->minishell: echo hola ||| cat
+		minishell: syntax error near unexpected token `||
+	--> exit 
     --> cd ~/Desktop
     --> $?$?$?
     --> echo $9HOME (variablen dürfen nicht mit digits anfangen)
@@ -19,6 +23,11 @@
     --> unset HOME (home not set + ~)
 >>>>>>> refactored
 If we're still motivated to walk the extra mile...
+	-->> bonjour echo hola
+		$> cat bonjour
+	-->echo hola > a
+		$> >>b echo que tal
+		$> cat a | <b cat | cat > c | cat
     --> echo $UID
     --> echo $hola*
     --> echo \$HOME (backslash davor ignorieren)

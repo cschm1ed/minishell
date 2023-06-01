@@ -6,7 +6,7 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:47:16 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/01 14:58:05 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:21:23 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	ft_strisnum(const char *str);
 
 int	execute_exit(t_info *info, char **arg, int exit_code)
 {
-	ft_putstr_fd("exit\n", STDERR_FILENO);
+	if (info->pipex == NULL)
+		ft_printf("exit\n", STDERR_FILENO);
 	if (arg && arg[1])
 	{
 		if (ft_strisnum(arg[1]) != 0)
@@ -41,33 +42,35 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 
 static int	ft_strisnum(const char *str)
 {
-	char		max[] = "9223372036854775807";
-	int			i;
-	int			j;
+    char	max[] = "9223372036854775807";
+    char	min[] = "9223372036854775808";
+    int		i;
+    int		sign;
 
-	j = 0;
-	i = 0;
-	while (str[i] == '-' || str[i] == '+')
-		j ++;
-	if (ft_strlen(str + j) <= 20)
-	{
-		if (ft_strlen(str + j) == 20 && (str[j] != '-' || str[j + 18] > '8'))
-			return (1);
-		while (str[j + i])
-		{
-			if (str[j + i] > max[i])
-				return (1);
-			i ++;
-		}
-	}
-	else
-		return (1);
-	i = 0;
-	while (str[i + j])
-	{
-		if (ft_isdigit(str[i + j]) == 0)
-			return (1);
-		i ++;
-	}
-	return (0);
+    i = 0;
+    sign = 1;
+    if (str[i] == '-' || str[i] == '+')
+    {
+        if (str[i] == '-')
+            sign = -1;
+        i ++;
+    }
+    if (ft_strlen(str + i) < 19)
+        return (0);
+    if (ft_strlen(str + i) > 20)
+        return (1);
+    if (ft_strlen(str + i) == 20)
+    {
+        if (sign == 1 && ft_strcmp(str + i, max) < 0)
+            return (FALSE);
+        if (sign == -1 && ft_strcmp(str + i, min) < 0)
+            return (FALSE);
+    }
+    while (str[i])
+    {
+        if (ft_isdigit(str[i]) == 0)
+            return (FALSE);
+        i ++;
+    }
+    return (TRUE);
 }
