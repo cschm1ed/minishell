@@ -45,12 +45,12 @@ static int	check_name(char *str)
 	if (*str == 0)
 		return (TRUE);
 	if ((ft_isalpha(str[0]) == FALSE)
-	&& str[i] != '_')
+		&& str[i] != '_')
 		return (FALSE);
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == FALSE
-		&& str[i] != '_')
+			&& str[i] != '_')
 			return (FALSE);
 		i ++;
 	}

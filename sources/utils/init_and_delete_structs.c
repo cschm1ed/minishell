@@ -26,7 +26,7 @@ static int		update_shlvl(t_info *info);
  */
 t_info	*info_init(char **env)
 {
-	t_info	    *info;
+	t_info	*info;
 
 	info = ft_calloc(sizeof(t_info), 1);
 	if (info == NULL)
@@ -35,20 +35,20 @@ t_info	*info_init(char **env)
 	if (info->builtins == NULL)
 		return (perror("malloc"), NULL);
 	info->builtins[0] = (t_command){"echo", execute_echo};
-	info->builtins[1] = (t_command) {"env", execute_env};
-	info->builtins[2] = (t_command) {"cd", execute_cd};
+	info->builtins[1] = (t_command){"env", execute_env};
+	info->builtins[2] = (t_command){"cd", execute_cd};
 	info->builtins[3] = (t_command){"exit", execute_exit};
 	info->builtins[4] = (t_command){"export", execute_export};
-	info->builtins[5] = (t_command) {"pwd", execute_pwd};
+	info->builtins[5] = (t_command){"pwd", execute_pwd};
 	info->builtins[6] = (t_command){"unset", execute_unset};
 	info->builtins[7] = (t_command){NULL, NULL};
 	info->env_lst = var_list_init(env);
 	if (info->env_lst == NULL)
 		return (NULL);
-	info->pwd = ft_strdup(lsts_find_var_val(info, "PWD") );
+	info->pwd = ft_strdup(lsts_find_var_val(info, "PWD"));
 	info->home_path = ft_strdup(lst_find_var_val(info->env_lst, "HOME"));
 	if (!info->home_path || update_shlvl(info) == FAILURE)
-	 	return (perror("malloc"), NULL);
+		return (perror("malloc"), NULL);
 	info->env = env;
 	return (info);
 }

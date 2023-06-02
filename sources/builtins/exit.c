@@ -12,6 +12,9 @@
 
 #include <minishell.h>
 
+#define EMAX "9223372036854775807"
+#define EMIN "9223372036854775808"
+
 static int	ft_strisnum(const char *str);
 
 int	execute_exit(t_info *info, char **arg, int exit_code)
@@ -42,35 +45,28 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 
 static int	ft_strisnum(const char *str)
 {
-	char	max[] = "9223372036854775807";
-	char	min[] = "9223372036854775808";
 	int		i;
 	int		sign;
 
-    i = 0;
-    sign = 1;
-    if (str[i] == '-' || str[i] == '+')
-    {
-        if (str[i] == '-')
-            sign = -1;
-        i ++;
-    }
-    if (ft_strlen(str + i) < 19)
-        return (0);
-    if (ft_strlen(str + i) > 20)
-        return (1);
-    if (ft_strlen(str + i) == 20)
-    {
-        if (sign == 1 && ft_strcmp(str + i, max) < 0)
-            return (FALSE);
-        if (sign == -1 && ft_strcmp(str + i, min) < 0)
-            return (FALSE);
-    }
-    while (str[i])
-    {
-        if (ft_isdigit(str[i]) == 0)
-            return (FALSE);
-        i ++;
-    }
-    return (TRUE);
+	i = 0;
+	sign = 1;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i ++;
+	}
+	if (ft_strlen(str + i) > 20)
+		return (1);
+	if (ft_strlen(str + i) == 20)
+	{
+		if (sign == 1 && ft_strcmp(str + i, EMAX) < 0)
+			return (FALSE);
+		if (sign == -1 && ft_strcmp(str + i, EMIN) < 0)
+			return (FALSE);
+	}
+	while (str[i])
+		if (ft_isdigit(str[i++]) == 0)
+			return (FALSE);
+	return (TRUE);
 }

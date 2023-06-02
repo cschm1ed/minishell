@@ -15,7 +15,7 @@
 static void	no_value(t_info *info, char *arg);
 static int	with_value(t_info *info, char *arg);
 static int	export_variable(t_info *info, char *const *arg, int fd_out, int i);
-static void remove_existing(t_info *info, char *name);
+static void	remove_existing(t_info *info, char *name);
 
 int	execute_export(t_info *info, char **arg, int fd_out)
 {
@@ -37,7 +37,7 @@ static int	export_variable(t_info *info, char *const *arg, int fd_out, int i)
 
 	exit_code = 0;
 	if ((ft_strchr(arg[i], '=') != NULL
-		&& *(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
+			&& *(ft_strchr(arg[i], '=') + 1) == 0 && arg[i + 1] != NULL)
 		|| check_if_varname_is_valid(arg[i]) == FALSE)
 	{
 		ft_printf("minishell: export: %s: nor a valid identifier\n",
@@ -99,12 +99,12 @@ static int	with_value(t_info *info, char *arg)
 	return (SUCCESS);
 }
 
-static void remove_existing(t_info *info, char *name)
+static void	remove_existing(t_info *info, char *name)
 {
 	ft_lstrmone(&(info->export_lst),
-				lst_find_node(info->export_lst, name), delete_variable);
+		lst_find_node(info->export_lst, name), delete_variable);
 	ft_lstrmone(&(info->env_lst),
 		lst_find_node(info->env_lst, name), delete_variable);
 	ft_lstrmone(&info->user_vars,
-				lst_find_node(info->user_vars, name), delete_variable);
+		lst_find_node(info->user_vars, name), delete_variable);
 }

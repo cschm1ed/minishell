@@ -14,7 +14,6 @@
 # define UTILS_H
 
 # include <minishell.h>
-
 // lst_utils
 void		ft_lstrmone(t_list **head, t_list *node, void (*del)(void*));
 char		*lst_find_var_val(t_list *lst, char *name);
@@ -45,8 +44,8 @@ t_info		*info_init(char **env);
 int			unexpected_token(char *token);
 char		*ft_readline(const char *str, t_info *info);
 void		keybindings_parent(int signum);
-void        keybindings_child(int signum);
-void        setup_signals(void (*func)(int));
+void		keybindings_child(int signum);
+void		setup_signals(void (*func)(int));
 void		rl_replace_line(char *c, int i);
 void		setup_signals_parent(void);
 void		setup_signals_child(void);

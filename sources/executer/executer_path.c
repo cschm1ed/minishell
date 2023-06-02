@@ -12,8 +12,8 @@
 
 #include <minishell.h>
 
-static char *get_possible_paths(char *cmd, t_info *info, int ret);
-static char *get_relative_path(char *cmd, t_info *info, char **paths, int ret);
+static char	*get_possible_paths(char *cmd, t_info *info, int ret);
+static char	*get_relative_path(char *cmd, t_info *info, char **paths, int ret);
 static int	is_directory(char *path);
 
 char	*get_path(char *cmd, t_info *info)
@@ -28,16 +28,14 @@ char	*get_path(char *cmd, t_info *info)
 		if (ret == FALSE)
 			return (NULL);
 		if (access(cmd, F_OK) != 0 && ft_strncmp(cmd, "./", 2) != 0 && ret != 3)
-		{
-			ft_printf("minishell: %s: command not found1\n",
-					  STDERR_FILENO, cmd);
-			return (g_exit_code = 127, NULL);
-		}
+			return (ft_printf("minishell: %s: command not found1\n",
+					STDERR_FILENO, cmd), g_exit_code = 127, NULL);
 	}
 	if (ft_strncmp(cmd, "./", 2) == 0)
 	{
 		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
-			return (ft_printf("minishell: %s: permission denied\n", STDERR_FILENO, cmd) ,NULL);
+			return (ft_printf("minishell: %s: permission denied\n",
+					STDERR_FILENO, cmd), NULL);
 		else if (access(cmd, F_OK | X_OK) == 0)
 			return (cmd);
 	}
@@ -47,7 +45,7 @@ char	*get_path(char *cmd, t_info *info)
 	return (path);
 }
 
-static char *get_possible_paths(char *cmd, t_info *info, int ret)
+static char	*get_possible_paths(char *cmd, t_info *info, int ret)
 {
 	char	**paths;
 	char	*path_var;
@@ -55,7 +53,7 @@ static char *get_possible_paths(char *cmd, t_info *info, int ret)
 	path_var = lst_find_var_val(info->env_lst, "PATH");
 	if (path_var == NULL)
 		return (g_exit_code = 127,
-			ft_printf("minishell: %s: command not found2\n",
+			ft_printf("minishell: %s: command not found\n",
 				STDERR_FILENO, cmd), NULL);
 	paths = ft_split(path_var, ':');
 	if (paths == NULL)
@@ -63,7 +61,7 @@ static char *get_possible_paths(char *cmd, t_info *info, int ret)
 	return (get_relative_path(cmd, info, paths, ret));
 }
 
-static char *get_relative_path(char *cmd, t_info *info, char **paths, int ret)
+static char	*get_relative_path(char *cmd, t_info *info, char **paths, int ret)
 {
 	char	*joined;
 	int		i;
@@ -82,7 +80,7 @@ static char *get_relative_path(char *cmd, t_info *info, char **paths, int ret)
 		free(joined);
 	}
 	if (ret != 3)
-		ft_printf("minishell: %s: command not found3\n",STDERR_FILENO, cmd);
+		ft_printf("minishell: %s: command not found\n", STDERR_FILENO, cmd);
 	return (ft_free_dbl_ptr(&paths), NULL);
 }
 
@@ -108,7 +106,8 @@ static int	is_directory(char *path)
 	else
 	{
 		if (access(path, F_OK) == -1)
-			ft_printf("minishell: %s: No such file or directory\n", STDERR_FILENO, path);
+			ft_printf("minishell: %s: No such file or directory\n",
+				STDERR_FILENO, path);
 		return (g_exit_code = 126, 3);
 	}
 	return (g_exit_code = 126, TRUE);

@@ -14,6 +14,8 @@
 #include "../../libft/libft.h"
 
 static void	print_variable(int fd_out, t_list *ptr);
+static void	assign_pointers(t_info *info, char ***array,
+				t_list **last, t_list **last2);
 
 char	**cpy_lst_to_array(t_list *lst, char ***array)
 {
@@ -44,17 +46,7 @@ int	print_sorted_lst(t_info *info, int fd_out)
 	t_list	*ptr;
 
 	i = 0;
-	last = ft_lstlast(info->env_lst);
-	last->next = info->export_lst;
-	last2 = ft_lstlast(info->env_lst);
-	last2->next = info->user_vars;
-	array = cpy_lst_to_array(info->env_lst, &array);
-	if (array == NULL)
-	{
-		last2->next = NULL;
-		last->next = NULL;
-		exit_error(info, __FILE__, __LINE__, "malloc");
-	}
+	assign_pointers(info, &array, &last, &last2);
 	bubble_sort_str_array(array, ft_lstsize(info->env_lst));
 	while (i < ft_lstsize(info->env_lst))
 	{
@@ -62,12 +54,9 @@ int	print_sorted_lst(t_info *info, int fd_out)
 		while (ft_strcmp(lst_get_var(ptr)->name, array[i]) != 0)
 			ptr = ptr->next;
 		print_variable(fd_out, ptr);
-		i ++;
+		i++;
 	}
-	free(array);
-	last2->next = NULL;
-	last->next = NULL;
-	return (SUCCESS);
+	return (free(array), last2->next = NULL, last->next = NULL, SUCCESS);
 }
 
 static void	print_variable(int fd_out, t_list *ptr)
@@ -96,36 +85,18 @@ int	check_if_varname_is_valid(char *str)
 	return (TRUE);
 }
 
-/**
- * @brief Adds a list of variables to a linked list.
- *
- * @param list A pointer to a pointer to the head of the linked list.
- * @param arg An array of strings containing variable assignments in the
- * 								format "name=value".
- *
- * @return SUCCESS if all variables are added successfully, or
- * 											FAILURE if an error occurs.
- */
-int	var_lst_add(t_list **list, char **arg)
+static void	assign_pointers(t_info *info, char ***array,
+				t_list **last, t_list **last2)
 {
-	t_variable	*var;
-	char		**split;
-	int			i;
-
-	i = 0;
-	while (arg[i])
+	(*last2)->next = info->user_vars;
+	(*last) = ft_lstlast(info->env_lst);
+	(*last)->next = info->export_lst;
+	(*last2) = ft_lstlast(info->env_lst);
+	if ((*array) == NULL)
 	{
-		split = ft_split(arg[i], '=');
-		if (!split)
-			return (perror("malloc"), FAILURE);
-		var = ft_calloc(sizeof(t_variable), 1);
-		if (!var)
-			return (perror("malloc"), FAILURE);
-		var->name = ft_strdup(split[0]);
-		var->value = ft_strdup(split[1]);
-		ft_free_dbl_ptr(&split);
-		ft_lstadd_back(list, ft_lstnew((void *)(var)));
-		i ++;
+		(*last2)->next = NULL;
+		(*last)->next = NULL;
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	}
-	return (SUCCESS);
+	(*array) = cpy_lst_to_array(info->env_lst, array);
 }
