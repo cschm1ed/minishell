@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   info_init.c                                        :+:      :+:    :+:   */
+/*   init_and_delete_structs.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 15:45:51 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/02 11:15:44 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ t_info	*info_init(char **env)
 	if (info->env_lst == NULL)
 		return (NULL);
 	info->pwd = ft_strdup(lsts_find_var_val(info, "PWD") );
-	if (!info->pwd || update_shlvl(info) == FAILURE)
-		return (perror("malloc"), NULL);
+	info->home_path = ft_strdup(lst_find_var_val(info->env_lst, "HOME"));
+	if (!info->home_path || update_shlvl(info) == FAILURE)
+	 	return (perror("malloc"), NULL);
 	info->env = env;
 	return (info);
 }

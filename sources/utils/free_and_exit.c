@@ -26,6 +26,8 @@ void	free_info(t_info **info)
 		free((*info)->pwd);
 	if ((*info)->builtins)
 		free((*info)->builtins);
+	if ((*info)->home_path)
+		free((*info)->home_path);
 	free(*info);
 	*info = NULL;
 }
