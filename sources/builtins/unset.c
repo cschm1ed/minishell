@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+static int	check_name(char *str);
+
 int	execute_unset(t_info *info, char **arg, int fd_out)
 {
 	int	i;
@@ -21,7 +23,7 @@ int	execute_unset(t_info *info, char **arg, int fd_out)
 		return (1);
 	while (arg[i])
 	{
-		if (check_if_varname_is_valid(arg[i]) == FALSE)
+		if (check_name(arg[i]) == FALSE)
 			return (ft_printf("unset: `%s': not a valid identifier\n",
 					fd_out, arg[i]), SUCCESS);
 		ft_lstrmone((&info->env_lst), lst_find_node(info->env_lst, arg[i]),
@@ -33,4 +35,24 @@ int	execute_unset(t_info *info, char **arg, int fd_out)
 		i ++;
 	}
 	return (SUCCESS);
+}
+
+static int	check_name(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (*str == 0)
+		return (TRUE);
+	if ((ft_isalpha(str[0]) == FALSE)
+	&& str[i] != '_')
+		return (FALSE);
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == FALSE
+		&& str[i] != '_')
+			return (FALSE);
+		i ++;
+	}
+	return (TRUE);
 }

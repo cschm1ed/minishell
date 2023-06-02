@@ -23,7 +23,7 @@ void	keybindings_parent(int signum)
 		g_exit_code = 1;
 	}
 	else if (signum == SIGQUIT)
-		(void)signum;
+		rl_redisplay();
 }
 
 void	keybindings_child(int signum)

@@ -63,8 +63,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_commands	commands;
-	t_info		*info;
+	t_commands		commands;
+	t_info			*info;
 
 	commands.raw = NULL;
 	commands.lexed = NULL;

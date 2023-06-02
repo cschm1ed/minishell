@@ -36,6 +36,7 @@
 # include <libft.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <termios.h>
 
 # include "colors.h"
 # include "structs.h"
