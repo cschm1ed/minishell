@@ -3,19 +3,12 @@
     --> ctrl+c when delimiter
 
 - edge cases
-	--> exit 
-    --> cd ~/Desktop
+
     --> $?$?$?
-    --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
-    --> unset PWD
-        env | grep PWD (OLDPWD wird auch geunsetted)
-    --> chmod 000 minishell -> permission denied
-	--> env: when _=/Users/cschmied/CLionProjects/minishell/./minishell
-				_=/Users/cschmied/Documents/minishell/sources/builtins/env.c
-	-->
-    --> unset HOLA=
-    --> unset $HOLA
-    --> unset HOME (home not set + ~)
+    ----->rewrite replace vars_smarter
+
+    --> export HOLA="bonjour      "
+            echo $HOLA | cat -e
 
 If we're still motivated to walk the extra mile...
 	-->> bonjour echo hola
@@ -23,12 +16,17 @@ If we're still motivated to walk the extra mile...
 	-->echo hola > a
 		$> >>b echo que tal
 		$> cat a | <b cat | cat > c | cat
-    --> echo $UID
     --> echo $hola*
     --> echo \$HOME (backslash davor ignorieren)
     --> $HOME
     --> $USERdskjhfkdshfsd
-    --> export HOLA="bonjour      "  
-        echo $HOLA | cat -e
-    --> rewrite export smarter
     --> invalid option function for builtins
+    --> rewrite export smarter
+
+ fixed:
+    --> unset HOME (home not set + ~) -->thule und max kein tildezeichen
+    --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
+    --> chmod 000 minishell -> permission denied
+    --> unset HOLA=
+    --> unset $HOLA --> ignore case
+    --> double unset
