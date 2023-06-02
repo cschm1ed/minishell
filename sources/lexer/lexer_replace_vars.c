@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_replace_vars.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/02 11:11:25 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:56:16 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 	char	*str;
 
 	str = lexed[i];
-	if ((str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
-			|| str[*j + 1] == '?')))
+	if ((str[*j] == '$'
+			&& (ft_isalnum(str[*j + 1]) == TRUE || str[*j + 1] == '?')))
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
 	{
@@ -97,12 +97,6 @@ static char	*replace_var(char *str, int *j, t_info *info)
 
 	if (get_name_len(str + (*j)) == 0)
 		return (ft_strdup(""));
-	if (str[0] == '~')
-	{
-		value = info->home_path;
-		ret = rejoin(NULL, value, 0, ft_strlen(value));
-		return (ret);
-	}
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	if (*name == '?')
 		value = ft_itoa(g_exit_code);
