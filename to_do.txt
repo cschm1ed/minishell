@@ -1,8 +1,6 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
-    --> echo sth | cat
     --> ctrl+c when delimiter
-	--> ctrl+d segfault
 
 - edge cases
 	--> exit 
@@ -18,7 +16,7 @@
     --> unset HOLA=
     --> unset $HOLA
     --> unset HOME (home not set + ~)
->>>>>>> refactored
+
 If we're still motivated to walk the extra mile...
 	-->> bonjour echo hola
 		$> cat bonjour

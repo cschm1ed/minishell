@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:06:49 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 15:56:12 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/02 10:38:17 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,19 @@ char	*get_path(char *cmd, t_info *info)
 	{
 		if (is_directory(cmd) == TRUE)
 			return (NULL);
-		if (access(cmd, F_OK) != 0)
-			return (g_exit_code = 127, ft_printf
-				("minishell: %s: command not found\n", STDERR_FILENO, cmd), NULL);
-		return (ft_strdup(cmd));
+		if (access(cmd, F_OK) != 0) {
+			ft_printf("minishell: %s: command not found\n",
+					  STDERR_FILENO, cmd);
+			return (g_exit_code = 127, NULL);
+		}
 	}
-	path = get_possible_paths(cmd, info);
-	if (path == NULL)
-		return (g_exit_code = 127, ft_printf
-				("minishell: %s: command not found\n", STDERR_FILENO, cmd), NULL);
+		path = get_possible_paths(cmd, info);
+		if (path == NULL)
+		{
+			ft_printf("minishell: %s: command not found\n",
+				STDERR_FILENO, cmd);
+			return (g_exit_code = 127, NULL);
+		}
 	return (path);
 }
 
@@ -44,7 +48,8 @@ static char	*get_possible_paths(char *cmd, t_info *info)
 	path_var = lst_find_var_val(info->env_lst, "PATH");
 	if (path_var == NULL)
 		return (g_exit_code = 127,
-			ft_printf("minishell: %s: command not found\n", STDERR_FILENO, cmd), NULL);
+			ft_printf("minishell: %s: command not found\n",
+				STDERR_FILENO, cmd), NULL);
 	paths = ft_split(path_var, ':');
 	if (paths == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");

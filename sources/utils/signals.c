@@ -30,8 +30,8 @@ void	keybindings_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		rl_replace_line("", 0);
 		ft_putchar_fd('\n', 1);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		g_exit_code = 130;
 	}

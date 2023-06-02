@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/29 15:53:26 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:50:14 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 
 static int	compare_delimiter(const char *str, const char *delimiter)
 {
-
 	if (strnstr(str, delimiter, ft_strlen(delimiter)) == str
-			&& *(str + ft_strlen(delimiter)) == '\n'
-			&& *(str + ft_strlen(delimiter) + 1) == 0)
+		&& *(str + ft_strlen(delimiter)) == '\n'
+		&& *(str + ft_strlen(delimiter) + 1) == 0)
 		return (0);
 	return (1);
 }

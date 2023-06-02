@@ -44,7 +44,7 @@ int	execute_cd(t_info *info, char **args, int fd_out)
 
 static void	ft_isdir(char *path)
 {
-	DIR			*directory;
+	DIR	*directory;
 
 	directory = opendir(path);
 	if (directory)

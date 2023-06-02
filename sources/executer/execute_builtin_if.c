@@ -37,9 +37,9 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 }
 
 static int	execute_builtin(t_info *info,
-                              t_list *parsed, char *cmd, int fd_out)
+								t_list *parsed, char *cmd, int fd_out)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (info->builtins[i].command)
@@ -47,7 +47,7 @@ static int	execute_builtin(t_info *info,
 		if (ft_strcmp(info->builtins[i].command, cmd) == 0)
 		{
 			return (info->builtins[i].execute_function
-					(info, lst_get_parsed(parsed)->args, fd_out));
+				(info, lst_get_parsed(parsed)->args, fd_out));
 		}
 		i ++;
 	}
@@ -57,8 +57,8 @@ static int	execute_builtin(t_info *info,
 int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 {
 	char	*cmd;
-	int     i;
-	int     flag;
+	int		i;
+	int		flag;
 
 	i = 0;
 	flag = FALSE;

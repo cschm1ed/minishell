@@ -33,19 +33,19 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 		g_exit_code = 1;
 		return (FAILURE);
 	}
-	exit_code = ft_atoi(arg[1]);
-	if (info)
-		free_info(&info);
+	if (arg && arg[0] && arg[1])
+		exit_code = ft_atoi(arg[1]);
+	free_info(&info);
 	exit(exit_code);
 	return (exit_code);
 }
 
 static int	ft_strisnum(const char *str)
 {
-    char	max[] = "9223372036854775807";
-    char	min[] = "9223372036854775808";
-    int		i;
-    int		sign;
+	char	max[] = "9223372036854775807";
+	char	min[] = "9223372036854775808";
+	int		i;
+	int		sign;
 
     i = 0;
     sign = 1;
