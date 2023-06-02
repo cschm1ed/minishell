@@ -63,7 +63,7 @@ char	*ft_strtrim(const char *s1, const char *set)
 	len = ft_get_finish(s1, set) - start;
 	if (len <= 0)
 		return (ft_strdup(""));
-	output = (char *) malloc ((len + 1) * sizeof(char));
+	output = malloc ((len + 1) * sizeof(char));
 	if (!output)
 		return (0);
 	i = 0;

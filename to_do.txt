@@ -1,14 +1,8 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
+
+to do:
     --> ctrl+c when delimiter
-
-- edge cases
-
-    --> $?$?$?
-    ----->rewrite replace vars_smarter
-
-    --> export HOLA="bonjour      "
-            echo $HOLA | cat -e
 
 If we're still motivated to walk the extra mile...
 	-->> bonjour echo hola
@@ -16,17 +10,23 @@ If we're still motivated to walk the extra mile...
 	-->echo hola > a
 		$> >>b echo que tal
 		$> cat a | <b cat | cat > c | cat
+
+    -->rewrite replace vars_smarter
     --> echo $hola*
     --> echo \$HOME (backslash davor ignorieren)
     --> $HOME
     --> $USERdskjhfkdshfsd
     --> invalid option function for builtins
+
     --> rewrite export smarter
+    --> unset $HOLA --> ignore case
 
  fixed:
+    --> $?$?$?
     --> unset HOME (home not set + ~) -->thule und max kein tildezeichen
     --> unset $PATH --> bash: ls: No such file or directory (exit_code: 127)
     --> chmod 000 minishell -> permission denied
     --> unset HOLA=
-    --> unset $HOLA --> ignore case
     --> double unset
+    --> export HOLA="bonjour      "
+                echo $HOLA | cat -e

@@ -60,7 +60,7 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 
 	str = lexed[i];
 	if ((str[*j] == '$' && (ft_isalnum(str[*j + 1]) == TRUE
-			|| str[*j + 1] == '?')) || str[0] == '~')
+			|| str[*j + 1] == '?')))
 		return (replace_var(str, j, info));
 	else if (str[*j] == '\'')
 	{
@@ -105,13 +105,17 @@ static char	*replace_var(char *str, int *j, t_info *info)
 	}
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
 	if (*name == '?')
-	{
 		value = ft_itoa(g_exit_code);
-		return (value);
-	}
 	else
-		value = lsts_find_var_val(info, name);
+		value = ft_strtrim(lsts_find_var_val(info, name), " \t\f\v\r\n");
+	if (value == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	ret = rejoin(str, value, *j, get_name_len(str + *j));
+	if (ret == NULL)
+	{
+		free(value);
+		exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	*j += ft_strlen(lsts_find_var_val(info, name));
 	return (ret);
 }
