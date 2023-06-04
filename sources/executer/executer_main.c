@@ -32,7 +32,6 @@ int	execute(t_info *info, t_list *parsed)
 		return (free_pipex(&info->pipex), SUCCESS);
 	while (parsed)
 	{
-		setup_signals(keybindings_child);
 		fork_process(info, pipex, parsed, i++);
 		parsed = parsed->next;
 	}
@@ -62,6 +61,7 @@ static int	create_pipes(t_data *pipex, t_list *parsed)
 
 static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i)
 {
+	setup_signals(keybindings_child);
 	pipex->pid[i] = fork();
 	if (pipex->pid[i] == -1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_heredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 17:50:14 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:39:33 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 	while (1)
 	{
 		ft_putstr_fd("> ", STDIN_FILENO);
-		buffer[0] = get_next_line(STDIN_FILENO);
+		buffer[0] = readline(STDIN_FILENO);
 		if (buffer[0] == NULL)
 			return (free(buffer), -1);
 		if (replace_variables(info, buffer) == FAILURE)
@@ -77,7 +77,7 @@ static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 		while (1)
 		{
 			ft_printf("> ", STDIN_FILENO);
-			buffer = get_next_line(STDIN_FILENO);
+			buffer = readline(STDIN_FILENO);
 			if (buffer == NULL)
 				exit_error(info, __FILE__, __LINE__, "get next line");
 			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)

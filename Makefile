@@ -25,7 +25,7 @@ UTILS       := ft_isspace.c ft_isspecial.c str_arr_utils.c ft_isredirect.c ft_is
                init_and_delete_structs.c lst_utils1.c lst_utils2.c ft_strcmp.c free_and_exit.c \
                unexpected_token.c ft_strsjoin.c signals.c
 
-LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c
+LEXER       := lexer.c lexer_checks.c lexer_utils.c lexer_split.c lexer_trim.c lexer_replace_vars.c lexer_new.c
 PARSER      := parser.c parser_utils.c
 BUILTINS    := echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
 EXECUTER    := execute_builtin_if.c executer_utils.c executer_main.c executer_execute.c execute_heredoc.c executer_path.c
