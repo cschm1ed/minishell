@@ -80,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		commands.raw = ft_readline("minishell: ", info);
 		new = lexer_new(commands.raw);
+		(void)new;
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed && commands.lexed[0])
 		{

@@ -32,7 +32,7 @@ BUILTINS    := echo.c env.c pwd.c export.c exit.c unset.c export_utils.c cd.c
 EXECUTER    := execute_builtin_if.c executer_utils.c executer_main.c executer_execute.c execute_heredoc.c executer_path.c
 OTHER_SRCS  := ft_readline.c main.c
 
-SRCS        := $(UTILS) $(LEXER) $(PARSER) $(BUILTINS) $(EXECUTER) $(OTHER_SRCS)
+SRCS        := $(UTILS) $(LEXER) $(PARSER) $(BUILTINS) $(EXECUTER) $(OTHER_SRCS) $(LEXER_NEW)
 
 # Objects
 OBJS        := $(SRCS:%.c=$(BUILDDIR)/%.o)

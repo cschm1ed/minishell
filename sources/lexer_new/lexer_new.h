@@ -18,4 +18,5 @@
 int		check_validity(char *str);
 char	*remove_unnessecary(char *str);
 t_list	*lexer_new(char *str);
+
 #endif

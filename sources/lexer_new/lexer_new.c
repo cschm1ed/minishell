@@ -6,11 +6,11 @@
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:19:59 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/04 16:19:59 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:15:37 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../includes/minishell.h"
 
 # define ESCAPEC 1
 # define EXPANSION 2
@@ -20,24 +20,12 @@
 # define OPERATOR 6
 # define WORD 7
 
-typedef enum
-{
-	ESCAPEC,
-	EXPANSION,
-	PATH_EXPANSION,
-	LITERAL,
-	STR_LITERAL,
-	OPERATOR,
-	WORD
-
-}	t_type;
-
 typedef struct s_token
 {
 	char	*content;
 	char	*group;
 	char	*next_group;
-	t_type 	type;
+	int 	type;
 }	t_token;
 
 t_list	*lexer_new(char *str)
