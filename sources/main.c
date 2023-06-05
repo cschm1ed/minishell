@@ -65,18 +65,21 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_commands		commands;
 	t_info			*info;
+	t_list			*new;
 
 	commands.raw = NULL;
 	commands.lexed = NULL;
 	commands.parsed = NULL;
 	setup_signals(keybindings_parent);
 	info = info_init(envp);
-	if (info == NULL)
+	if (info == NULL) {
 		return (perror("info"), 1);
+	}
 	info->commands = &commands;
 	while (1)
 	{
 		commands.raw = ft_readline("minishell: ", info);
+		new = lexer_new(commands.raw);
 		commands.lexed = lexer(commands.raw, info);
 		if (commands.lexed && commands.lexed[0])
 		{

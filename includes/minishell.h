@@ -37,9 +37,10 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <termios.h>
-
 # include "colors.h"
+
 # include "structs.h"
+# include "../sources/lexer_new/lexer_new.h"
 # include "../sources/builtins/builtins.h"
 # include "../sources/executer/executer.h"
 # include "../sources/lexer/lexer.h"

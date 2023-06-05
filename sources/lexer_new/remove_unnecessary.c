@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_new.h                                        :+:      :+:    :+:   */
+/*   remove_unnecessary.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cschmied <cschmied@student.42wolfsburg.d>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 16:46:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/04 20:30:43 by cschmied         ###   ########.fr       */
+/*   Created: 2023/06/04 20:30:59 by cschmied          #+#    #+#             */
+/*   Updated: 2023/06/04 20:42:42 by cschmied         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#ifndef LEXER_NEW_H
-# define LEXER_NEW_H
+#include <minishell.h>
 
-int		check_validity(char *str);
-char	*remove_unnessecary(char *str);
-t_list	*lexer_new(char *str);
-#endif
+char *remove_unnecessary(char *str)
+{
+	char	*out;
+	int		i;
+
+	out	= ft_calloc(sizeof(char), ft_strlen(str));
+	if (out == NULL)
+		return (perror("malloc"), NULL);
+	while (str[i])
+	{
+		if (ft_isspace(str[i]))
+			skip_spaces(str, &i);
+		else if (str[i] == '\'')
+			skip_singles(str, &i);
+		out[i] == str[i];
+	}
+}
