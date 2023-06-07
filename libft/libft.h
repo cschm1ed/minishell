@@ -57,6 +57,7 @@ typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
+    int             flag;
 }					t_list;
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);

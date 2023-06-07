@@ -55,8 +55,10 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	}
 	ft_lstadd_back(add, node);
 	tmp = tokens->next->next;
-	ft_lstrmone(&info->token_lst, tokens->next, free);
-	ft_lstrmone(&info->token_lst, tokens, free);
+    tokens->next->flag = TRUE;
+    tokens->flag = TRUE;
+	//ft_lstrmone(&info->token_lst, tokens->next, free);
+	//ft_lstrmone(&info->token_lst, tokens, free);
 	return (tmp);
 }
 
@@ -65,13 +67,15 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 	t_list		*args;
 
 	args = start;
+    while (args->flag)
+        args = args->next;
 	if (args != NULL)
 	{
 		lst_get_parsed(node)->cmd = ft_strdup(args->content);
 		if (lst_get_parsed(node)->cmd == NULL)
 			exit_error(info, __FILE__, __LINE__, "malloc");
 	}
-	while (args && ft_strcmp(args->content, "|") != 0)
+	while (args && args->flag != TRUE && ft_strcmp(args->content, "|") != 0)
 	{
 		if (str_arr_add(&(lst_get_parsed(node)->args),
 				args->content) == NULL)

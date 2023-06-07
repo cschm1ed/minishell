@@ -8,7 +8,7 @@ If we're still motivated to walk the extra mile...
 	-->> bonjour echo hola
 		$> cat bonjour
 	-->echo hola > a
-		$> >>b echo que tal
+		$> >>b echo que tal --> works in this version for some reason
 		$> cat a | <b cat | cat > c | cat
 
     -->rewrite replace vars_smarter
