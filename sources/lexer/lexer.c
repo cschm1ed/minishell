@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/07 16:21:06 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 18:27:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 
 static char	**check_and_trim_quotes(char **lexed);
 static int	preserve_as_literal(t_info *info, char **lexed, int substrs);
+
+// void    print_lexed(char *str)
+// {
+//     int    i;
+
+//     i = 0;
+//     while (str[i])
+//         printf("%s\n", str[i++]);
+// }
+
+// void    print_literal(int *array, int substrs)
+// {
+//     int    i;
+
+//     i = 0;
+//     while (i < substrs)
+//         printf("Array: %d\n", array[i++]);
+// }
 
 /**
  * @brief splits the input into an array of strings and handles syntax errors
