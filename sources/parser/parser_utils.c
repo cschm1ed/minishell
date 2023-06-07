@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:53:39 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/31 17:53:35 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 15:55:06 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	}
 	ft_lstadd_back(add, node);
 	tmp = tokens->next->next;
-    tokens->next->flag = TRUE;
-    tokens->flag = TRUE;
+   	tokens->next->flag = TRUE;
+	tokens->flag = TRUE;
 	//ft_lstrmone(&info->token_lst, tokens->next, free);
 	//ft_lstrmone(&info->token_lst, tokens, free);
 	return (tmp);
@@ -67,8 +67,8 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 	t_list		*args;
 
 	args = start;
-    while (args->flag)
-        args = args->next;
+	while (args->flag)
+		args = args->next;
 	if (args != NULL)
 	{
 		lst_get_parsed(node)->cmd = ft_strdup(args->content);

@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/31 17:20:48 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:36:26 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 static char	*update_str(char *str, size_t start, size_t end);
 
+/**
+ * @brief trims the quotes appropriately
+ * 
+ * @param str - string to trim 
+ * @return char* - trimmed string
+ */
 char	*trim_quotes(char *str)
 {
 	int	i;
@@ -37,6 +43,14 @@ char	*trim_quotes(char *str)
 	return (str);
 }
 
+/**
+ * @brief updates the string by joining all components without specific quotes
+ * 
+ * @param str - string to free and rejoin
+ * @param start - marking the beginning of quotes
+ * @param end  - marking the end of quotes
+ * @return char* - rejoined and trimmed string
+ */
 static char	*update_str(char *str, size_t start, size_t end)
 {
 	char	*tmp1;

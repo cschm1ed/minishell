@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/31 15:46:23 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:29:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 static int	count_specials(char *lxd, char c);
 static int	print_invalid_num_of_specials(char c, int cnt);
 
-int	only_isspace(char *cmd)
+/**
+ * @brief checks whether cmd contains only isspace
+ * 
+ * @param cmd - the user's input
+ * @return int - true or false
+ */
+int	ft_isempty(char *cmd)
 {
 	int	i;
 
@@ -28,6 +34,12 @@ int	only_isspace(char *cmd)
 	return (TRUE);
 }
 
+/**
+ * @brief checks whether the amount of quotes is valid
+ * 
+ * @param cmd - the user's input
+ * @return int - true or false
+ */
 int	valid_num_of_quotes(char *cmd)
 {
 	int		i;
@@ -45,6 +57,12 @@ int	valid_num_of_quotes(char *cmd)
 	return (TRUE);
 }
 
+/**
+ * @brief checks whether the amount of specials is valid
+ * 
+ * @param lxd - splitted and trimmed array of the user's input
+ * @return int - true or false
+ */
 int	valid_num_of_specials(char **lxd)
 {
 	int	s;
@@ -72,6 +90,13 @@ int	valid_num_of_specials(char **lxd)
 	return (TRUE);
 }
 
+/**
+ * @brief checks whether lxd contains a valid amount of specials
+ * 
+ * @param lxd - trimmed string of the user's input
+ * @param c - special character that is currently looked at
+ * @return int - true or false
+ */
 static int	count_specials(char *lxd, char c)
 {
 	int	cnt;
@@ -89,6 +114,14 @@ static int	count_specials(char *lxd, char c)
 	return (SUCCESS);
 }
 
+/**
+ * @brief prints the appropriate error message
+ * (depending on the amount of specials and the kind of special character)
+ * 
+ * @param c - special character
+ * @param cnt - invalid amount of specials
+ * @return int - true or false
+ */
 static int	print_invalid_num_of_specials(char c, int cnt)
 {
 	if (c == '<' && cnt == 3)

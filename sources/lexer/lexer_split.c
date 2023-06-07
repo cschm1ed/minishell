@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 14:39:31 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/30 15:22:36 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:42:05 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 static int	terminate_string(char *s, int *i);
 
+/**
+ * @brief counts the prospective substrings of the splitted cmd
+ * 
+ * @param s - the user's input which needs to be splitted into an array
+ * @return int - amount of substrings
+ */
 int	count_substrs(char *s)
 {
 	int	cnt;
@@ -37,7 +43,16 @@ int	count_substrs(char *s)
 	return (cnt);
 }
 
-char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
+/**
+ * @brief splits the user's input into a two dimensional array
+ * (depending on isspace and isspecial)
+ * 
+ * @param split - splitted array to return
+ * @param s - the user's input which needs to be splitted 
+ * @param substrs - the calculated amount of substrings needed 
+ * @return char** - splitted array
+ */
+char	**split_cmd(char **split, char *s, int substrs)
 {
 	int	start;
 	int	i;
@@ -45,7 +60,7 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 
 	i = 0;
 	j = 0;
-	while (s[i] && (int) j < amt_substrs)
+	while (s[i] && (int) j < substrs)
 	{
 		start = i;
 		if (s[i] && ft_isspace(s[i]) == FALSE)
@@ -66,6 +81,15 @@ char	**split_if_isspace_or_isspecial(char **split, char *s, int amt_substrs)
 	return (split);
 }
 
+/**
+ * @brief terminates the string appropriately
+ * (depending on isspace or isspecial)
+ * (skipping metacharacters within quotes)
+ * 
+ * @param s - string to terminate
+ * @param i - location that is currently looked at
+ * @return int 
+ */
 static int	terminate_string(char *s, int *i)
 {
 	while (s[*i] && ft_isspace(s[*i]) == FALSE && ft_isspecial(s[*i]) == FALSE)

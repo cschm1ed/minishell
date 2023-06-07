@@ -6,13 +6,20 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 15:15:30 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:47:33 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	skip_until_quote(const char *s, int *i)
+/**
+ * @brief skips until it encounters a matching quote
+ * (preventing the interpreting the metacharacters within quotes)
+ * @param s - string to skip special character 
+ * @param i - location that is currently looked at
+ * @return int - true or false
+ */
+int	skip_until_quote(char *s, int *i)
 {
 	char	quote;
 
@@ -23,6 +30,13 @@ int	skip_until_quote(const char *s, int *i)
 	return (TRUE);
 }
 
+/**
+ * @brief skips special characters
+ * 
+ * @param s - string to skip special character 
+ * @param i - location that is currently looked at
+ * @return int - true or false
+ */
 int	skip_specials(char *s, int *i)
 {
 	char	c;

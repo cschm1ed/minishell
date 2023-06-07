@@ -6,57 +6,81 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 19:03:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/31 17:28:06 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 16:21:06 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	**iterate_through_cmd(char **lexed);
+static char	**check_and_trim_quotes(char **lexed);
+static int	preserve_as_literal(t_info *info, char **lexed, int substrs);
 
-void	print_lexed(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		printf("%s\n", str[i++]);
-}
-
+/**
+ * @brief splits the input into an array of strings and handles syntax errors
+ * 
+ * @param cmd - the user's input
+ * @param info - struct with neccessary info (environmental variables, etc)
+ * @return char** - splitted command into a two dimensional array
+ */
 char	**lexer(char *cmd, t_info *info)
 {
 	char	**lexed;
-	int		amt_substrs;
+	int		substrs;
 
 	if (cmd == NULL || *cmd == 0
-		|| valid_num_of_quotes(cmd) == FALSE || only_isspace(cmd) == TRUE)
+		|| valid_num_of_quotes(cmd) == FALSE || ft_isempty(cmd) == TRUE)
 		return (NULL);
-	amt_substrs = count_substrs(cmd);
-	info->commands->preserve_literal = ft_calloc(sizeof(int), amt_substrs);
-	if (info->commands->preserve_literal == NULL)
-		return (perror("malloc"), NULL);
-	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));
+	substrs = count_substrs(cmd);
+	lexed = ft_calloc(substrs + 1, sizeof(char *));
 	if (!lexed)
 		return (perror("malloc"), NULL);
-	lexed = split_if_isspace_or_isspecial(lexed, cmd, amt_substrs);
+	lexed = split_cmd(lexed, cmd, substrs);
 	if (!lexed)
 		return (NULL);
-	print_lexed(lexed);
-	if (replace_variables(info, lexed) == FAILURE)
+	if (preserve_as_literal(info, lexed, substrs) == FAILURE
+		|| replace_variables(info, lexed) == FAILURE)
 		return (NULL);
-	lexed = iterate_through_cmd(lexed);
+	lexed = check_and_trim_quotes(lexed);
 	if (valid_num_of_specials(lexed) == FALSE)
 		return (ft_free_dbl_ptr(&lexed));
 	return (lexed);
 }
 
 /**
- * @brief splits the user's command into an array of strings
- * @param cmd the user's input that was read from the line
- * @param substr the array of strings that will be returned after lexing
- * @return char** - the lexed array of the user's cmd
+ * @brief prevents the shell from interpreting metacharacters within quotes
+ * (except for dollar sign)
+ * 
+ * @param info - struct with neccessary info (flag to preserve_literal)
+ * @param lexed - splitted command into a two dimensional array
+ * @param substrs - amount of substrs from the command
+ * @return int - status whether allocation succeeded or failed
  */
-static char	**iterate_through_cmd(char **lexed)
+static int	preserve_as_literal(t_info *info, char **lexed, int substrs)
+{
+	int	i;
+	int	j;
+
+	info->commands->preserve_literal = ft_calloc(sizeof(int), substrs);
+	if (info->commands->preserve_literal == NULL)
+		return (perror("malloc"), FAILURE);
+	i = -1;
+	while (lexed[++i])
+	{
+		j = -1;
+		while (lexed[i][++j])
+			if (ft_isquote(lexed[i][j]) == TRUE)
+				info->commands->preserve_literal[i] = TRUE;
+	}
+	return (SUCCESS);
+}
+
+/**
+ * @brief checks the quotation marks and trims them appropriately
+ * 
+ * @param lexed - splitted command into a two dimensional array
+ * @return char** - trimmed two dimensional array
+ */
+static char	**check_and_trim_quotes(char **lexed)
 {
 	char	*trimmed;
 	int		i;

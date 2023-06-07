@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:10:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/02 11:06:42 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:57:41 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ typedef struct s_list		t_list;
 typedef struct s_data		t_data;
 typedef struct s_executable	t_executable;
 
-typedef struct s_info {
-	t_list		*env_lst;
-	char		**env;
-	t_list		*user_vars;
-	t_list		*export_lst;
-	t_list		*token_lst;
-	t_commands	*commands;
+typedef struct s_info
+{
+	t_list			*env_lst;
+	char			**env;
+	t_list			*user_vars;
+	t_list			*export_lst;
+	t_list			*token_lst;
+	t_commands		*commands;
 	t_executable	*builtins;
-	t_data		*pipex;
-	char		*pwd;
-	char		*home_path;
+	t_data			*pipex;
+	char			*pwd;
+	char			*home_path;
 }	t_info;
 
 typedef struct s_parsed
@@ -56,7 +57,7 @@ typedef struct s_commands
 	char		*raw;
 	char		**lexed;
 	t_list		*parsed;
-	int 		*preserve_literal;
+	int			*preserve_literal;
 }	t_commands;
 
 typedef struct s_history
