@@ -31,17 +31,17 @@ t_info	*info_init(char **env)
 	info = ft_calloc(sizeof(t_info), 1);
 	if (info == NULL)
 		return (perror("malloc"), NULL);
-	info->builtins = ft_calloc(8, sizeof(t_command));
+	info->builtins = ft_calloc(8, sizeof(t_executable));
 	if (info->builtins == NULL)
 		return (perror("malloc"), NULL);
-	info->builtins[0] = (t_command){"echo", execute_echo};
-	info->builtins[1] = (t_command){"env", execute_env};
-	info->builtins[2] = (t_command){"cd", execute_cd};
-	info->builtins[3] = (t_command){"exit", execute_exit};
-	info->builtins[4] = (t_command){"export", execute_export};
-	info->builtins[5] = (t_command){"pwd", execute_pwd};
-	info->builtins[6] = (t_command){"unset", execute_unset};
-	info->builtins[7] = (t_command){NULL, NULL};
+	info->builtins[0] = (t_executable){"echo", execute_echo};
+	info->builtins[1] = (t_executable){"env", execute_env};
+	info->builtins[2] = (t_executable){"cd", execute_cd};
+	info->builtins[3] = (t_executable){"exit", execute_exit};
+	info->builtins[4] = (t_executable){"export", execute_export};
+	info->builtins[5] = (t_executable){"pwd", execute_pwd};
+	info->builtins[6] = (t_executable){"unset", execute_unset};
+	info->builtins[7] = (t_executable){NULL, NULL};
 	info->env_lst = var_list_init(env);
 	if (info->env_lst == NULL)
 		return (NULL);

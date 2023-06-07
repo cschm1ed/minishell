@@ -82,6 +82,8 @@ static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 static t_list	*add_redirect(t_list *t_start, t_info *info, t_list *node,
 			t_list *parsed)
 {
+	if (t_start == NULL)
+		return (node);
 	if (t_start->next == NULL && (invalid_special(t_start->content) == TRUE
 			|| invalid_colon(t_start->content) == TRUE))
 		return (NULL);

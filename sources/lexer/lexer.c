@@ -14,6 +14,15 @@
 
 static char	**iterate_through_cmd(char **lexed);
 
+void	print_lexed(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		printf("%s\n", str[i++]);
+}
+
 char	**lexer(char *cmd, t_info *info)
 {
 	char	**lexed;
@@ -23,12 +32,16 @@ char	**lexer(char *cmd, t_info *info)
 		|| valid_num_of_quotes(cmd) == FALSE || only_isspace(cmd) == TRUE)
 		return (NULL);
 	amt_substrs = count_substrs(cmd);
+	info->commands->preserve_literal = ft_calloc(sizeof(int), amt_substrs);
+	if (info->commands->preserve_literal == NULL)
+		return (perror("malloc"), NULL);
 	lexed = ft_calloc(amt_substrs + 1, sizeof(char *));
 	if (!lexed)
 		return (perror("malloc"), NULL);
 	lexed = split_if_isspace_or_isspecial(lexed, cmd, amt_substrs);
 	if (!lexed)
 		return (NULL);
+	print_lexed(lexed);
 	if (replace_variables(info, lexed) == FAILURE)
 		return (NULL);
 	lexed = iterate_through_cmd(lexed);

@@ -12,14 +12,14 @@
 
 #include <minishell.h>
 
-// void	print_lexed(char **str)
-// {
-// 	int	i;
+/*static void	print_lexed(char **str)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (str[i])
-// 		printf("%s\n", str[i++]);
-// }
+	i = 0;
+	while (str[i])
+		printf("%s\n", str[i++]);
+}*/
 
 // void	print_parsed(t_list *parsed)
 // {

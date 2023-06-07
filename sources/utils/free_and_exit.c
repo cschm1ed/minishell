@@ -66,7 +66,10 @@ void	free_cmds(t_commands *commands, t_info *info)
 		ft_free_dbl_ptr(&commands->lexed);
 	if (info->pipex)
 		free_pipex(&info->pipex);
+	if (commands->preserve_literal)
+		free(commands->preserve_literal);
 	info->token_lst = NULL;
+	commands->preserve_literal = NULL;
 	commands->raw = NULL;
 	commands->lexed = NULL;
 	commands->parsed = NULL;
