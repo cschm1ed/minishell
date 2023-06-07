@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 09:21:26 by lspohle           #+#    #+#             */
-/*   Updated: 2023/05/30 14:38:14 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/07 17:30:43 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@ static void	wait_for_children(t_data *pipex, int cnt);
 static int	create_pipes(t_data *pipex, t_list *parsed);
 static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i);
 
+/**
+ * @brief execute command by command
+ * 
+ * @param info - info struct with all neccessary info (commands, etc.)
+ * @param parsed - list of parsed struct
+ * @return int - failure or success
+ */
 int	execute(t_info *info, t_list *parsed)
 {
 	t_data		*pipex;
@@ -41,6 +48,13 @@ int	execute(t_info *info, t_list *parsed)
 	return (free_pipex(&info->pipex), SUCCESS);
 }
 
+/**
+ * @brief creates a pipe for every command (node)
+ * 
+ * @param pipex - data struct with execution info (command path, pipe, pid, ...)
+ * @param parsed - list of parsed struct
+ * @return int - failure or success
+ */
 static int	create_pipes(t_data *pipex, t_list *parsed)
 {
 	int	amt;
@@ -60,6 +74,14 @@ static int	create_pipes(t_data *pipex, t_list *parsed)
 	return (SUCCESS);
 }
 
+/**
+ * @brief forks to execute the command currently looked at
+ * 
+ * @param info - info struct with all neccessary info (commands, ...)
+ * @param pipex - data struct with execution info (command path, pipe, pid, ...)
+ * @param parsed - list of parsed struct
+ * @param i - current command
+ */
 static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i)
 {
 	pipex->pid[i] = fork();
@@ -73,6 +95,12 @@ static void	fork_process(t_info *info, t_data *pipex, t_list *parsed, int i)
 	close(pipex->pipe_fd[i][1]);
 }
 
+/**
+ * @brief waits for child processes to finish
+ * 
+ * @param pipex - data struct with execution info (command path, pipe, pid, ...)
+ * @param cnt - amount of commands (nodes)
+ */
 static void	wait_for_children(t_data *pipex, int cnt)
 {
 	int	j;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executer_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:06:49 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/02 11:31:55 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:53:42 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,25 @@
 
 static char	*get_possible_paths(char *cmd, t_info *info, int ret);
 static char	*get_relative_path(char *cmd, t_info *info, char **paths, int ret);
-static int	is_directory(char *path);
+static int	ft_isdirectory(char *path);
 
+/**
+ * @brief get accessible path of the built-in command (executable)
+ * (focusing on edge cases like '/' and "./")
+ * 
+ * @param cmd - built-in that is currently looked at
+ * @param info - info struct with all neccessary info (commands, etc.)
+ * @return char* - accessible path of the built-in command
+ */
 char	*get_path(char *cmd, t_info *info)
 {
 	char	*path;
 	int		ret;
 
-	ret = 0;
+	ret = FALSE;
 	if (ft_strchr(cmd, '/') != NULL)
 	{
-		ret = is_directory(cmd);
+		ret = ft_isdirectory(cmd);
 		if (ret == FALSE)
 			return (NULL);
 		if (access(cmd, F_OK) != 0 && ft_strncmp(cmd, "./", 2) != 0 && ret != 3)
@@ -45,6 +53,14 @@ char	*get_path(char *cmd, t_info *info)
 	return (path);
 }
 
+/**
+ * @brief get accessible path of the built-in command (executable)
+ * 
+ * @param cmd - built-in that is currently looked at
+ * @param info - info struct with all neccessary info (commands, etc.)
+ * @param ret - indicates whether it's a valid file
+ * @return char* - accessible path of the built-in command
+ */
 static char	*get_possible_paths(char *cmd, t_info *info, int ret)
 {
 	char	**paths;
@@ -84,7 +100,13 @@ static char	*get_relative_path(char *cmd, t_info *info, char **paths, int ret)
 	return (ft_free_dbl_ptr(&paths), NULL);
 }
 
-static int	is_directory(char *path)
+/**
+ * @brief checks whether the user's input is a directory instead of a file
+ * 
+ * @param path - prospective file to check
+ * @return int - 0, 1 or 3
+ */
+static int	ft_isdirectory(char *path)
 {
 	int	i;
 	DIR	*directory;
@@ -102,6 +124,7 @@ static int	is_directory(char *path)
 	{
 		ft_printf("minishell: %s: is a directory\n", STDERR_FILENO, path);
 		closedir(directory);
+		return (g_exit_code = 126, TRUE);
 	}
 	else
 	{
@@ -110,5 +133,4 @@ static int	is_directory(char *path)
 				STDERR_FILENO, path);
 		return (g_exit_code = 126, 3);
 	}
-	return (g_exit_code = 126, TRUE);
 }
