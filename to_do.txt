@@ -1,6 +1,10 @@
 - memory leaks
     -->  valgrind --leak-check=full --track-origins=yes --trace-children=yes --track-fds=yes --verbose --suppressions=memcheck.supp -s ./minishell "-n" "echo sth"
 
+-->
+    echo "|"
+    echo ">>"  out
+
 If we're still motivated to walk the extra mile...
     --> rewrite replace vars_smarter
     --> echo $hola*
@@ -8,7 +12,6 @@ If we're still motivated to walk the extra mile...
     --> $HOME
     --> $USERdskjhfkdshfsd
     --> invalid option function for builtins
-
     --> rewrite export smarter
     --> unset $HOLA --> ignore case
 

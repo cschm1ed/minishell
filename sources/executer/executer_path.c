@@ -33,11 +33,11 @@ char	*get_path(char *cmd, t_info *info)
 	if (ft_strchr(cmd, '/') != NULL)
 	{
 		dir = valid_directory_syntax(cmd);
+        if (access(cmd, F_OK) != 0 && ft_strncmp(cmd, "./", 2) != 0 && dir == FALSE)
+            return (ft_printf("minishell: %s: command not found\n",
+                              STDERR_FILENO, cmd), g_exit_code = 127, NULL);
 		if (dir == FALSE)
 			return (NULL);
-		if (access(cmd, F_OK) != 0 && ft_strncmp(cmd, "./", 2) != 0 && dir == 0)
-			return (ft_printf("minishell: %s: command not found\n",
-					STDERR_FILENO, cmd), g_exit_code = 127, NULL);
 	}
 	if (ft_strncmp(cmd, "./", 2) == 0)
 	{

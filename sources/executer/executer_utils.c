@@ -25,9 +25,12 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	while (redirects)
 	{
 		filename = lst_get_var(redirects)->value;
-		if (access(filename, F_OK) == -1 || access(filename, R_OK) == -1)
-			return (ft_printf("minishell: %s: %s\n", STDERR_FILENO,
-					filename, strerror(errno)), -1);
+		if (access(filename, F_OK) == -1)
+			return (ft_printf("minishell: %s: No such file or directory\n", STDERR_FILENO,
+					filename), -1);
+        else if (access(filename, R_OK) == -1)
+            return (ft_printf("minishell: %s: permission denied\n", STDERR_FILENO,
+                              filename), -1);
 		fd = open(filename, O_RDONLY);
 		if (fd == -1)
 			return (ft_printf("minishell: %s: :%s\n", STDERR_FILENO,

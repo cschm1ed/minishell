@@ -78,8 +78,8 @@ static int	preserve_as_literal(t_info *info, char **lexed, int substrs)
 	int	i;
 	int	j;
 
-	info->commands->preserve_literal = ft_calloc(sizeof(int), substrs);
-	if (info->commands->preserve_literal == NULL)
+	info->preserve_literal = ft_calloc(sizeof(int), substrs);
+	if (info->preserve_literal == NULL)
 		return (perror("malloc"), FAILURE);
 	i = -1;
 	while (lexed[++i])
@@ -87,7 +87,7 @@ static int	preserve_as_literal(t_info *info, char **lexed, int substrs)
 		j = -1;
 		while (lexed[i][++j])
 			if (ft_isquote(lexed[i][j]) == TRUE)
-				info->commands->preserve_literal[i] = TRUE;
+				info->preserve_literal[i] = TRUE;
 	}
 	return (SUCCESS);
 }

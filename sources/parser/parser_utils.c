@@ -19,18 +19,20 @@ void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 	if (tokens == NULL)
 		return ;
 	ptr = tokens;
-	while (ptr && ft_strcmp(ptr->content, "|") != 0)
+	while (ptr && (ft_strcmp(ptr->content, "|") != 0) &&
+                !is_literal(ptr, info))
 	{
-		if (ft_strcmp(ptr->content, ">") == 0)
-			ptr = set_mode(ptr, &(parsed->redirect_output), info, 0);
-		else if (ft_strcmp((char *)ptr->content, "<") == 0)
-			ptr = set_mode(ptr, &(parsed->redirect_input), info, 0);
-		else if (ft_strcmp((char *)ptr->content, ">>") == 0)
-			ptr = set_mode(ptr, &(parsed->redirect_output), info, APPEND);
-		else if (ft_strcmp((char *)ptr->content, "<<") == 0)
-			ptr = set_mode(ptr, &(parsed->here_docs), info, 0);
-		else
-			ptr = ptr->next;
+        if (!ft_strcmp(ptr->content, ">") && !is_literal(ptr, info))
+            ptr = set_mode(ptr, &(parsed->redirect_output), info, 0);
+        else if (!ft_strcmp((char *)ptr->content, "<") && !is_literal(ptr, info))
+            ptr = set_mode(ptr, &(parsed->redirect_input), info, 0);
+        else if (!(ft_strncmp(ptr->content, ">>", ft_strlen(ptr->content) + 1)
+                && !is_literal(ptr, info)))
+            ptr = set_mode(ptr, &(parsed->redirect_output), info, APPEND);
+        else if (!ft_strcmp((char *)ptr->content, "<<") && !is_literal(ptr, info))
+            ptr = set_mode(ptr, &(parsed->here_docs), info, 0);
+        else
+            ptr = ptr->next;
 	}
 }
 
@@ -42,7 +44,8 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 
 	if (tokens->next == NULL)
 		return (unexpected_token(NULL), NULL);
-	else if (ft_isspecial(*tokens->next->content) == TRUE)
+	else if (ft_isspecial(*tokens->next->content) == TRUE
+            && !is_literal(tokens->next, info))
 		return (unexpected_token(tokens->next->content), NULL);
 	name = ft_strdup(tokens->next->content);
 	if (name == NULL)
@@ -57,8 +60,6 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	tmp = tokens->next->next;
    	tokens->next->flag = TRUE;
 	tokens->flag = TRUE;
-	//ft_lstrmone(&info->token_lst, tokens->next, free);
-	//ft_lstrmone(&info->token_lst, tokens, free);
 	return (tmp);
 }
 
@@ -117,4 +118,21 @@ int	invalid_special(char *cmd)
 	if (!cmd[i] && special >= 1)
 		return (g_exit_code = 258, unexpected_token("newline"), TRUE);
 	return (FALSE);
+}
+
+int is_literal(t_list *node, t_info *info)
+{
+    int     i;
+    t_list  *head;
+
+    i = 0;
+    head = info->token_lst;
+    while (head && head != node)
+    {
+        i ++;
+        head = head->next;
+    }
+    if (head == NULL)
+        return (FALSE);
+    return (info->preserve_literal[i]);
 }

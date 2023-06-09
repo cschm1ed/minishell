@@ -29,7 +29,8 @@ typedef struct s_info
 	t_list			*user_vars;
 	t_list			*export_lst;
 	t_list			*token_lst;
-	t_commands		*commands;
+    int             *preserve_literal;
+    t_commands		*commands;
 	t_executable	*builtins;
 	t_data			*pipex;
 	char			*pwd;
@@ -57,7 +58,6 @@ typedef struct s_commands
 	char		*raw;
 	char		**lexed;
 	t_list		*parsed;
-	int			*preserve_literal;
 }	t_commands;
 
 typedef struct s_history

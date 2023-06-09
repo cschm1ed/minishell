@@ -22,5 +22,7 @@ void	redirects(t_list *tokens, t_parsed *parsed, t_info *info);
 t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag);
 int		invalid_colon(char *cmd);
 int		invalid_special(char *cmd);
+int     is_literal(t_list *node, t_info *info);
+
 
 #endif
