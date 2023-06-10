@@ -137,5 +137,4 @@ void	delete_parsed(void *content)
 		ft_lstclear(&parsed->here_docs, delete_variable);
 	if (content)
 		free(content);
-	ft_bzero(parsed, sizeof(parsed));
 }

@@ -47,8 +47,8 @@ static int	distribute_commands(t_list **parsed, t_info *info)
 	node = info->token_lst;
 	while (node)
 	{
-		if (first == TRUE && !ft_strcmp(node->content, "|")
-            && !is_literal(node, info))
+		if (first == TRUE && (!ft_strcmp(node->content, "|")
+            && !is_literal(node, info)))
 			return (unexpected_token("|"));
 		if ((!is_literal(node, info) && !ft_strcmp(node->content, "|"))
                 || first == TRUE)

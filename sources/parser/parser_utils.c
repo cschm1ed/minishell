@@ -76,7 +76,8 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 		if (lst_get_parsed(node)->cmd == NULL)
 			exit_error(info, __FILE__, __LINE__, "malloc");
 	}
-	while (args && args->flag != TRUE && ft_strcmp(args->content, "|") != 0)
+	while (args && args->flag != TRUE &&
+            !(ft_strcmp(args->content, "|") == 0 && !is_literal(args, info)))
 	{
 		if (str_arr_add(&(lst_get_parsed(node)->args),
 				args->content) == NULL)
