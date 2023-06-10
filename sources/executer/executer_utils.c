@@ -12,10 +12,15 @@
 
 #include <minishell.h>
 
+#define EMSG1 "minishell: %s: No such file or directory\n"
+#define EMSG2 "minishell: %s: permission denied\n"
+#define EMSG3 "minishell no access: %s: %s\n"
+#define EMSG4 "minishell open failed: %s: :%s\n"
+
 int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
 	t_list	*redirects;
-	char	*filename;
+	char	*fname;
 	int		fd;
 
 	fd = STDIN_FILENO;
@@ -24,17 +29,14 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 		return (STDIN_FILENO);
 	while (redirects)
 	{
-		filename = lst_get_var(redirects)->value;
-		if (access(filename, F_OK) == -1)
-			return (ft_printf("minishell: %s: No such file or directory\n", STDERR_FILENO,
-					filename), -1);
-        else if (access(filename, R_OK) == -1)
-            return (ft_printf("minishell: %s: permission denied\n", STDERR_FILENO,
-                              filename), -1);
-		fd = open(filename, O_RDONLY);
+		fname = lst_get_var(redirects)->value;
+		if (access(fname, F_OK) == -1)
+			return (ft_printf(EMSG1, 2, fname), -1);
+		else if (access(fname, R_OK) == -1)
+			return (ft_printf(EMSG2, 2, fname), -1);
+		fd = open(fname, O_RDONLY);
 		if (fd == -1)
-			return (ft_printf("minishell: %s: :%s\n", STDERR_FILENO,
-					filename, strerror(errno)), -1);
+			return (perror("minishell: open: "), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;
@@ -47,7 +49,7 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 int	create_outfiles(t_list *parsed)
 {
 	t_list	*redirects;
-	char	*filename;
+	char	*fname;
 	int		fd;
 	int		flags;
 
@@ -55,17 +57,15 @@ int	create_outfiles(t_list *parsed)
 	fd = STDOUT_FILENO;
 	while (redirects)
 	{
-		filename = lst_get_var(redirects)->value;
-		if (access(filename, F_OK) != -1 && access(filename, W_OK) == -1)
-			return (ft_printf("minishell no access: %s: %s\n", STDERR_FILENO,
-					filename, strerror(errno)), -1);
+		fname = lst_get_var(redirects)->value;
+		if (access(fname, F_OK) != -1 && access(fname, W_OK) == -1)
+			return (ft_printf(EMSG3, 2, fname, strerror(errno)), -1);
 		flags = O_WRONLY | O_TRUNC | O_CREAT;
 		if (lst_get_var(redirects)->key == APPEND)
 			flags = O_WRONLY | O_APPEND | O_CREAT;
-		fd = open(filename, flags, 0644);
+		fd = open(fname, flags, 0644);
 		if (fd == -1)
-			return (ft_printf("minishell open failed: %s: :%s\n", STDERR_FILENO,
-					filename, strerror(errno)), -1);
+			return (ft_printf(EMSG4, 2, fname, strerror(errno)), -1);
 		if (redirects != ft_lstlast(redirects))
 			close(fd);
 		redirects = redirects->next;
