@@ -91,8 +91,7 @@ int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 	while (info->builtins[i].command)
 		if (ft_strcmp(info->builtins[i++].command, cmd) == 0)
 			flag = TRUE;
-	if (ft_lstsize(parsed) != 1
-		|| flag == FALSE)
+	if (flag == FALSE || parsed->next)
 		return (FAILURE);
 	handle_files(pipex, parsed, info, 0);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
