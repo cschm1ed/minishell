@@ -12,6 +12,12 @@
 
 #include <minishell.h>
 
+/**
+ * @brief iterates through command to find redirections
+ * @param tokens
+ * @param parsed
+ * @param info
+ */
 void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 {
 	t_list	*ptr;
@@ -37,6 +43,14 @@ void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 	}
 }
 
+/**
+ * @brief appends redirect arg to corresponding list
+ * @param tokens
+ * @param add
+ * @param info
+ * @param flag
+ * @return next token to interpret
+ */
 t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 {
 	t_list	*tmp;
@@ -64,7 +78,14 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	return (tmp);
 }
 
-int	add_args(t_list *node, t_info *info, t_list *start)
+/**
+ * @brief finds command in remaining tokens and reads arguments
+ * @param node
+ * @param info
+ * @param start
+ * @return SUCCESS
+ */
+void	add_args(t_list *node, t_info *info, t_list *start)
 {
 	t_list	*args;
 
@@ -84,9 +105,13 @@ int	add_args(t_list *node, t_info *info, t_list *start)
 			exit_error(info, __FILE__, __LINE__, "malloc");
 		args = args->next;
 	}
-	return (SUCCESS);
 }
 
+/**
+ * @brief checks for syntax errors in given token
+ * @param cmd
+ * @return TRUE or FALSE
+ */
 int	invalid_colon(char *cmd)
 {
 	int	i;
@@ -102,6 +127,11 @@ int	invalid_colon(char *cmd)
 	return (FALSE);
 }
 
+/**
+ * @brief checks for syntax errors in given token
+ * @param cmd
+ * @return TRUE or FALSE
+ */
 int	invalid_special(char *cmd)
 {
 	int	i;

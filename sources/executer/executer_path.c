@@ -76,6 +76,14 @@ static char	*get_possible_paths(char *cmd, t_info *info, int valid_syntax)
 	return (get_relative_path(cmd, info, paths, valid_syntax));
 }
 
+/**
+ * @brief iterates through list of paths to find executable
+ * @param cmd
+ * @param info
+ * @param paths
+ * @param valid_syntax
+ * @return NULL or executable
+ */
 static char	*get_relative_path(char *cmd, t_info *info, char **paths,
 		int valid_syntax)
 {

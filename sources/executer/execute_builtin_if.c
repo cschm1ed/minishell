@@ -15,6 +15,14 @@
 static int	execute_builtin(t_info *info,
 				t_list *parsed, char *cmd, int fd_out);
 
+/**
+ * @brief if the given command is an executable it will be executed
+ * @param info - info struct
+ * @param parsed - parsed command info struct
+ * @param pipex - pipex struct
+ * @param cnt - position of command in list of commands
+ * @return exit code if builtin, 1000 otherwise
+ */
 int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 {
 	char	*cmd;
@@ -36,6 +44,14 @@ int	execute_builtin_if(t_info *info, t_list *parsed, t_data *pipex, int cnt)
 	return (exit_code);
 }
 
+/**
+ * Executes the specified built-in command.
+ * @param info - info struct
+ * @param parsed - parsed command info struct
+ * @param cmd - command to execute
+ * @param fd_out - output file descriptor
+ * @return exit code of the executed command, 1000 if not found
+ */
 static int	execute_builtin(t_info *info,
 								t_list *parsed, char *cmd, int fd_out)
 {
@@ -54,6 +70,13 @@ static int	execute_builtin(t_info *info,
 	return (1000);
 }
 
+/**
+ * Executes a single command in the parent process if it is a builtin
+ * @param info - info struct
+ * @param parsed - parsed command info struct
+ * @param pipex - pipex struct
+ * @return SUCCESS if execution is successful, FAILURE otherwise
+ */
 int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 {
 	char	*cmd;

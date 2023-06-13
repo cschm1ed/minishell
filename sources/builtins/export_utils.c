@@ -62,7 +62,7 @@ int	print_sorted_lst(t_info *info, int fd_out)
 static void	print_variable(int fd_out, t_list *ptr)
 {
 	ft_printf("declare -x %s", fd_out, lst_get_var(ptr)->name);
-	if (lst_get_var(ptr)->value[0])
+	if (lst_get_var(ptr)->value)
 		ft_printf("=%s", fd_out, lst_get_var(ptr)->value);
 	ft_printf("\n", fd_out);
 }
@@ -88,10 +88,10 @@ int	check_if_varname_is_valid(char *str)
 static void	assign_pointers(t_info *info, char ***array,
 				t_list **last, t_list **last2)
 {
-	(*last2)->next = info->user_vars;
 	(*last) = ft_lstlast(info->env_lst);
 	(*last)->next = info->export_lst;
 	(*last2) = ft_lstlast(info->env_lst);
+	(*last2)->next = info->user_vars;
 	if ((*array) == NULL)
 	{
 		(*last2)->next = NULL;

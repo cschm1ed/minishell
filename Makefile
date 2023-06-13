@@ -10,7 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-# Directories
 VPATH       := sources:sources/utils:sources/lexer:sources/parser:sources/builtins:sources/executer:libft
 
 BUILDDIR    := build
@@ -50,21 +49,18 @@ BLUE        := \033[0;34m
 ESCAPE      := \033[0m
 
 # Build rules
-${NAME}: $(OBJS) $(LIBFTDIR)/$(LIBFT)
-	@echo "$(GREEN)linking...$(ESCAPE)"
+$(NAME): $(OBJS)
 	@$(CC) $(LDFLAGS) $^ $(LIBFTDIR)/$(LIBFT) -o $(NAME)
-	@clear
 	@echo "$(BLUE)$$HEADER $(ESCAPE)"
 
-$(BUILDDIR)/%.o: %.c $(BUILDDIR)
-	@${CC} $(CFLAGS) -c $< -o $@
-	@clear
+$(BUILDDIR)/%.o: %.c | $(BUILDDIR) $(LIBFTDIR)/$(LIBFT)
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(YELLOW)compiling > $< $(ESCAPE)"
 
 $(BUILDDIR):
 	@mkdir $(BUILDDIR)
 
-${LIBFTDIR}/$(LIBFT):
+$(LIBFTDIR)/$(LIBFT):
 	@$(MAKE) bonus -C $(LIBFTDIR)
 
 # Standard rules
@@ -79,6 +75,8 @@ fclean: clean
 	@$(MAKE) fclean -C $(LIBFTDIR)
 
 re: fclean all
+
+.PHONY: all clean fclean re
 
 .PHONY: all clean fclean re
 

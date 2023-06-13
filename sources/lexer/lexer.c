@@ -15,24 +15,6 @@
 static char	**check_and_trim_quotes(char **lexed);
 static int	preserve_as_literal(t_info *info, char **lexed, int substrs);
 
-// void    print_lexed(char *str)
-// {
-//     int    i;
-
-//     i = 0;
-//     while (str[i])
-//         printf("%s\n", str[i++]);
-// }
-
-// void    print_literal(int *array, int substrs)
-// {
-//     int    i;
-
-//     i = 0;
-//     while (i < substrs)
-//         printf("Array: %d\n", array[i++]);
-// }
-
 /**
  * @brief splits the input into an array of strings and handles syntax errors
  * 

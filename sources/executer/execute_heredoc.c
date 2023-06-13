@@ -16,6 +16,14 @@ static int		final_heredoc(t_info *info, t_list *heredocs, int hpipe[2]);
 static int		compare_delimiter(const char *str, const char *delimiter);
 static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
 
+/**
+ * @brief writes heredoc input into a pipe, the command will recieve
+ * @param parsed
+ * @param cnt
+ * @param pipex
+ * @param info
+ * @return SUCCESS or FAILURE
+ */
 int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 {
 	t_list	*heredocs;
@@ -33,6 +41,13 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	return (final_heredoc(info, heredocs, hpipe));
 }
 
+/**
+ * @brief writes heredoc input into a pipe, the command will recieve
+ * @param info
+ * @param heredocs
+ * @param hpipe
+ * @return SUCCESS or FAILURE
+ */
 static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 {
 	char	**buffer;
@@ -59,15 +74,28 @@ static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
 	return (SUCCESS);
 }
 
+/**
+ * @brief checks if the given string matches the heredoc delimiter
+ * @param str
+ * @param delimiter
+ * @return TRUE or FALSE
+ */
 static int	compare_delimiter(const char *str, const char *delimiter)
 {
 	if (strnstr(str, delimiter, ft_strlen(delimiter)) == str
 		&& *(str + ft_strlen(delimiter)) == '\n'
 		&& *(str + ft_strlen(delimiter) + 1) == 0)
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }
 
+/**
+ * @brief ignores multiple heredocs, so only input from last
+ * 			heredoc will be recieved
+ * @param info
+ * @param heredocs
+ * @return
+ */
 static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 {
 	char	*buffer;

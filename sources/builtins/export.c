@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-static void	no_value(t_info *info, char *arg);
+static int	no_value(t_info *info, char *arg);
 static int	with_value(t_info *info, char *arg);
 static int	export_variable(t_info *info, char *const *arg, int fd_out, int i);
 static void	remove_existing(t_info *info, char *name);
@@ -46,37 +46,38 @@ static int	export_variable(t_info *info, char *const *arg, int fd_out, int i)
 	}
 	else if (ft_strchr(arg[i], '=') == NULL
 		|| *(ft_strchr(arg[i], '=') + 1) == 0)
-		no_value(info, arg[i]);
+	{
+		if (no_value(info, arg[i]) == FAILURE)
+			exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	else
 		if (with_value(info, arg[i]) == FAILURE)
 			exit_error(info, __FILE__, __LINE__, "malloc");
 	return (exit_code);
 }
 
-static void	no_value(t_info *info, char *arg)
+static int	no_value(t_info *info, char *arg)
 {
 	char	*name;
 	char	*value;
 	t_list	*node;
 
-	name = ft_strdup(arg);
+	name = ft_substr(arg, 0, ft_strlen(arg) - (ft_strchr(arg, '=') != 0));
+	value = NULL;
 	if (!name)
 		exit_error(info, __FILE__, __LINE__, "malloc");
-	value = ft_strdup("");
-	if (value == NULL)
+	if (ft_strchr(arg, '='))
 	{
-		free(name);
-		exit_error(info, __FILE__, __LINE__, "malloc");
+		value = ft_strdup("");
+		if (value == NULL)
+			return (free(name), FAILURE);
 	}
 	node = lst_newvar_node(name, value, 0);
 	if (node == NULL)
-	{
-		free(name);
-		free(value);
-		exit_error(info, __FILE__, __LINE__, "malloc");
-	}
+		return (free(name), free(value), FAILURE);
 	remove_existing(info, name);
 	ft_lstadd_back(&(info->export_lst), node);
+	return (SUCCESS);
 }
 
 static int	with_value(t_info *info, char *arg)

@@ -38,6 +38,13 @@ t_list	*parser(t_list **parsed, char **lexed, t_info *info)
 	return (*parsed);
 }
 
+/**
+ * @brief splits input into multiple commands separated by |
+ * 			for further interpretation
+ * @param parsed
+ * @param info
+ * @return SUCCESS or FAILURE
+ */
 static int	distribute_commands(t_list **parsed, t_info *info)
 {
 	int		first;
@@ -65,6 +72,14 @@ static int	distribute_commands(t_list **parsed, t_info *info)
 	return (SUCCESS);
 }
 
+/**
+ * @brief creates parsed node, and applies functions, to fill said node
+ * 			with information
+ * @param p_lst
+ * @param t_start
+ * @param info
+ * @return parsed struct
+ */
 static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 {
 	t_list	*parsed;
@@ -81,6 +96,14 @@ static t_list	*parse_command(t_list **p_lst, t_list *t_start, t_info *info)
 		return (add_redirect(t_start, info, info->token_lst, parsed));
 }
 
+/**
+ * @brief iterates through input to find redirects
+ * @param t_start
+ * @param info
+ * @param node
+ * @param parsed
+ * @return parsed struct
+ */
 static t_list	*add_redirect(t_list *t_start, t_info *info, t_list *node,
 		t_list *parsed)
 {
@@ -95,6 +118,12 @@ static t_list	*add_redirect(t_list *t_start, t_info *info, t_list *node,
 	return (node);
 }
 
+/**
+ * @brief checks if token shall be interpreted
+ * @param node
+ * @param info
+ * @return TRUE or FALSE
+ */
 int	is_literal(t_list *node, t_info *info)
 {
 	int		i;
