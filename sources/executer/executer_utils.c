@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:48:51 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 10:52:14 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 12:52:23 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ int	create_outfiles(t_list *parsed)
 	return (fd);
 }
 
-void	handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
+int	handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
 {
 	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex, info);
-	if (pipex->file_fd[0] == -1 && parsed->next == NULL)
-		execute_exit(info, NULL, 1);
+	if (pipex->file_fd[0] == -1)
+		return (FAILURE);
 	pipex->file_fd[1] = create_outfiles(parsed);
 	if (pipex->file_fd[1] == -1)
-		execute_exit(info, NULL, 1);
+		return (FAILURE);
+	return (SUCCESS);
 }

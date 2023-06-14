@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 11:52:03 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 13:06:40 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 13:01:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		execute_env(t_info *info, char **args, int fd_out);
 
 // exit
 int		execute_exit(t_info *info, char **arg, int exit_code);
+int		execute_exit_child(t_info *info, char **arg, int exit_code);
 
 // export
 int		execute_export(t_info *info, char **arg, int fd_out);

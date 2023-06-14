@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 11:49:04 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 12:04:51 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	replace_variables(t_info *info, char **lexed)
 		{
 			lexed[i] = process_string(&j, lexed, i, info);
 			if (lexed[i] == NULL)
-				return (FAILURE);
+				exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		i++;
 	}
@@ -99,22 +99,21 @@ static char	*replace_var(char *str, int *j, t_info *info)
 	if (get_name_len(str + (*j)) == 0)
 		return (ft_strdup(""));
 	name = ft_substr(str, *j + 1, get_name_len(str + (*j)));
+	if (name == NULL)
+		exit_error(info, __FILE__, __LINE__, "malloc");
 	if (*name == '?')
 		value = ft_itoa(g_exit_code);
 	else
-		value = ft_strtrim(lsts_find_var_val(info, name), " \t\f\v\r\n");
+	{
+		value = lsts_find_var_val(info, name);
+		if (value == NULL)
+			value = strdup("");
+		else
+			value = ft_strtrim(lsts_find_var_val(info, name), " \t\f\v\r\n");
+	}
 	if (value == NULL)
-	{
-		free(name);
-		exit_error(info, __FILE__, __LINE__, "malloc");
-	}
+		return (free(name), NULL);
 	ret = rejoin(str, value, *j, get_name_len(str + *j));
-	if (ret == NULL)
-	{
-		free(name);
-		free(value);
-		exit_error(info, __FILE__, __LINE__, "malloc");
-	}
 	*j += ft_strlen(lsts_find_var_val(info, name));
 	return (free(name), free(value), ret);
 }

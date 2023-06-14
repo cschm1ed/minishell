@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 18:54:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 08:16:50 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 12:16:01 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 			flag = TRUE;
 	if (flag == FALSE || parsed->next)
 		return (FAILURE);
-	handle_files(pipex, parsed, info, 0);
+	if (handle_files(pipex, parsed, info, 0) == FAILURE)
+		return (g_exit_code = 1, SUCCESS);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
 		g_exit_code = execute_builtin_if(info, parsed, pipex, 0);
 	else
