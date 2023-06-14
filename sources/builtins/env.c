@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 19:03:58 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 13:16:17 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 09:51:49 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ int	execute_env(t_info *info, char **args, int fd_out)
 			lst_get_var(lst)->name, lst_get_var(lst)->value);
 		lst = lst->next;
 	}
-	ft_printf("_=/Users/cschmied/Documents/minishell/sources/builtins/env.c\n",
-		fd_out);
 	return (0);
 }

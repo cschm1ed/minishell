@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 19:53:39 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/07 15:55:06 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 10:49:59 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
 	if (tokens == NULL)
 		return ;
 	ptr = tokens;
-	while (ptr && (ft_strcmp(ptr->content, "|") != 0) && !is_literal(ptr, info))
+	while (ptr && (ft_strcmp(ptr->content, "|") != 0))
 	{
-		if (!ft_strcmp(ptr->content, ">") && !is_literal(ptr, info))
-			ptr = set_mode(ptr, &(parsed->redirect_output), info, 0);
-		else if (!ft_strcmp((char *)ptr->content, "<") && !is_literal(ptr,
+		if (!ft_strcmp((char *)ptr->content, "<") && !is_literal(ptr,
 				info))
 			ptr = set_mode(ptr, &(parsed->redirect_input), info, 0);
-		else if (!(ft_strncmp(ptr->content, ">>", ft_strlen(ptr->content) + 1)
-				&& !is_literal(ptr, info)))
-			ptr = set_mode(ptr, &(parsed->redirect_output), info, APPEND);
 		else if (!ft_strcmp((char *)ptr->content, "<<") && !is_literal(ptr,
 				info))
 			ptr = set_mode(ptr, &(parsed->here_docs), info, 0);
+		else if (!ft_strcmp(ptr->content, ">") && !is_literal(ptr, info))
+			ptr = set_mode(ptr, &(parsed->redirect_output), info, 0);
+		else if (!(ft_strncmp(ptr->content, ">>", ft_strlen(ptr->content) + 1))
+			&& !is_literal(ptr, info))
+			ptr = set_mode(ptr, &(parsed->redirect_output), info, APPEND);
 		else
 			ptr = ptr->next;
 	}
@@ -51,7 +51,7 @@ void	redirects(t_list *tokens, t_parsed *parsed, t_info *info)
  * @param flag
  * @return next token to interpret
  */
-t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
+t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int ident)
 {
 	t_list	*tmp;
 	t_list	*node;
@@ -65,7 +65,7 @@ t_list	*set_mode(t_list *tokens, t_list **add, t_info *info, int flag)
 	name = ft_strdup(tokens->next->content);
 	if (name == NULL)
 		exit_error(info, __FILE__, __LINE__, "malloc");
-	node = lst_newvar_node(NULL, name, flag);
+	node = lst_newvar_node(NULL, name, ident);
 	if (node == NULL)
 	{
 		free(name);

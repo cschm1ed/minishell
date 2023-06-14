@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 17:50:14 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/14 10:09:55 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 	}
 	heredocs = ignore_multiple_heredocs(info, heredocs);
 	if (pipe(hpipe) == -1)
-		return (-1);
+		exit_error(info, __FILE__, __LINE__, "pipe");
 	return (final_heredoc(info, heredocs, hpipe));
 }
 
