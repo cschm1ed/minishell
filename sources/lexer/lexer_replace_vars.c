@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/02 15:56:16 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 08:35:43 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,19 @@ static char	*replace_var(char *str, int *j, t_info *info)
 	else
 		value = ft_strtrim(lsts_find_var_val(info, name), " \t\f\v\r\n");
 	if (value == NULL)
+	{
+		free(name);
 		exit_error(info, __FILE__, __LINE__, "malloc");
+	}
 	ret = rejoin(str, value, *j, get_name_len(str + *j));
 	if (ret == NULL)
 	{
+		free(name);
 		free(value);
 		exit_error(info, __FILE__, __LINE__, "malloc");
 	}
 	*j += ft_strlen(lsts_find_var_val(info, name));
-	return (ret);
+	return (free(name), free(value), ret);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_delete_structs.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/02 11:15:44 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/14 08:45:57 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,8 @@ static int	update_shlvl(t_info *info)
 		new = ft_itoa(x + 1);
 		if (new == NULL)
 			return (FAILURE);
-		if (val)
-		{
-			free(val);
-			lst_replace_var_val(info->env_lst, "SHLVL", new);
-		}
+		lst_replace_var_val(info->env_lst, "SHLVL", new);
+		free(new);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 21:12:07 by lspohle           #+#    #+#              #
-#    Updated: 2023/05/29 16:39:32 by lspohle          ###   ########.fr        #
+#    Updated: 2023/06/14 08:22:55 by lspohle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,8 @@ OBJS        := $(SRCS:%.c=$(BUILDDIR)/%.o)
 
 # Compiler
 CC          := cc
-CFLAGS      := -g -Wall -Werror -Wextra -fsanitize=address -I ./includes -I ./libft -O2 -D BUFFER_SIZE=25
-LDFLAGS     := -g -Wall -Werror -Wextra -fsanitize=address -I ./includes -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
+CFLAGS      := -g -Wall -Werror -Wextra -I ./includes -I ./libft -O2 -D BUFFER_SIZE=25
+LDFLAGS     := -g -Wall -Werror -Wextra -I ./includes -I $(HOME)/goinfre/.brew/opt/readline/include/ -L $(HOME)/goinfre/.brew/opt/readline/lib/ -lreadline
 MAKE        := make
 RM          := rm -f
 

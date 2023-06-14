@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 17:06:49 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/07 18:46:09 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 08:55:52 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	*get_path(char *cmd, t_info *info)
 		if (access(cmd, F_OK) && ft_strncmp(cmd, "./", 2) && dir == FALSE)
 			return (ft_printf("minishell: %s: command not found\n",
 					STDERR_FILENO, cmd), g_exit_code = 127, NULL);
+		if (access(cmd, F_OK | X_OK) == 0)
+			return (cmd);
 		if (dir == FALSE)
 			return (NULL);
 	}

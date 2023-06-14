@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_new_node.c                                     :+:      :+:    :+:   */
+/*   lst_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 13:46:28 by cschmied          #+#    #+#             */
-/*   Updated: 2023/05/24 15:22:02 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 08:58:15 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ int	lst_replace_var_val(t_list *list, char *name, char *new)
 	if (replacement == NULL)
 		return (perror("malloc"), FAILURE);
 	if (lst_find_node(list, name) != NULL)
+	{
+		if (lst_get_var(lst_find_node(list, name))->value)
+			free(lst_get_var(lst_find_node(list, name))->value);
 		lst_get_var(lst_find_node(list, name))->value = replacement;
+	}
 	else
 		free(replacement);
 	return (SUCCESS);
