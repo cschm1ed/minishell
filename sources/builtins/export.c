@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 23:24:23 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/01 13:21:33 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:23:46 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ static int	no_value(t_info *info, char *arg)
 	if (node == NULL)
 		return (free(name), free(value), FAILURE);
 	remove_existing(info, name);
-	ft_lstadd_back(&(info->export_lst), node);
+	if (!value)
+		ft_lstadd_back(&(info->export_lst), node);
+	else
+		ft_lstadd_back(&(info->env_lst), node);
 	return (SUCCESS);
 }
 

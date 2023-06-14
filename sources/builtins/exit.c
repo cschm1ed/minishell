@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cschmied <cschmied@student.42wolfsburg.    +#+  +:+       +#+        */
+/*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:47:16 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/01 15:21:23 by cschmied         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:42:00 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static int	ft_strisnum(const char *str);
 
 int	execute_exit(t_info *info, char **arg, int exit_code)
 {
-	if (info->pipex == NULL)
+	if (info == NULL)
 		ft_printf("exit\n", STDERR_FILENO);
 	if (arg && arg[1])
 	{
-		if (ft_strisnum(arg[1]) != 0)
+		if (ft_strisnum(arg[1]) == 0)
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n",
 				STDERR_FILENO, arg[1]);
@@ -32,7 +32,7 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 	}
 	if (arg && arg[1] && arg[2])
 	{
-		ft_printf("minishell: exit: too many arguments\n", STDERR_FILENO);
+		ft_printf("exit\nminishell: exit: too many arguments\n", STDERR_FILENO);
 		g_exit_code = 1;
 		return (FAILURE);
 	}
@@ -56,15 +56,15 @@ static int	ft_strisnum(const char *str)
 			sign = -1;
 		i ++;
 	}
-	if (ft_strlen(str + i) > 20)
-		return (1);
-	if (ft_strlen(str + i) == 20)
+	if (ft_strlen(str + i) == 19)
 	{
-		if (sign == 1 && ft_strcmp(str + i, EMAX) < 0)
+		if (sign == 1 && ft_strcmp(str + i, EMAX) > 0)
 			return (FALSE);
-		if (sign == -1 && ft_strcmp(str + i, EMIN) < 0)
+		if (sign == -1 && ft_strcmp(str + i, EMIN) > 0)
 			return (FALSE);
 	}
+	if (ft_strlen(str + i) > 19)
+		return (FALSE);
 	while (str[i])
 		if (ft_isdigit(str[i++]) == 0)
 			return (FALSE);

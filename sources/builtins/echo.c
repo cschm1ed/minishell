@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:55:00 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/01 13:12:10 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:19:03 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ static void	print_args(char **args, int j, int fd_out)
 		if (args[j][0] == 0)
 			ft_putchar_fd(' ', fd_out);
 		else
+		{
 			ft_putstr_fd(args[j], fd_out);
+			if (args[j + 1] && args[j + 1][0])
+				ft_putchar_fd(' ', fd_out);
+		}
 		j ++;
 	}
 }
