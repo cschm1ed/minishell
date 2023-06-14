@@ -30,24 +30,20 @@ char	*get_path(char *cmd, t_info *info)
 	int		dir;
 
 	dir = FALSE;
+	if (ft_strncmp(cmd, "./", 2) == 0
+		&& access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
+		return (ft_printf("minishell: %s: permission denied\n",
+				STDERR_FILENO, cmd), g_exit_code = 126, NULL);
 	if (ft_strchr(cmd, '/') != NULL)
 	{
 		dir = valid_directory_syntax(cmd);
+		if (dir == TRUE)
+			return (NULL);
+		if (dir == 3)
+			return (cmd);
 		if (access(cmd, F_OK) && ft_strncmp(cmd, "./", 2) && dir == FALSE)
 			return (ft_printf("minishell: %s: command not found\n",
 					STDERR_FILENO, cmd), g_exit_code = 127, NULL);
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (cmd);
-		if (dir == FALSE)
-			return (NULL);
-	}
-	if (ft_strncmp(cmd, "./", 2) == 0)
-	{
-		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) != 0)
-			return (ft_printf("minishell: %s: permission denied\n",
-					STDERR_FILENO, cmd), NULL);
-		else if (access(cmd, F_OK | X_OK) == 0)
-			return (cmd);
 	}
 	path = get_possible_paths(cmd, info, dir);
 	if (path == NULL && dir == FALSE)
@@ -121,25 +117,25 @@ static int	valid_directory_syntax(char *path)
 	int	i;
 	DIR	*directory;
 
-	i = 0;
-	while (path[i])
-	{
+	i = -1;
+	while (path[++i])
 		if (!(path[i] == '/' || path[i] == '.' || ft_isalnum(path[i]))
 			|| (path[i] == '.' && path[i + 1] == '.' && path[i + 2] == '.'))
 			return (FALSE);
-		i++;
-	}
 	directory = opendir(path);
 	if (directory)
 	{
 		ft_printf("minishell: %s: is a directory\n", STDERR_FILENO, path);
 		closedir(directory);
+		return (g_exit_code = 126, TRUE);
 	}
 	else
 	{
 		if (access(path, F_OK) == -1)
 			ft_printf("minishell: %s: No such file or directory\n",
 				STDERR_FILENO, path);
+		if (access(path, F_OK | X_OK) == 0)
+			return (g_exit_code = 0, 3);
+		return (g_exit_code = 127, TRUE);
 	}
-	return (g_exit_code = 126, TRUE);
 }
