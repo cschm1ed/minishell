@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 13:34:18 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 08:35:43 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:49:04 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static char	*process_string(int *j, char **lexed, int i, t_info *info)
 	else if (str[*j] == '\'')
 	{
 		skip_until_quote(str, j);
-		*j += 1;
+		if (str[*j])
+			*j += 1;
 	}
 	else if (str[*j] == '"')
 	{

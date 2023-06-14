@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 20:47:16 by lspohle           #+#    #+#             */
-/*   Updated: 2023/06/14 11:42:00 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/14 11:51:43 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static int	ft_strisnum(const char *str);
 
 int	execute_exit(t_info *info, char **arg, int exit_code)
 {
-	if (info == NULL)
-		ft_printf("exit\n", STDERR_FILENO);
+	ft_printf("exit\n", STDERR_FILENO);
 	if (arg && arg[1])
 	{
 		if (ft_strisnum(arg[1]) == 0)
@@ -32,7 +31,7 @@ int	execute_exit(t_info *info, char **arg, int exit_code)
 	}
 	if (arg && arg[1] && arg[2])
 	{
-		ft_printf("exit\nminishell: exit: too many arguments\n", STDERR_FILENO);
+		ft_printf("minishell: exit: too many arguments\n", STDERR_FILENO);
 		g_exit_code = 1;
 		return (FAILURE);
 	}
