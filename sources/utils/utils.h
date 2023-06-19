@@ -49,5 +49,7 @@ void		setup_signals(void (*func)(int));
 void		rl_replace_line(char *c, int i);
 void		setup_signals_parent(void);
 void		setup_signals_child(void);
+void		keybindings_heredoc(int signum);
+void		keybindings_ignore(int signum);
 
 #endif

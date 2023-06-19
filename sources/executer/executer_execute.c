@@ -41,7 +41,7 @@ static t_parsed	*setup(t_data *pipex, t_list *parsed, t_info **info, int cnt)
 
 	setup_signals(keybindings_child);
 	content = lst_get_parsed(parsed);
-	if (handle_files(pipex, parsed, (*info), cnt) == FAILURE)
+	if (handle_files(pipex, parsed) == FAILURE)
 		return (NULL);
 	dup_infiles(pipex, parsed, cnt);
 	dup_outfiles(pipex, parsed, (*info), cnt);
@@ -65,7 +65,8 @@ static void	dup_outfiles( t_data *pipex, t_list *parsed, t_info *info, int cnt)
 	t_parsed	*content;
 
 	content = lst_get_parsed(parsed);
-	if (parsed != info->commands->parsed && !content->redirect_input)
+	if (parsed != info->commands->parsed
+		&& !content->redirect_input && lst_get_parsed(parsed)->hdoc == FALSE)
 	{
 		dup2(pipex->pipe_fd[cnt - 1][0], STDIN_FILENO);
 		if (pipex->pipe_fd[cnt - 1][0] != STDIN_FILENO)

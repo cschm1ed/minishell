@@ -35,6 +35,8 @@ int	execute(t_info *info, t_list *parsed)
 	if (pipex->pid == NULL || create_pipes(pipex, parsed) == FAILURE
 		|| pipex == NULL)
 		exit_error(info, __FILE__, __LINE__, "pipe or malloc");
+	parsed = info->commands->parsed;
+	heredoc_redirect(parsed, pipex, info);
 	if (execute_single(info, parsed, pipex) == SUCCESS)
 		return (free_pipex(&info->pipex), SUCCESS);
 	while (parsed)

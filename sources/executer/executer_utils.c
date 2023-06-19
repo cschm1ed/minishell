@@ -17,7 +17,7 @@
 #define EMSG3 "minishell no access: %s: %s\n"
 #define EMSG4 "minishell open failed: %s: :%s\n"
 
-int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
+int	check_infiles(t_list *parsed)
 {
 	t_list	*redirects;
 	char	*fname;
@@ -25,6 +25,8 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 
 	fd = STDIN_FILENO;
 	redirects = lst_get_parsed(parsed)->redirect_input;
+	if (lst_get_parsed(parsed)->hdoc == TRUE)
+		return (lst_get_parsed(parsed)->heredoc_pipe[0]);
 	if (redirects == NULL && lst_get_parsed(parsed)->here_docs == NULL)
 		return (STDIN_FILENO);
 	while (redirects)
@@ -41,8 +43,6 @@ int	check_infiles(t_list *parsed, int cnt, t_data *pipex, t_info *info)
 			close(fd);
 		redirects = redirects->next;
 	}
-	if (lst_get_parsed(parsed)->here_docs != NULL)
-		fd = heredoc_redirect(parsed, cnt, pipex, info);
 	return (fd);
 }
 
@@ -73,9 +73,9 @@ int	create_outfiles(t_list *parsed)
 	return (fd);
 }
 
-int	handle_files(t_data *pipex, t_list *parsed, t_info *info, int cnt)
+int	handle_files(t_data *pipex, t_list *parsed)
 {
-	pipex->file_fd[0] = check_infiles(parsed, cnt, pipex, info);
+	pipex->file_fd[0] = check_infiles(parsed);
 	if (pipex->file_fd[0] == -1)
 		return (FAILURE);
 	pipex->file_fd[1] = create_outfiles(parsed);

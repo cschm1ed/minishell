@@ -6,7 +6,7 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 15:48:50 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 13:00:06 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:44:25 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,12 @@ void	delete_parsed(void *content)
 		ft_lstclear(&(parsed->redirect_output), delete_variable);
 	if (parsed->here_docs)
 		ft_lstclear(&parsed->here_docs, delete_variable);
+	if (parsed->heredoc_pipe[0])
+		close(parsed->heredoc_pipe[0]);
+	if (parsed->heredoc_pipe[1])
+		close(parsed->heredoc_pipe[1]);
+	parsed->heredoc_pipe[0] = 0;
+	parsed->heredoc_pipe[1] = 0;
 	if (content)
 		free(content);
 }

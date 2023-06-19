@@ -6,15 +6,16 @@
 /*   By: lspohle <lspohle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:56:19 by cschmied          #+#    #+#             */
-/*   Updated: 2023/06/14 10:09:55 by lspohle          ###   ########.fr       */
+/*   Updated: 2023/06/19 09:44:53 by lspohle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int		final_heredoc(t_info *info, t_list *heredocs, int hpipe[2]);
+static int		final_heredoc(t_info *info, t_list *heredocs, int *hpipe);
 static int		compare_delimiter(const char *str, const char *delimiter);
 static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
+void			execute_heredoc(t_list *parsed, t_data *pipex, t_info *info);
 
 /**
  * @brief writes heredoc input into a pipe, the command will recieve
@@ -24,21 +25,54 @@ static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs);
  * @param info
  * @return SUCCESS or FAILURE
  */
-int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
+int	heredoc_redirect(t_list *parsed, t_data *pipex, t_info *info)
+{
+	int	status;
+
+	status = 0;
+	while (parsed)
+	{
+		if (lst_get_parsed(parsed)->here_docs)
+		{
+			execute_heredoc(parsed, pipex, info);
+			ft_lstclear(&lst_get_parsed(parsed)->redirect_input,
+				delete_variable);
+			lst_get_parsed(parsed)->redirect_input = NULL;
+			ft_lstclear(&lst_get_parsed(parsed)->here_docs, delete_variable);
+			lst_get_parsed(parsed)->here_docs = NULL;
+			lst_get_parsed(parsed)->hdoc = TRUE;
+			setup_signals(keybindings_ignore);
+			waitpid(pipex->heredoc_pid, &status, 0);
+			setup_signals(keybindings_parent);
+			if ((((*(int *)&(status)) & 0177) == 0))
+				g_exit_code = (((*(int *)&(status)) >> 8) & 0x000000ff);
+		}
+		parsed = parsed->next;
+	}
+	return (SUCCESS);
+}
+
+void	execute_heredoc(t_list *parsed, t_data *pipex, t_info *info)
 {
 	t_list	*heredocs;
-	int		hpipe[2];
 
 	heredocs = lst_get_parsed(parsed)->here_docs;
-	if (cnt > 0)
+	setup_signals(keybindings_heredoc);
+	if (pipex->heredoc_pid == -1
+		|| pipe(lst_get_parsed(parsed)->heredoc_pipe) != 0)
+		exit_error(info, __FILE__, __LINE__, "fork/pipe");
+	pipex->heredoc_pid = fork();
+	if (pipex->heredoc_pid == 0)
 	{
-		read(pipex->pipe_fd[cnt - 1][0], NULL, 1);
-		close(pipex->pipe_fd[cnt - 1][0]);
+		heredocs = lst_get_parsed(parsed)->here_docs;
+		heredocs = ignore_multiple_heredocs(info, heredocs);
+		if (final_heredoc(info, heredocs, lst_get_parsed(parsed)->heredoc_pipe)
+			== FAILURE)
+			execute_exit_child(info, NULL, 1);
+		close(lst_get_parsed(parsed)->heredoc_pipe[0]);
+		execute_exit_child(info, NULL, 0);
 	}
-	heredocs = ignore_multiple_heredocs(info, heredocs);
-	if (pipe(hpipe) == -1)
-		exit_error(info, __FILE__, __LINE__, "pipe");
-	return (final_heredoc(info, heredocs, hpipe));
+	close(lst_get_parsed(parsed)->heredoc_pipe[1]);
 }
 
 /**
@@ -48,26 +82,24 @@ int	heredoc_redirect(t_list *parsed, int cnt, t_data *pipex, t_info *info)
  * @param hpipe
  * @return SUCCESS or FAILURE
  */
-static int	final_heredoc(t_info *info, t_list *heredocs, int hpipe[2])
+static int	final_heredoc(t_info *info, t_list *heredocs, int *hpipe)
 {
-	char	**buffer;
+	char	*buffer[2];
 
-	buffer = ft_calloc(2, sizeof(char *));
-	if (buffer == NULL)
-		exit_error(info, __FILE__, __LINE__, "malloc");
+	buffer[1] = NULL;
 	while (1)
 	{
 		ft_putstr_fd("> ", STDIN_FILENO);
 		buffer[0] = get_next_line(STDIN_FILENO);
 		if (buffer[0] == NULL)
-			return (free(buffer), -1);
+			return (FAILURE);
 		if (replace_variables(info, buffer) == FAILURE)
 		{
-			free(buffer);
+			free(buffer[0]);
 			exit_error(info, __FILE__, __LINE__, "malloc");
 		}
 		if (compare_delimiter(*buffer, lst_get_var(heredocs)->value) == 0)
-			return (close(hpipe[1]), free(buffer), hpipe[0]);
+			return (close(hpipe[1]), free(buffer[0]), SUCCESS);
 		write(hpipe[1], buffer[0], ft_strlen(buffer[0]));
 		free(buffer[0]);
 	}
@@ -107,7 +139,7 @@ static t_list	*ignore_multiple_heredocs(t_info *info, t_list *heredocs)
 			ft_printf("> ", STDIN_FILENO);
 			buffer = get_next_line(STDIN_FILENO);
 			if (buffer == NULL)
-				exit_error(info, __FILE__, __LINE__, "get next line");
+				execute_exit_child(info, NULL, 1);
 			if (compare_delimiter(buffer, lst_get_var(heredocs)->value) == 0)
 			{
 				free(buffer);

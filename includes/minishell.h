@@ -50,4 +50,6 @@ int	g_exit_code;
 
 void	print_lexed(char **arg);
 
+void	safe_close(int *fd);
+
 #endif

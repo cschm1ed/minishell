@@ -93,7 +93,7 @@ int	execute_single(t_info *info, t_list *parsed, t_data *pipex)
 			flag = TRUE;
 	if (flag == FALSE || parsed->next)
 		return (FAILURE);
-	if (handle_files(pipex, parsed, info, 0) == FAILURE)
+	if (handle_files(pipex, parsed) == FAILURE)
 		return (g_exit_code = 1, SUCCESS);
 	if (pipex->file_fd[0] >= 0 && pipex->file_fd[1] >= 0)
 		g_exit_code = execute_builtin_if(info, parsed, pipex, 0);

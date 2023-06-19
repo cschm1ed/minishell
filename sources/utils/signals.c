@@ -42,6 +42,24 @@ void	keybindings_child(int signum)
 	}
 }
 
+void	keybindings_heredoc(int signum)
+{
+	if (signum == SIGINT)
+	{
+		ft_putchar_fd('\n', 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		exit (1);
+	}
+	else if (signum == SIGQUIT)
+		(void) signum;
+}
+
+void	keybindings_ignore(int signum)
+{
+	(void)signum;
+}
+
 void	setup_signals(void (*func)(int))
 {
 	signal (SIGINT, func);
